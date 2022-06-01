@@ -1,10 +1,13 @@
 <?php
-	
-	require_once 'define.php';
 
-	function __autoload($clasName){
-		require_once LIBRARY_PATH . "{$clasName}.php";
-	}
-	
-	$bootstrap = new Bootstrap();
-	$bootstrap->init();
+require_once 'define.php';
+
+function my_autoload($className)
+{
+	require_once LIBRARY_PATH . "{$className}.php";
+}
+
+spl_autoload_register('my_autoload');
+
+$bootstrap = new Bootstrap();
+$bootstrap->init();
