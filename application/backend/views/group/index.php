@@ -5,19 +5,19 @@ $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
         $id         = $item['id'];
-        $groupACP   = HelperBackend::showItemGroupACP($item['group_acp']);
+        $groupACP   = HelperBackend::showItemGroupACP($id, $item['group_acp']);
         $status     = HelperBackend::showItemStatus($id, $item['status']);
         $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
         $xhtml .= '
             <tr>
                 <td><input type="checkbox"></td>
-                <td>'.$id.'</td>
-                <td>'.$item['name'].'</td>
-                <td>'.$groupACP.'</td>
-                <td>'.$status.'</td>
-                <td>'.$created.'</td>
-                <td>'.$modified.'</td>
+                <td>' . $id . '</td>
+                <td>' . $item['name'] . '</td>
+                <td>' . $groupACP . '</td>
+                <td>' . $status . '</td>
+                <td>' . $created . '</td>
+                <td>' . $modified . '</td>
                 <td>
                     <a href="#" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
                     <a href="#" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
@@ -83,6 +83,7 @@ if (!empty($items)) {
                 <div class="container-fluid">
                     <div class="row align-items-center justify-content-between mb-2">
                         <div>
+
                             <div class="input-group">
                                 <select class="form-control custom-select">
                                     <option>Bulk Action</option>
@@ -91,9 +92,10 @@ if (!empty($items)) {
                                     <option>Inactive</option>
                                 </select>
                                 <span class="input-group-append">
-                                    <button type="button" class="btn btn-info">Apply</button>
+                                    <button type="submit" class="btn btn-info">Apply</button>
                                 </span>
                             </div>
+
                         </div>
                         <div>
                             <a href="group-form.php" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
@@ -104,7 +106,7 @@ if (!empty($items)) {
                     <table class="table align-middle text-center table-bordered">
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" name="checkall-toggle"></th>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Group ACP</th>
@@ -115,7 +117,7 @@ if (!empty($items)) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?= $xhtml;?>
+                            <?= $xhtml; ?>
                         </tbody>
                     </table>
                 </div>

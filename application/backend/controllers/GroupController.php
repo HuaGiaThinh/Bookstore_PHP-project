@@ -17,4 +17,25 @@ class GroupController extends Controller{
 	public function addAction(){
 		$this->_view->render('index/index');
 	}
+
+	public function ajaxStatusAction()
+	{
+		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-ajax-status']);
+
+		echo json_encode($result);
+	}
+
+	public function ajaxACPAction()
+	{
+		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-ajax-ACP']);
+
+		echo json_encode($result);
+	}
+
+	public function changeStatus()
+	{
+		echo '<pre style="color: red;">';
+		print_r($this->_arrParam);
+		echo '</pre>';
+	}
 }
