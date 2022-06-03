@@ -4,24 +4,20 @@ $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
-        $id = $item['id'];
-        $createdDate = Helper::formatDate('d-m-Y', $item['created']);
-        $modifiedDate = Helper::formatDate('d-m-Y', $item['modified']);
+        $id         = $item['id'];
+        $groupACP   = HelperBackend::showItemGroupACP($item['group_acp']);
+        $status     = HelperBackend::showItemStatus($id, $item['status']);
+        $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
+        $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
         $xhtml .= '
             <tr>
                 <td><input type="checkbox"></td>
                 <td>'.$id.'</td>
                 <td>'.$item['name'].'</td>
-                <td>'.Helper::groupAcp($item['group_acp']).'</td>
-                <td>'.Helper::status($id, $item['status']).'</td>
-                <td>
-                    <p class="mb-0"><i class="far fa-user"></i>'.$item['name'].'</p>
-                    <p class="mb-0"><i class="far fa-clock"></i>'.$createdDate.'</p>
-                </td>
-                <td>
-                    <p class="mb-0"><i class="far fa-user"></i>'.$item['name'].'</p>
-                    <p class="mb-0"><i class="far fa-clock"></i>'.$modifiedDate.'</p>
-                </td>
+                <td>'.$groupACP.'</td>
+                <td>'.$status.'</td>
+                <td>'.$created.'</td>
+                <td>'.$modified.'</td>
                 <td>
                     <a href="#" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
                     <a href="#" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>

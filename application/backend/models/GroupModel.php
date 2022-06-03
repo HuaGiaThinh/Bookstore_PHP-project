@@ -9,7 +9,7 @@ class GroupModel extends Model
 
 	public function listItems($searchValue = null)
 	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `modified`";
+		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
 		if (!empty($searchValue)) $query[] = " WHERE `link` LIKE '%$searchValue%'";
 		$query		= implode(" ", $query);
