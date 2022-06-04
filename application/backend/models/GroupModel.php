@@ -7,11 +7,13 @@ class GroupModel extends Model
 		$this->setTable('group');
 	}
 
-	public function listItems($searchValue = null)
+	public function listItems($params)
 	{
+		$searchValue = isset($params['search']) ? trim($params['search']) : '';
+
 		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
-		if (!empty($searchValue)) $query[] = " WHERE `link` LIKE '%$searchValue%'";
+		if (!empty($searchValue)) $query[] = " WHERE `name` LIKE '%$searchValue%'";
 		$query		= implode(" ", $query);
 
 		$result		= $this->listRecord($query);
@@ -72,6 +74,9 @@ class GroupModel extends Model
 	{
 		if (!empty($params['cid'])) {
 			$this->delete($params['cid']);
+		} else {
+			$this->delete([$params['id']]);
 		}
+		Session::set('message', 'Dữ liệu đã được xóa thành công!');
 	}
 }

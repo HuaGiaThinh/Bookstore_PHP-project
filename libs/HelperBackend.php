@@ -43,4 +43,54 @@ class HelperBackend
             $time
         );
     }
+
+    public static function input($type, $name, $value, $class = null, $require = null)
+    {
+        $xhtml = sprintf('<input type="%s" name="%s" value="%s" class="%s" %s />', $type, $name, $value, $class, $require);
+        return $xhtml;
+
+    }
+
+    public static function label($for = null, $class = null, $text)
+    {
+        $xhtml = sprintf('<label for="%s" class="%s">%s</label>', $for, $class, $text);
+        return $xhtml;
+    }
+
+    public static function select($name, $arrOptions, $keySelected = null)
+    {
+        $options = '<option>Select status</option>';
+        foreach ($arrOptions as $key => $value) {
+            $selected = $key == $keySelected ? 'selected' : '';
+            $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
+        }
+
+        $xhtml = sprintf('
+            <select class="form-select" name="%s">
+                %s
+            </select>', $name, $options);
+        return $xhtml;
+    }
+
+    public static function showMessage()
+    {
+        $message = Session::get('message');
+        Session::unset('message');
+
+        if (!empty($message)) {
+            $message = '
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Message!</strong> ' . $message . '
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            ';
+        }
+        return $message;
+    }
+
+    public static function highlight($searchValue, $name)
+    {
+        if (!empty($searchValue)) $name = str_replace($searchValue, "<mark>$searchValue</mark>", $name);
+        return $name;
+    }
 }

@@ -10,12 +10,13 @@ class GroupController extends Controller{
 	
 	public function indexAction(){
 		$this->_view->_title = "Group";
-        $this->_view->items = $this->_model->listItems();
-		$this->_view->render('group/index');
+
+        $this->_view->items = $this->_model->listItems($this->_arrParam);
+		$this->_view->render($this->_arrParam['controller'] . '/index');
 	}
 	
 	public function addAction(){
-		$this->_view->render('index/index');
+		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
 	public function ajaxStatusAction()
@@ -32,10 +33,16 @@ class GroupController extends Controller{
 		echo json_encode($result);
 	}
 
-	public function changeStatus()
+	public function changeStatusAction()
 	{
 		echo '<pre style="color: red;">';
 		print_r($this->_arrParam);
 		echo '</pre>';
+	}
+
+	public function deleteAction()
+	{
+		$this->_model->deleteItems($this->_arrParam);
+		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 	}
 }

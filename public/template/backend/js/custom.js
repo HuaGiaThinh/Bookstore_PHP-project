@@ -59,6 +59,14 @@ function changePage(page){
 	$('#adminForm').submit();
 }
 
+function deleteItem(url) {
+    let result = confirm("Bạn có chắc chắn muốn xóa không?");
+    if (result) {
+        window.location.replace(url)
+    }
+}
+
+
 $(document).ready(function(){
 	$('input[name=checkall-toggle]').change(function(){
 		var checkStatus = this.checked;
