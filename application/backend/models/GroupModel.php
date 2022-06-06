@@ -1,10 +1,29 @@
 <?php
 class GroupModel extends Model
 {
+	private $arrAcceptSearchField = ['name', 'status'];
 	public function __construct()
 	{
 		parent::__construct();
 		$this->setTable('group');
+	}
+
+	private function createSearchQuery($value)
+    {
+        $result = '';
+        foreach ($this->arrAcceptSearchField as $field) {
+            $result .= " `$field` LIKE '%$value%' OR";
+        }
+        return  '(' . rtrim($result, ' OR') . ')';
+    }
+
+	public function countItemByStatus($params)
+	{
+		$query[] = "SELECT COUNT(`status`) as `all`, SUM(`status` = 'active') as `active`, SUM(`status` = 'inactive') as `inactive` FROM `$this->table`";
+		
+		$query		= implode(" ", $query);
+        $result = $this->singleRecord($query);
+		return $result;
 	}
 
 	public function listItems($params)
@@ -13,7 +32,7 @@ class GroupModel extends Model
 
 		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
-		if (!empty($searchValue)) $query[] = " WHERE `name` LIKE '%$searchValue%'";
+		if (!empty($searchValue)) $query[]    = "WHERE {$this->createSearchQuery($searchValue)}";
 		$query		= implode(" ", $query);
 
 		$result		= $this->listRecord($query);

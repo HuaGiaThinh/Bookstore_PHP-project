@@ -1,11 +1,8 @@
 <?php
-echo '<pre style="color: red;">';
-print_r($this->params);
-echo '</pre>';
 $message = HelperBackend::showMessage();
 
 $linkIndex = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
-
+$linkForm = URL::createLink($this->params['module'], $this->params['controller'], 'form');
 $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
@@ -19,7 +16,7 @@ if (!empty($items)) {
         $linkDelete = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
         $xhtml .= '
             <tr>
-                <td><input type="checkbox" name="cid[]" value="'.$id.'"></td>
+                <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td>' . $name . '</td>
                 <td>' . $groupACP . '</td>
@@ -53,16 +50,17 @@ if (!empty($items)) {
                 <div class="container-fluid">
                     <div class="row justify-content-between align-items-center">
                         <div class="area-filter-status mb-2">
-                            <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
+                            <!-- <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
                             <a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
-                            <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a>
+                            <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a> -->
+                            <?= HelperBackend::createButtonFilter($this->countItemFilter)?>
                         </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">
-                                <div class="input-group">       
+                                <div class="input-group">
                                     <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
                                     <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
-                                    <?= HelperBackend::input('hidden', 'action', 'index');?>
+                                    <?= HelperBackend::input('hidden', 'action', 'index'); ?>
 
                                     <input type="text" class="form-control" name="search" placeholder="Enter search keyword..." aria-label="Enter search keyword" value="<?= @$this->params['search'] ?>">
                                     <span class="input-group-append">
@@ -92,46 +90,48 @@ if (!empty($items)) {
                 </div>
             </div>
             <div class="card-body">
-                <div class="container-fluid">
-                    <div class="row align-items-center justify-content-between mb-2">
-                        <div>
-                            <div class="input-group">
-                                <select class="form-control custom-select">
-                                    <option selected disabled>Bulk Action</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                    <option value="delete">Delete</option>
-                                </select>
-                                <span class="input-group-append">
-                                    <button type="submit" class="btn btn-info">Apply</button>
-                                </span>
+                <form action="" method="POST" name="main-form" id="main-form">
+                    <div class="container-fluid">
+                        <div class="row align-items-center justify-content-between mb-2">
+                            <div>
+                                <div class="input-group">
+                                    <select class="form-control custom-select">
+                                        <option selected disabled>Bulk Action</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                        <option value="delete">Delete</option>
+                                    </select>
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info">Apply</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="<?= $linkForm;?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
                             </div>
                         </div>
-                        <div>
-                            <a href="group-form.php" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
-                        </div>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table align-middle text-center table-bordered">
-                        <?= $message; ?>
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" name="checkall-toggle"></th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Group ACP</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                                <th>Modified</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?= $xhtml; ?>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle text-center table-bordered">
+                            <?= $message; ?>
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="checkall-toggle"></th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Group ACP</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Modified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?= $xhtml; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
             </div>
             <div class="card-footer clearfix">
                 <ul class="pagination m-0 float-right">

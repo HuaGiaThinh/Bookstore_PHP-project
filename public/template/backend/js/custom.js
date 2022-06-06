@@ -44,8 +44,8 @@ function changeGroupACP(url){
 }
 
 function submitForm(url){
-	$('#adminForm').attr('action', url);
-	$('#adminForm').submit();
+	$('#main-form').attr('action', url);
+	$('#main-form').submit();
 }
 
 function sortList(column, order){

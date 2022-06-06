@@ -1,21 +1,27 @@
 <?php
-class GroupController extends Controller{
-	public function __construct($arrParams){
+class GroupController extends Controller
+{
+	public function __construct($arrParams)
+	{
 		parent::__construct($arrParams);
 		$this->_templateObj->setFolderTemplate('backend/');
 		$this->_templateObj->setFileTemplate('index.php');
 		$this->_templateObj->setFileConfig('template.ini');
 		$this->_templateObj->load();
 	}
-	
-	public function indexAction(){
-		$this->_view->_title = "Group";
 
-        $this->_view->items = $this->_model->listItems($this->_arrParam);
+	public function indexAction()
+	{
+		$this->_view->_title = "Group List";
+		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
+		$this->_view->items = $this->_model->listItems($this->_arrParam);
+	
 		$this->_view->render($this->_arrParam['controller'] . '/index');
 	}
-	
-	public function addAction(){
+
+	public function formAction()
+	{
+		$this->_view->_title = "Group Form";
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
@@ -33,12 +39,6 @@ class GroupController extends Controller{
 		echo json_encode($result);
 	}
 
-	public function changeStatusAction()
-	{
-		echo '<pre style="color: red;">';
-		print_r($this->_arrParam);
-		echo '</pre>';
-	}
 
 	public function deleteAction()
 	{

@@ -48,7 +48,6 @@ class HelperBackend
     {
         $xhtml = sprintf('<input type="%s" name="%s" value="%s" class="%s" %s />', $type, $name, $value, $class, $require);
         return $xhtml;
-
     }
 
     public static function label($for = null, $class = null, $text)
@@ -81,7 +80,7 @@ class HelperBackend
             $message = '
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Message!</strong> ' . $message . '
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
             </div>
             ';
         }
@@ -92,5 +91,16 @@ class HelperBackend
     {
         if (!empty($searchValue)) $name = str_replace($searchValue, "<mark>$searchValue</mark>", $name);
         return $name;
+    }
+
+    public static function createButtonFilter($arrFilter) {
+        $xhtml = '';
+        $xhtml .= sprintf('<a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">%s</span></a> ', $arrFilter['all']);
+        foreach ($arrFilter as $key => $value) {
+            if ($key != 'all') {
+                $xhtml .= sprintf('<a href="#" class="btn btn-secondary">%s <span class="badge badge-pill badge-light">%s</span></a> ', ucfirst($key), $value);
+            }        
+        }
+        return $xhtml;
     }
 }
