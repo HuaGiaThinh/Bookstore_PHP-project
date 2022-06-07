@@ -9,20 +9,23 @@ class GroupModel extends Model
 	}
 
 	private function createSearchQuery($value)
-    {
-        $result = '';
-        foreach ($this->arrAcceptSearchField as $field) {
-            $result .= " `$field` LIKE '%$value%' OR";
-        }
-        return  '(' . rtrim($result, ' OR') . ')';
-    }
+	{
+		$result = '';
+		foreach ($this->arrAcceptSearchField as $field) {
+			$result .= " `$field` LIKE '%$value%' OR";
+		}
+		return  '(' . rtrim($result, ' OR') . ')';
+	}
 
 	public function countItemByStatus($params)
 	{
+		$searchValue = isset($params['search']) ? trim($params['search']) : '';
+
 		$query[] = "SELECT COUNT(`status`) as `all`, SUM(`status` = 'active') as `active`, SUM(`status` = 'inactive') as `inactive` FROM `$this->table`";
-		
+		if (!empty($searchValue)) $query[]    = "WHERE {$this->createSearchQuery($searchValue)}";
+
 		$query		= implode(" ", $query);
-        $result = $this->singleRecord($query);
+		$result = $this->singleRecord($query);
 		return $result;
 	}
 
@@ -41,7 +44,7 @@ class GroupModel extends Model
 
 	public function singleItem($params)
 	{
-		$query[] 	= "SELECT `id`, `link`, `status`, `ordering`";
+		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`";
 		$query[] 	= "FROM `{$this->table}`";
 		$query[] 	= "WHERE `id` = {$params['id']}";
 		$query		= implode(" ", $query);
@@ -97,5 +100,21 @@ class GroupModel extends Model
 			$this->delete([$params['id']]);
 		}
 		Session::set('message', 'Dữ liệu đã được xóa thành công!');
+	}
+
+	public function addItem($data)
+	{
+		$data['created'] = date("Y:m:d H:i:s");
+		$data['created_by'] = 'admin';
+		$this->insert($data);
+		Session::set('message', 'Thêm phần tử thành công!');
+	}
+
+	public function updateItem($data, $id)
+	{
+		$data['modified'] = date("Y:m:d H:i:s");
+		$data['modified_by'] = 'admin';
+		$this->update($data, [['id', $id]]);
+		Session::set('message', 'Cập nhật phần tử thành công!');
 	}
 }

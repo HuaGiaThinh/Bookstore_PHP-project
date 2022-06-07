@@ -1,8 +1,9 @@
 <?php
 $message = HelperBackend::showMessage();
 
-$linkIndex = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
-$linkForm = URL::createLink($this->params['module'], $this->params['controller'], 'form');
+$linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
+$linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
+
 $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
@@ -14,6 +15,8 @@ if (!empty($items)) {
         $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
         $linkDelete = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
+        $linkEdit   = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
+
         $xhtml .= '
             <tr>
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
@@ -24,7 +27,7 @@ if (!empty($items)) {
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
                 <td>
-                    <a href="#" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
+                    <a href="' . $linkEdit . '" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
                     <a href="javascript:deleteItem(\'' . $linkDelete . '\')" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
                 </td>
             </tr>
@@ -53,7 +56,7 @@ if (!empty($items)) {
                             <!-- <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
                             <a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
                             <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a> -->
-                            <?= HelperBackend::createButtonFilter($this->countItemFilter)?>
+                            <?= HelperBackend::createButtonFilter($this->countItemFilter) ?>
                         </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">
@@ -107,7 +110,7 @@ if (!empty($items)) {
                                 </div>
                             </div>
                             <div>
-                                <a href="<?= $linkForm;?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
+                                <a href="<?= $linkAdd; ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
                             </div>
                         </div>
                     </div>
