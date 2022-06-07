@@ -21,7 +21,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="index.php" class="nav-link active">
+                    <a href="<?= URL::createLink($this->params['module'], 'dashboard', 'index')?>" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -36,13 +36,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="group-list.php" class="nav-link">
+                            <a href="<?= URL::createLink($this->params['module'], 'group', 'index')?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="group-form.php" class="nav-link">
+                            <a href="<?= URL::createLink($this->params['module'], 'group', 'form')?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add</p>
                             </a>

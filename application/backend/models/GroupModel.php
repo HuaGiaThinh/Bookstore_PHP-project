@@ -53,6 +53,17 @@ class GroupModel extends Model
 		return $result;
 	}
 
+	public function filterStatus($params)
+	{
+		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
+		$query[] 	= "FROM `{$this->table}`";
+		if ($params['status'] != 'all') $query[] 	= "WHERE `status` = '{$params['status']}'";
+
+		$query		= implode(" ", $query);
+		$result		= $this->listRecord($query);
+		return $result;
+	}
+
 	public function handleStatus($params, $option = null)
 	{
 		if ($option['task'] == 'change-status') {

@@ -1,8 +1,9 @@
 <?php
 $message = HelperBackend::showMessage();
 
-$linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
+$linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
+$xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params);
 
 $items = $this->items;
 $xhtml = '';
@@ -56,7 +57,7 @@ if (!empty($items)) {
                             <!-- <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
                             <a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
                             <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a> -->
-                            <?= HelperBackend::createButtonFilter($this->countItemFilter) ?>
+                            <?= $xhtmlFilterStatus; ?>
                         </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">
