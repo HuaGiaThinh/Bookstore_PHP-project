@@ -1,47 +1,47 @@
-function changeStatus(url){
-	$.get(url, function(data){
-		var element		= 'a#status-' + data[0];
-		var classRemoveActive = 'btn-success';
-		var classRemoveIcon = 'fa-check';
+// function changeStatus(url){
+// 	$.get(url, function(data){
+// 		var element		= 'a#status-' + data[0];
+// 		var classRemoveActive = 'btn-success';
+// 		var classRemoveIcon = 'fa-check';
 
-		var classAddActive 	= 'btn-danger';
-		var classAddIcon 	= 'fa-minus';
+// 		var classAddActive 	= 'btn-danger';
+// 		var classAddIcon 	= 'fa-minus';
 
-		if(data[1] == 'active'){
-			classRemoveActive = 'btn-danger';
-			classRemoveIcon = 'fa-minus';
-			classAddActive 	= 'btn-success';
-			classAddIcon 	= 'fa-check';
-		}
+// 		if(data[1] == 'active'){
+// 			classRemoveActive = 'btn-danger';
+// 			classRemoveIcon = 'fa-minus';
+// 			classAddActive 	= 'btn-success';
+// 			classAddIcon 	= 'fa-check';
+// 		}
 
-		$(element).attr('href', "javascript:changeStatus('"+data[2]+"')")
-		$(element).removeClass(classRemoveActive).addClass(classAddActive)
-		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
-	}, 'json');
-}
+// 		$(element).attr('href', "javascript:changeStatus('"+data[2]+"')")
+// 		$(element).removeClass(classRemoveActive).addClass(classAddActive)
+// 		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
+// 	}, 'json');
+// }
 
-function changeGroupACP(url){
-	$.get(url, function(data){
-		var element		= 'a#groupACP-' + data[0];
-		var classRemoveActive = 'btn-success';
-		var classRemoveIcon = 'fa-check';
+// function changeGroupACP(url){
+// 	$.get(url, function(data){
+// 		var element		= 'a#groupACP-' + data[0];
+// 		var classRemoveActive = 'btn-success';
+// 		var classRemoveIcon = 'fa-check';
 
-		var classAddActive 	= 'btn-danger';
-		var classAddIcon 	= 'fa-minus';
+// 		var classAddActive 	= 'btn-danger';
+// 		var classAddIcon 	= 'fa-minus';
 
-		if(data[1] == 1){
-			classRemoveActive = 'btn-danger';
-			classRemoveIcon = 'fa-minus';
-			classAddActive 	= 'btn-success';
-			classAddIcon 	= 'fa-check';
-		}
+// 		if(data[1] == 1){
+// 			classRemoveActive = 'btn-danger';
+// 			classRemoveIcon = 'fa-minus';
+// 			classAddActive 	= 'btn-success';
+// 			classAddIcon 	= 'fa-check';
+// 		}
 
-		$(element).attr('href', "javascript:changeGroupACP('"+data[2]+"')")
-		$(element).removeClass(classRemoveActive).addClass(classAddActive)
-		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
-		console.log(data);
-	}, 'json');
-}
+// 		$(element).attr('href', "javascript:changeGroupACP('"+data[2]+"')")
+// 		$(element).removeClass(classRemoveActive).addClass(classAddActive)
+// 		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
+// 		console.log(data);
+// 	}, 'json');
+// }
 
 function submitForm(url){
 	$('#main-form').attr('action', url);

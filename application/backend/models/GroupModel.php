@@ -55,40 +55,18 @@ class GroupModel extends Model
 
 	public function handleStatus($params, $option = null)
 	{
-		if ($option['task'] == 'change-ajax-status') {
-			$status = ($params['status'] == 'active') ? 'inactive' : 'active';
-			$id = $params['id'];
-
-			$query	= "UPDATE `$this->table` SET `status` = '$status' WHERE `id` = '" . $id . "'";
-			$this->query($query);
-
-			$result =  [$id, $status, URL::createLink('backend', 'group', 'ajaxStatus', [
-				'id' => $id, 'status' => $status
-			])];
-			return $result;
-		}
-
-		if ($option['task'] == 'change-ajax-ACP') {
-			$groupACP = ($params['group_acp'] == 0) ? 1 : 0;
-			$id = $params['id'];
-
-			$query	= "UPDATE `$this->table` SET `group_acp` = $groupACP WHERE `id` = '" . $id . "'";
-			$this->query($query);
-
-			$result =  [$id, $groupACP, URL::createLink('backend', 'group', 'ajaxACP', [
-				'id' => $id, 'group_acp' => $groupACP
-			])];
-			return $result;
-		}
-
 		if ($option['task'] == 'change-status') {
-			$status = $params['type'];
+			$status = ($params['status'] == 'active') ? 'inactive' : 'active';
 
-			if (!empty($params['cid'])) {
-				$ids = $this->createWhereDeleteSQL($params['cid']);
-				$query	= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
-				$this->query($query);
-			}
+			$this->update(['status' => $status], [['id', $params['id']]]);
+			Session::set('message', 'Thay đổi trạng thái thành công!');
+		}
+
+		if ($option['task'] == 'change-groupACP') {
+			$groupACP = ($params['group_acp'] == 0) ? 1 : 0;
+
+			$this->update(['group_acp' => $groupACP], [['id', $params['id']]]);
+			Session::set('message', 'Thay đổi group ACP thành công!');
 		}
 	}
 

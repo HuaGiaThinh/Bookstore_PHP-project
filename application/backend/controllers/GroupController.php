@@ -59,20 +59,16 @@ class GroupController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
-	public function ajaxStatusAction()
-	{
-		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-ajax-status']);
+	public function changeStatusAction() {
+		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
+		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 
-		echo json_encode($result);
 	}
 
-	public function ajaxACPAction()
-	{
-		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-ajax-ACP']);
-
-		echo json_encode($result);
+	public function changeGroupAcpAction() {
+		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-groupACP']);
+		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 	}
-
 
 	public function deleteAction()
 	{

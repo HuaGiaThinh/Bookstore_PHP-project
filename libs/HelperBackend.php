@@ -11,9 +11,9 @@ class HelperBackend
             $activeIcon = 'minus';
         }
 
-        $link = URL::createLink($module, $controller, 'ajaxStatus', ['id' => $id, 'status' => $status]);
+        $link = URL::createLink($module, $controller, 'changeStatus', ['id' => $id, 'status' => $status]);
 
-        return sprintf('<a id="status-%s" href="javascript:changeStatus(\'%s\');" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+        return sprintf('<a id="status-%s" href="%s" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
     public static function showItemGroupACP($id, $groupACP, $module = 'backend', $controller = 'group')
@@ -26,9 +26,9 @@ class HelperBackend
             $activeIcon = 'minus';
         }
 
-        $link = URL::createLink($module, $controller, 'ajaxACP', ['id' => $id, 'group_acp' => $groupACP]);
+        $link = URL::createLink($module, $controller, 'changeGroupAcp', ['id' => $id, 'group_acp' => $groupACP]);
 
-        return sprintf('<a id="groupACP-%s" href="javascript:changeGroupACP(\'%s\');" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+        return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
     public static function showItemHistory($createdBy, $time)
