@@ -34,7 +34,7 @@ class GroupController extends Controller
 			$data       = $this->_arrParam['form'];
 
 			$validate = new Validate($data);
-			$validate->addRule('name', 'string', ['min' => 5, 'max' => 100])
+			$validate->addRule('name', 'string', ['min' => 5, 'max' => 50])
 				->addRule('group_acp', 'groupACP')
 				->addRule('status', 'status');
 
@@ -73,7 +73,7 @@ class GroupController extends Controller
 	public function filterStatusAction() {
 		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
 		$this->_view->items = $this->_model->filterStatus($this->_arrParam);
-		$this->_view->render($this->_arrParam['controller'] . '/index');
+		$this->_view->render($this->_arrParam['controller'] . '/index');	
 	}
 
 	public function deleteAction()

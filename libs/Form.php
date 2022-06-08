@@ -13,11 +13,12 @@ class Form
         return $xhtml;
     }
 
-    public static function select($name, $arrOptions, $nameDefaultSelect, $keySelected = null)
+    public static function select($name, $arrOptions, $nameDefaultSelect, $keySelected = '')
     {
         $options = '<option> - Select '.$nameDefaultSelect.' - </option>';
         foreach ($arrOptions as $key => $value) {
-            $selected = $key == $keySelected ? 'selected' : '';
+            $key = (string)$key;
+            $selected = ($key === $keySelected) ? 'selected' : '';
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 

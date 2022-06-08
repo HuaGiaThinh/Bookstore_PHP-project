@@ -54,9 +54,6 @@ if (!empty($items)) {
                 <div class="container-fluid">
                     <div class="row justify-content-between align-items-center">
                         <div class="area-filter-status mb-2">
-                            <!-- <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
-                            <a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
-                            <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a> -->
                             <?= $xhtmlFilterStatus; ?>
                         </div>
                         <div class="area-search mb-2">
