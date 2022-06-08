@@ -21,11 +21,7 @@ class Form
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 
-        $xhtml = sprintf('
-            <select class="custom-select" name="%s">
-                %s
-            </select>', $name, $options);
-        return $xhtml;
+        return sprintf('<select class="custom-select" name="%s">%s</select>', $name, $options);
     }
 
     public static function row ($label, $input) {
