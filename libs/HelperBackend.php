@@ -98,11 +98,11 @@ class HelperBackend
         $xhtml = '';
         foreach ($arrFilter as $key => $value) {
             $classActive = 'secondary';
-            if ((!isset($params['status']) && $key == 'all' ) || @$params['status'] == $key) {
+            if ((!isset($params['status']) && $key == 'all') || (@$params['status'] == $key)) {
                 $classActive = 'info';
             }
 
-            $link = URl::createLink($params['module'], $params['controller'], 'filterStatus', ['status' => $key]);
+            $link = URl::createLink($params['module'], $params['controller'], $params['action'], ['status' => $key]);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
         }
         return $xhtml;

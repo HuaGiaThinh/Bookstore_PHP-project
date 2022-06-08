@@ -35,7 +35,13 @@ class GroupModel extends Model
 
 		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
-		if (!empty($searchValue)) $query[]    = "WHERE {$this->createSearchQuery($searchValue)}";
+
+		// Search
+		if (!empty($searchValue)) $query[] = "WHERE {$this->createSearchQuery($searchValue)}";
+
+		// Filter Status
+		if (isset($params['status']) && $params['status'] != 'all') $query[] = "WHERE `status` = '{$params['status']}'";
+
 		$query		= implode(" ", $query);
 
 		$result		= $this->listRecord($query);
@@ -50,17 +56,6 @@ class GroupModel extends Model
 		$query		= implode(" ", $query);
 
 		$result		= $this->singleRecord($query);
-		return $result;
-	}
-
-	public function filterStatus($params)
-	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
-		$query[] 	= "FROM `{$this->table}`";
-		if ($params['status'] != 'all') $query[] 	= "WHERE `status` = '{$params['status']}'";
-
-		$query		= implode(" ", $query);
-		$result		= $this->listRecord($query);
 		return $result;
 	}
 

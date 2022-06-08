@@ -70,12 +70,6 @@ class GroupController extends Controller
 		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 	}
 
-	public function filterStatusAction() {
-		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
-		$this->_view->items = $this->_model->filterStatus($this->_arrParam);
-		$this->_view->render($this->_arrParam['controller'] . '/index');	
-	}
-
 	public function deleteAction()
 	{
 		$this->_model->deleteItems($this->_arrParam);
