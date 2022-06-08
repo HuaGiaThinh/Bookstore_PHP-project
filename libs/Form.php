@@ -17,8 +17,7 @@ class Form
     {
         $options = '<option> - Select '.$nameDefaultSelect.' - </option>';
         foreach ($arrOptions as $key => $value) {
-            $key = (string)$key;
-            $selected = ($key === $keySelected) ? 'selected' : '';
+            $selected = ((string)$key === $keySelected) ? 'selected' : '';
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 
