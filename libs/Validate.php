@@ -79,6 +79,9 @@ class Validate
 					case 'status':
 						$this->validateStatus($element);
 						break;
+					case 'select':
+						$this->validateSelectBox($element);
+						break;
 					case 'groupACP':
 						$this->validateGroupACP($element);
 						break;
@@ -146,14 +149,17 @@ class Validate
 
 	public function showErrors()
 	{
-		$xhtml = '';
+		$xhtml = '<div class="alert alert-danger alert-dismissible">';
+		$xhtml .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+		$xhtml .= '<h5><i class="icon fas fa-exclamation-triangle"></i> Lỗi!</h5>';
 		if (!empty($this->errors)) {
-			$xhtml .= '<ul class="error">';
+			$xhtml .= '<ul class="list-unstyled mb-0">';
 			foreach ($this->errors as $key => $value) {
-				$xhtml .= '<li>' . $value . ' </li>';
+				$xhtml .= '<li class="text-white">' . $value . ' </li>';
 			}
 			$xhtml .=  '</ul>';
 		}
+		$xhtml .= '</div>';
 		return $xhtml;
 	}
 
@@ -183,6 +189,13 @@ class Validate
 	{
 		if ($this->source[$element] == '- Select Group ACP -') {
 			$this->setError($element, 'Select groupACP');
+		}
+	}
+
+	private function validateSelectBox($element)
+	{
+		if ($this->source[$element] == 'default') {
+			$this->setError($element, 'Invalid value');
 		}
 	}
 

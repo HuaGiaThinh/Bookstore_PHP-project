@@ -1,7 +1,7 @@
 <?php
 class GroupModel extends Model
 {
-	private $arrAcceptSearchField = ['name', 'status'];
+	private $arrAcceptSearchField = ['name'];
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,10 +19,12 @@ class GroupModel extends Model
 
 	public function countItemByStatus($params)
 	{
-		$searchValue = isset($params['search']) ? trim($params['search']) : '';
 
-		$query[] = "SELECT COUNT(`status`) as `all`, SUM(`status` = 'active') as `active`, SUM(`status` = 'inactive') as `inactive` FROM `$this->table`";
-		if (!empty($searchValue)) $query[]    = "WHERE {$this->createSearchQuery($searchValue)}";
+		$query[] = "SELECT COUNT(`status`) as `all`, SUM(`status` = 'active') as `active`, SUM(`status` = 'inactive') as `inactive` FROM `$this->table` WHERE `id` > 0";
+
+		// search
+		$searchValue = isset($params['search']) ? trim($params['search']) : '';
+		if (!empty($searchValue)) $query[]    = "AND {$this->createSearchQuery($searchValue)}";
 
 		$query		= implode(" ", $query);
 		$result = $this->singleRecord($query);
@@ -31,16 +33,18 @@ class GroupModel extends Model
 
 	public function listItems($params)
 	{
-		$searchValue = isset($params['search']) ? trim($params['search']) : '';
-
 		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
+		$query[]	= "WHERE `id` > 0";
 
 		// Search
-		if (!empty($searchValue)) $query[] = "WHERE {$this->createSearchQuery($searchValue)}";
+		$searchValue = isset($params['search']) ? trim($params['search']) : '';
+		if (!empty($searchValue)) {
+			$query[] = "AND {$this->createSearchQuery($searchValue)}";
+		}
 
 		// Filter Status
-		if (isset($params['status']) && $params['status'] != 'all') $query[] = "WHERE `status` = '{$params['status']}'";
+		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
 		$query		= implode(" ", $query);
 

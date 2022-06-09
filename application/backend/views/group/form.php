@@ -1,19 +1,6 @@
 <?php
 $linkIndex = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 
-if (isset($this->errors)) {
-    $errors = '';
-    foreach ($this->errors as $key => $value) {
-        $errors .= sprintf('<li class="text-white">%s</li>', $value);
-    }
-    $xhtmlError = '
-        <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-exclamation-triangle"></i> Lỗi!</h5>
-            <ul class="list-unstyled mb-0">' . $errors . '</ul>
-        </div>
-    ';
-}
 
 $arrOptions = [
     'group_acp' => [1 => 'Active', 0 => 'Inactive'],
@@ -39,7 +26,7 @@ $elements = [
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <?= $xhtmlError ?? ''; ?>
+                <?= $this->errors ?? ''; ?>
                 <form action="" method="POST">
                     <div class="card card-outline card-info">
                         <div class="card-body">

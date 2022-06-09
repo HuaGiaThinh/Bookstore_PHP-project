@@ -35,8 +35,8 @@ class GroupController extends Controller
 
 			$validate = new Validate($data);
 			$validate->addRule('name', 'string', ['min' => 5, 'max' => 50])
-				->addRule('group_acp', 'groupACP')
-				->addRule('status', 'status');
+				->addRule('group_acp', 'select')
+				->addRule('status', 'select');
 
 			$validate->run();
 			$error      = $validate->getError();
@@ -52,7 +52,7 @@ class GroupController extends Controller
 				$this->_view->flagSuccess = true;
 			} else {
 				$this->_view->data = $data;
-				$this->_view->errors = $error;
+				$this->_view->errors = $validate->showErrors();
 			}
 		}
 

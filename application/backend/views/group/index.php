@@ -1,9 +1,12 @@
 <?php
+echo '<pre style="color: red;">';
+print_r($this->params);
+echo '</pre>';
 $message = HelperBackend::showMessage();
 
 $linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
-$xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params);
+$xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params, ($this->params['search'] ?? ''));
 
 $items = $this->items;
 $xhtml = '';
