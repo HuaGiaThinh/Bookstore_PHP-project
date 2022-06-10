@@ -1,69 +1,97 @@
 <?php
-class Controller{
-	
+class Controller
+{
+
 	// View Object
 	protected $_view;
-	
+
 	// Model Object
 	protected $_model;
-	
+
 	// Template object
 	protected $_templateObj;
-	
+
 	// Params (GET - POST)
 	protected $_arrParam;
-	
-	public function __construct($arrParams){
+
+	// Pagination
+	protected $_pagination	= array(
+		'totalItemsPerPage'	=> 1,
+		'pageRange'			=> 2,
+	);
+
+	public function __construct($arrParams)
+	{
 		$this->setModel($arrParams['module'], $arrParams['controller']);
 		$this->setTemplate($this);
 		$this->setView($arrParams['module']);
+
+		$this->_pagination['currentPage'] = (isset($arrParams['filter_page'])) ? $arrParams['filter_page'] : 1;
+		$arrParams['pagination'] = $this->_pagination;
+
 		$this->setParams($arrParams);
 		$this->_view->params = $this->_arrParam;
 		Session::init();
 	}
-	
+
 	// SET MODEL
-	public function setModel($moduleName, $modelName){
+	public function setModel($moduleName, $modelName)
+	{
 		$modelName = ucfirst($modelName) . 'Model';
 		$path = APPLICATION_PATH . $moduleName . DS . 'models' .  DS . $modelName . '.php';
-		if(file_exists($path)){
+		if (file_exists($path)) {
 			require_once $path;
 			$this->_model	= new $modelName();
 		}
 	}
-	
+
 	// GET MODEL
-	public function getModel(){
+	public function getModel()
+	{
 		return $this->_model;
 	}
-	
+
 	// SET VIEW
-	public function setView($moduleName){
+	public function setView($moduleName)
+	{
 		$this->_view = new View($moduleName);
 	}
-	
+
 	// GET VIEW
-	public function getView(){
+	public function getView()
+	{
 		return $this->_view;
 	}
-	
+
 	// SET TEMPLATE
-	public function setTemplate(){
-		$this->_templateObj = new Template($this);	
+	public function setTemplate()
+	{
+		$this->_templateObj = new Template($this);
 	}
-	
+
 	// GET TEMPLATE
-	public function getTemplate(){
+	public function getTemplate()
+	{
 		return $this->_templateObj;
 	}
-	
+
 	// GET PARAMS
-	public function setParams($arrParam){
-		$this->_arrParam= $arrParam;
+	public function setParams($arrParam)
+	{
+		$this->_arrParam = $arrParam;
 	}
-	
+
 	// GET PARAMS
-	public function getParams($arrParam){
-		$this->_arrParam= $arrParam;
+	public function getParams($arrParam)
+	{
+		$this->_arrParam = $arrParam;
+	}
+
+	// SET PAGINATION
+	public function setPagination($config){
+		$this->_pagination['totalItemsPerPage'] = $config['totalItemsPerPage'];
+		$this->_pagination['pageRange']			= $config['pageRange'];
+		$this->_arrParam['pagination']			= $this->_pagination;
+		$this->_view->arrParam					=$this->_arrParam;
 	}
 }

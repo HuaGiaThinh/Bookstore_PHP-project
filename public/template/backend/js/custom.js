@@ -56,8 +56,10 @@ function sortList(column, order){
 
 function changePage(page){
 	$('input[name=filter_page]').val(page);
-	$('#adminForm').submit();
+	$('#main-form').submit();
 }
+
+
 
 function deleteItem(url) {
     let result = confirm("Bạn có chắc chắn muốn xóa không?");
@@ -91,6 +93,8 @@ $(document).ready(function(){
 	$('#filter-bar select[name=filter_group_acp]').change(function(){
 		$('#adminForm').submit();
 	})
+
+	$('#currentPage').parent().addClass('active');
 })
 
 

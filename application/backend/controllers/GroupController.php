@@ -14,6 +14,12 @@ class GroupController extends Controller
 	{
 		$this->_view->_title = "Group List";
 		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
+		$totalItem = $this->_model->countItem($this->_arrParam);
+
+		$configPagination = array('totalItemsPerPage'	=> 3, 'pageRange' => 3);
+		$this->setPagination($configPagination);
+
+		$this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 		$this->_view->items = $this->_model->listItems($this->_arrParam);
 	
 		$this->_view->render($this->_arrParam['controller'] . '/index');

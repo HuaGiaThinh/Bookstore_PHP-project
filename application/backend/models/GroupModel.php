@@ -46,10 +46,37 @@ class GroupModel extends Model
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
-		$query		= implode(" ", $query);
+		// PAGINATION
+		$pagination			= $params['pagination'];
+		$totalItemsPerPage	= $pagination['totalItemsPerPage'];
+		if ($totalItemsPerPage > 0) {
+			$position	= ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+			$query[]	= "LIMIT $position, $totalItemsPerPage";
+		}
 
+		echo $query		= implode(" ", $query);
 		$result		= $this->listRecord($query);
 		return $result;
+	}
+
+	public function countItem($params)
+	{
+		$query[] 	= "SELECT COUNT(`id`) AS `total`";
+		$query[] 	= "FROM `{$this->table}`";
+		$query[]	= "WHERE `id` > 0";
+
+		// Search
+		$searchValue = isset($params['search']) ? trim($params['search']) : '';
+		if (!empty($searchValue)) {
+			$query[] = "AND {$this->createSearchQuery($searchValue)}";
+		}
+
+		// Filter Status
+		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
+
+		$query		= implode(" ", $query);
+		$result		= $this->singleRecord($query);
+		return $result['total'];
 	}
 
 	public function singleItem($params)
