@@ -21,7 +21,7 @@ class Form
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 
-        return sprintf('<select class="%s" name="%s">%s</select>',$class, $name, $options);
+        return sprintf('<select class="form-control %s" name="%s">%s</select>',$class, $name, $options);
     }
 
     public static function row ($label, $input) {
