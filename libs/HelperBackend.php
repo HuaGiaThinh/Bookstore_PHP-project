@@ -88,10 +88,10 @@ class HelperBackend
         return $message;
     }
 
-    public static function highlight($searchValue, $name)
+    public static function highlight($searchValue, $item)
     {
-        if (!empty($searchValue)) $name = str_replace($searchValue, "<mark>$searchValue</mark>", $name);
-        return $name;
+        if (!empty($searchValue)) $item = str_replace($searchValue, "<mark>$searchValue</mark>", $item);
+        return $item;
     }
 
     public static function showFilterStatus($arrFilter, $params, $searchKeyword = '')
@@ -116,10 +116,11 @@ class HelperBackend
     }
 
     // USER =================================================================
-    public static function showUserInfo($arrInfo)
+    public static function showUserInfo($searchValue, $arrInfo)
     {
         $xhtml = '';
         foreach ($arrInfo as $key => $value) {
+            $value = HelperBackend::highlight($searchValue, $value);
             $xhtml .= sprintf('<p class="mb-0">%s: %s</p>', ucfirst($key), $value);
         }
         return $xhtml;

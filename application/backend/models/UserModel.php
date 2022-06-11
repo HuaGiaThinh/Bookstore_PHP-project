@@ -1,7 +1,7 @@
 <?php
 class UserModel extends Model
 {
-	private $arrAcceptSearchField = ['name'];
+	private $arrAcceptSearchField = ['username', 'email', 'fullname'];
 	public function __construct()
 	{
 		parent::__construct();
@@ -124,7 +124,7 @@ class UserModel extends Model
 		$data['password'] = md5($data['password']);
 
 		$this->insert($data);
-		// Session::set('message', 'Thêm phần tử thành công!');
+		Session::set('message', 'Thêm phần tử thành công!');
 	}
 
 	public function updateItem($data, $id)

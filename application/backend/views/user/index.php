@@ -18,12 +18,13 @@ if (!empty($items)) {
         $groupSelectBox = Form::select('', $arrOption, 'form-control custom-select w-auto', $item['group_id']);
 
         $arrInfo        = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
-        $info           = HelperBackend::showUserInfo($arrInfo);
+        $info           = HelperBackend::showUserInfo(@$this->params['search'], $arrInfo);
 
-        $linkEdit    = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
-        $keyButton  = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
-        $editButton = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
-        $trashButton  = HelperBackend::createButton('#', 'danger', '<i class="fas fa-trash "></i>', true, true);
+        $linkEdit       = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
+        $linkDelete     = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
+        $keyButton      = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
+        $editButton     = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
+        $trashButton    = HelperBackend::createButton('javascript:deleteItem(\'' . $linkDelete . '\')', 'danger', '<i class="fas fa-trash "></i>', true, true);
         $xhtml .= '
             <tr>
                 <td><input type="checkbox"></td>
@@ -39,6 +40,8 @@ if (!empty($items)) {
     }
 }
 
+// pagination
+$xhtmlPagination = $this->pagination->showPagination('');
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -104,43 +107,45 @@ if (!empty($items)) {
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="container-fluid">
-                        <div class="row align-items-center justify-content-between mb-2">
-                            <div>
-                                <div class="input-group">
-                                    <select class="form-control custom-select">
-                                        <option>Bulk Action</option>
-                                        <option>Delete</option>
-                                        <option>Active</option>
-                                        <option>Inactive</option>
-                                    </select>
-                                    <span class="input-group-append">
-                                        <button type="button" class="btn btn-info">Apply</button>
-                                    </span>
+                    <form action="" method="POST" name="main-form" id="main-form">
+                        <div class="container-fluid">
+                            <div class="row align-items-center justify-content-between mb-2">
+                                <div>
+                                    <div class="input-group">
+                                        <select class="form-control custom-select">
+                                            <option>Bulk Action</option>
+                                            <option>Delete</option>
+                                            <option>Active</option>
+                                            <option>Inactive</option>
+                                        </select>
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-info">Apply</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="<?= $linkAdd ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
                                 </div>
                             </div>
-                            <div>
-                                <a href="<?= $linkAdd ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
-                            </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table align-middle text-center table-bordered">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox"></th>
-                                    <th>ID</th>
-                                    <th class="text-left">Info</th>
-                                    <th>Group</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
-                                    <th>Modified</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?= $xhtml; ?>
-                                <!-- <tr>
+                        <div class="table-responsive">
+                            <?= $message; ?>
+                            <table class="table align-middle text-center table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>ID</th>
+                                        <th class="text-left">Info</th>
+                                        <th>Group</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                        <th>Modified</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?= $xhtml; ?>
+                                    <!-- <tr>
                                     <td><input type="checkbox"></td>
                                     <td>1</td>
                                     <td class="text-left">
@@ -276,12 +281,14 @@ if (!empty($items)) {
                                         <a href="#" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
                                     </td>
                                 </tr> -->
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?= HelperBackend::input('hidden', 'filter_page', '1'); ?>
+                    </form>
                 </div>
                 <div class="card-footer clearfix">
-                    <ul class="pagination m-0 float-right">
+                    <!-- <ul class="pagination m-0 float-right">
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a></li>
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -289,7 +296,8 @@ if (!empty($items)) {
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
                         <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                    </ul>
+                    </ul> -->
+                    <?= $xhtmlPagination; ?>
                 </div>
             </div>
         </div>
