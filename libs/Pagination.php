@@ -20,7 +20,7 @@ class Pagination
 		$this->totalPage			= ceil($totalItems / $pagination['totalItemsPerPage']);
 	}
 
-	public function showPagination($link)
+	public function showPagination()
 	{
 		$paginationHTML = '';
 		if ($this->totalPage > 1) {

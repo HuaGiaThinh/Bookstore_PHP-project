@@ -43,7 +43,7 @@ if (!empty($items)) {
 }
 
 // pagination
-$xhtmlPagination = $this->pagination->showPagination('');
+$xhtmlPagination = $this->pagination->showPagination();
 ?>
 <div class="container-fluid">
     <div class="row">

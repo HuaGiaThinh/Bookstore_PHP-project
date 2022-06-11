@@ -56,11 +56,10 @@ class UserController extends Controller
 			if (empty($error)) {
 				if ($flagId) {
 					$this->_model->updateItem($data, $id);
-					URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 				} else {
 					$this->_model->addItem($data);
-					URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 				}
+				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 				$this->_view->flagSuccess = true;
 			} else {
 				$this->_view->data = $data;
