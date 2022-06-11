@@ -1,36 +1,38 @@
 <?php
-$message = HelperBackend::showMessage();
+$message    = HelperBackend::showMessage();
 
 $linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
+$addButton  = HelperBackend::createButton($linkAdd, 'info', '<i class="fas fa-plus"></i> Add New');
 $xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params, ($this->params['search'] ?? ''));
 
 $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
-        $id             = $item['id'];
-        $status         = HelperBackend::showItemStatus($id, $item['status'], $this->params['module'], $this->params['controller']);
-        $created        = HelperBackend::showItemHistory($item['created_by'], $item['created']);
-        $modified       = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
+        $id          = $item['id'];
+        $status      = HelperBackend::showItemStatus($id, $item['status'], $this->params['module'], $this->params['controller']);
+        $created     = HelperBackend::showItemHistory($item['created_by'], $item['created']);
+        $modified    = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
 
-        $arrOption      = ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'];
-        $groupSelectBox = Form::select('', $arrOption, 'form-control custom-select w-auto', $item['group_id']);
+        $arrGroup    = ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'];
+        $groupSelect = Form::select('', $arrGroup, 'form-control custom-select w-auto', $item['group_id']);
 
-        $arrInfo        = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
-        $info           = HelperBackend::showUserInfo(@$this->params['search'], $arrInfo);
+        $arrInfo     = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
+        $info        = HelperBackend::showUserInfo(@$this->params['search'], $arrInfo);
 
-        $linkEdit       = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
-        $linkDelete     = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
-        $keyButton      = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
-        $editButton     = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
-        $trashButton    = HelperBackend::createButton('javascript:deleteItem(\'' . $linkDelete . '\')', 'danger', '<i class="fas fa-trash "></i>', true, true);
+        $linkEdit    = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
+        $linkDelete  = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
+        $keyButton   = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
+        $editButton  = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
+        $trashButton = HelperBackend::createButton('javascript:deleteItem(\'' . $linkDelete . '\')', 'danger', '<i class="fas fa-trash "></i>', true, true);
+
         $xhtml .= '
             <tr>
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td class="text-left">' . $info . '</td>
-                <td>' . $groupSelectBox . '</td>
+                <td>' . $groupSelect . '</td>
                 <td>' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
@@ -124,7 +126,7 @@ $xhtmlPagination = $this->pagination->showPagination('');
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="<?= $linkAdd ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
+                                    <?= $addButton; ?>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +135,7 @@ $xhtmlPagination = $this->pagination->showPagination('');
                             <table class="table align-middle text-center table-bordered">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"></th>
+                                        <th><input type="checkbox" name="checkall-toggle"></th>
                                         <th>ID</th>
                                         <th class="text-left">Info</th>
                                         <th>Group</th>
@@ -288,15 +290,6 @@ $xhtmlPagination = $this->pagination->showPagination('');
                     </form>
                 </div>
                 <div class="card-footer clearfix">
-                    <!-- <ul class="pagination m-0 float-right">
-                        <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                    </ul> -->
                     <?= $xhtmlPagination; ?>
                 </div>
             </div>
