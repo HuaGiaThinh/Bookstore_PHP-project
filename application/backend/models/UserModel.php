@@ -46,13 +46,13 @@ class UserModel extends Model
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
-		// PAGINATION
-		// $pagination			= $params['pagination'];
-		// $totalItemsPerPage	= $pagination['totalItemsPerPage'];
-		// if ($totalItemsPerPage > 0) {
-		// 	$position	= ($pagination['currentPage'] - 1) * $totalItemsPerPage;
-		// 	$query[]	= "LIMIT $position, $totalItemsPerPage";
-		// }
+		//PAGINATION
+		$pagination			= $params['pagination'];
+		$totalItemsPerPage	= $pagination['totalItemsPerPage'];
+		if ($totalItemsPerPage > 0) {
+			$position	= ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+			$query[]	= "LIMIT $position, $totalItemsPerPage";
+		}
 
 		$query		= implode(" ", $query);
 		$result		= $this->listRecord($query);
@@ -81,7 +81,7 @@ class UserModel extends Model
 
 	public function singleItem($params)
 	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`";
+		$query[]	= "SELECT `id`, `username`, `email`, `status`, `fullname`, `created`, `created_by`, `modified`, `modified_by`, `group_id`";
 		$query[] 	= "FROM `{$this->table}`";
 		$query[] 	= "WHERE `id` = {$params['id']}";
 		$query		= implode(" ", $query);
@@ -121,14 +121,22 @@ class UserModel extends Model
 	{
 		$data['created'] = date("Y:m:d H:i:s");
 		$data['created_by'] = 'admin';
+		$data['password'] = md5($data['password']);
+
 		$this->insert($data);
-		Session::set('message', 'Thêm phần tử thành công!');
+		// Session::set('message', 'Thêm phần tử thành công!');
 	}
 
 	public function updateItem($data, $id)
 	{
 		$data['modified'] = date("Y:m:d H:i:s");
 		$data['modified_by'] = 'admin';
+
+		if ($data['password'] != null) {
+			$data['password'] = md5($data['password']);
+		} else {
+			unset($data['password']);
+		}
 		$this->update($data, [['id', $id]]);
 		Session::set('message', 'Cập nhật phần tử thành công!');
 	}

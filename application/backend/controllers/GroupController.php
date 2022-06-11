@@ -27,10 +27,11 @@ class GroupController extends Controller
 
 	public function formAction()
 	{
-		$this->_view->_title = "Group Form";
+		$this->_view->_title = "ADD GROUP";
 
 		$flagId = false;
 		if (isset($this->_arrParam['id'])) {
+			$this->_view->_title = "EDIT GROUP";
 			$id = $this->_arrParam['id'];
 			$flagId = true;
 			$this->_view->data = $this->_model->singleItem($this->_arrParam);

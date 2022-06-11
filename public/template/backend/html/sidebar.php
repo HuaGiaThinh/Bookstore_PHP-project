@@ -65,7 +65,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= URL::createLink($this->params['module'], 'group', 'form')?>" class="nav-link">
+                            <a href="<?= URL::createLink($this->params['module'], 'user', 'form')?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add</p>
                             </a>

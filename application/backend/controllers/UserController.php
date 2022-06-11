@@ -14,12 +14,12 @@ class UserController extends Controller
 	{
 		$this->_view->_title = "User List";
 		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
-		// $totalItem = $this->_model->countItem($this->_arrParam);
+		$totalItem = $this->_model->countItem($this->_arrParam);
 
-		// $configPagination = array('totalItemsPerPage'	=> 3, 'pageRange' => 3);
-		// $this->setPagination($configPagination);
+		$configPagination = array('totalItemsPerPage'	=> 3, 'pageRange' => 3);
+		$this->setPagination($configPagination);
 
-		// $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
+		$this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 		$this->_view->items = $this->_model->listItems($this->_arrParam);
 	
 		$this->_view->render($this->_arrParam['controller'] . '/index');
@@ -27,10 +27,13 @@ class UserController extends Controller
 
 	public function formAction()
 	{
-		$this->_view->_title = "User Form";
+		$this->_view->_title = "ADD USER";
 
+		$requirePassword = true;
 		$flagId = false;
 		if (isset($this->_arrParam['id'])) {
+			$this->_view->_title = "EDIT USER";
+			$requirePassword = false;
 			$id = $this->_arrParam['id'];
 			$flagId = true;
 			$this->_view->data = $this->_model->singleItem($this->_arrParam);
@@ -40,9 +43,12 @@ class UserController extends Controller
 			$data       = $this->_arrParam['form'];
 
 			$validate = new Validate($data);
-			$validate->addRule('name', 'string', ['min' => 5, 'max' => 50])
-				->addRule('group_acp', 'select')
-				->addRule('status', 'select');
+			$validate->addRule('username', 'string', ['min' => 5, 'max' => 50])
+				->addRule('password', 'password', ['action' => 'edit'], $requirePassword)
+				->addRule('email', 'email')
+				->addRule('fullname', 'string', ['min' => 10, 'max' => 100])
+				->addRule('status', 'select')
+				->addRule('group_id', 'select');
 
 			$validate->run();
 			$error      = $validate->getError();

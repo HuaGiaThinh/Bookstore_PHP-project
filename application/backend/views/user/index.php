@@ -3,14 +3,12 @@ $message = HelperBackend::showMessage();
 
 $linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
+$xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params, ($this->params['search'] ?? ''));
 
 $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
-        echo '<pre style="color: red;">';
-        print_r($item);
-        echo '</pre>';
         $id             = $item['id'];
         $status         = HelperBackend::showItemStatus($id, $item['status'], $this->params['module'], $this->params['controller']);
         $created        = HelperBackend::showItemHistory($item['created_by'], $item['created']);
@@ -21,6 +19,11 @@ if (!empty($items)) {
 
         $arrInfo        = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
         $info           = HelperBackend::showUserInfo($arrInfo);
+
+        $linkEdit    = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
+        $keyButton  = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
+        $editButton = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
+        $trashButton  = HelperBackend::createButton('#', 'danger', '<i class="fas fa-trash "></i>', true, true);
         $xhtml .= '
             <tr>
                 <td><input type="checkbox"></td>
@@ -30,11 +33,7 @@ if (!empty($items)) {
                 <td>' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
-                <td>
-                    <a href="#" class="btn btn-secondary btn-sm rounded-circle"><i class="fas fa-key"></i></a>
-                    <a href="#" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
-                </td>
+                <td> ' . $keyButton . $editButton . $trashButton . '</td>
             </tr>
         ';
     }
@@ -59,9 +58,7 @@ if (!empty($items)) {
                     <div class="container-fluid">
                         <div class="row justify-content-between align-items-center">
                             <div class="area-filter-status mb-2">
-                                <a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
-                                <a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
-                                <a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a>
+                                <?= $xhtmlFilterStatus; ?>
                             </div>
                             <div class="area-filter-attribute mb-2">
                                 <select class="form-control custom-select">
@@ -73,12 +70,16 @@ if (!empty($items)) {
                                 </select>
                             </div>
                             <div class="area-search mb-2">
-                                <form action="" method="GET">
+                                <form action="" method="GET" name="search-form">
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
+                                        <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
+                                        <?= HelperBackend::input('hidden', 'action', 'index'); ?>
+
+                                        <input type="text" class="form-control" name="search" placeholder="Enter search keyword..." aria-label="Enter search keyword" value="<?= @$this->params['search'] ?>">
                                         <span class="input-group-append">
                                             <button type="submit" class="btn btn-info">Search</button>
-                                            <a href="#" class="btn btn-danger">Clear</a>
+                                            <a href="<?= $linkIndex; ?>" class="btn btn-danger">Clear</a>
                                         </span>
                                     </div>
                                 </form>
@@ -119,7 +120,7 @@ if (!empty($items)) {
                                 </div>
                             </div>
                             <div>
-                                <a href="<?= $linkAdd?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
+                                <a href="<?= $linkAdd ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
                             </div>
                         </div>
                     </div>
