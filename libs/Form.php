@@ -13,15 +13,15 @@ class Form
         return $xhtml;
     }
 
-    public static function select($name, $arrOptions, $nameDefaultSelect, $keySelected = '')
+    public static function select($name, $arrOptions, $class, $keySelected = '')
     {
-        $options = '<option value="default"> - Select '.$nameDefaultSelect.' - </option>';
+        $options = '';
         foreach ($arrOptions as $key => $value) {
             $selected = ((string)$key === $keySelected) ? 'selected' : '';
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 
-        return sprintf('<select class="custom-select" name="%s">%s</select>', $name, $options);
+        return sprintf('<select class="%s" name="%s">%s</select>',$class, $name, $options);
     }
 
     public static function row ($label, $input) {

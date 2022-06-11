@@ -1,11 +1,11 @@
 <?php
-class GroupModel extends Model
+class UserModel extends Model
 {
 	private $arrAcceptSearchField = ['name'];
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setTable(TBL_GROUP);
+		$this->setTable(TBL_USER);
 	}
 
 	private function createSearchQuery($value)
@@ -33,8 +33,8 @@ class GroupModel extends Model
 
 	public function listItems($params)
 	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
-		$query[] 	= "FROM `{$this->table}`";
+		$query[]	= "SELECT `id`, `username`, `email`, `status`, `fullname`, `created`, `created_by`, `modified`, `modified_by`, `group_id`";
+		$query[]	= "FROM `{$this->table}`";
 		$query[]	= "WHERE `id` > 0";
 
 		// Search
@@ -47,12 +47,12 @@ class GroupModel extends Model
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
 		// PAGINATION
-		$pagination			= $params['pagination'];
-		$totalItemsPerPage	= $pagination['totalItemsPerPage'];
-		if ($totalItemsPerPage > 0) {
-			$position	= ($pagination['currentPage'] - 1) * $totalItemsPerPage;
-			$query[]	= "LIMIT $position, $totalItemsPerPage";
-		}
+		// $pagination			= $params['pagination'];
+		// $totalItemsPerPage	= $pagination['totalItemsPerPage'];
+		// if ($totalItemsPerPage > 0) {
+		// 	$position	= ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+		// 	$query[]	= "LIMIT $position, $totalItemsPerPage";
+		// }
 
 		$query		= implode(" ", $query);
 		$result		= $this->listRecord($query);

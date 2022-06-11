@@ -33,6 +33,7 @@ class HelperBackend
 
     public static function showItemHistory($createdBy, $time)
     {
+        $createdBy = $createdBy == 1 ? 'admin' : $createdBy;
         $time = date('d-m-Y', strtotime($time));
 
         return sprintf(
@@ -102,6 +103,16 @@ class HelperBackend
 
             $link = URl::createLink($params['module'], $params['controller'], $params['action'], ['status' => $key, 'search' => $searchKeyword]);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
+        }
+        return $xhtml;
+    }
+
+    // USER =================================================================
+    public static function showUserInfo($arrInfo)
+    {
+        $xhtml = '';
+        foreach ($arrInfo as $key => $value) {
+            $xhtml .= sprintf('<p class="mb-0">%s: %s</p>', ucfirst($key), $value);
         }
         return $xhtml;
     }

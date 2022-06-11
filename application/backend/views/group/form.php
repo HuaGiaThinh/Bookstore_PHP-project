@@ -3,8 +3,8 @@ $linkIndex = URL::createLink($this->params['module'], $this->params['controller'
 
 
 $arrOptions = [
-    'group_acp' => [1 => 'Active', 0 => 'Inactive'],
-    'status'    => ['active' => 'Active', 'inactive' => 'Inactive']
+    'group_acp' => ['default' => '- Select Group ACP -', 1 => 'Active', 0 => 'Inactive'],
+    'status'    => ['default' => '- Select Status -', 'active' => 'Active', 'inactive' => 'Inactive']
 ];
 $elements = [
     [
@@ -13,11 +13,11 @@ $elements = [
     ],
     [
         'label'     => Form::label('Group ACP', 'text-danger'),
-        'element'   => Form::select('form[group_acp]', $arrOptions['group_acp'], 'Group ACP', @$this->data['group_acp'])
+        'element'   => Form::select('form[group_acp]', $arrOptions['group_acp'], 'custom-select', @$this->data['group_acp'])
     ],
     [
         'label'     => Form::label('Status', 'text-danger'),
-        'element'   => Form::select('form[status]', $arrOptions['status'], 'Status', @$this->data['status'])
+        'element'   => Form::select('form[status]', $arrOptions['status'], 'custom-select', @$this->data['status'])
     ]
 
 ];
