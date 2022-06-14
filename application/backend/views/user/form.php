@@ -6,6 +6,7 @@ $arrOptions = [
     'group'     => ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'],
     'status'    => ['default' => '- Select Status -', 'active' => 'Active', 'inactive' => 'Inactive']
 ];
+
 $elements = [
     [
         'label'     => Form::label('Username', 'text-danger'),
@@ -31,8 +32,13 @@ $elements = [
         'label'     => Form::label('Group', 'text-danger'),
         'element'   => Form::select('form[group_id]', $arrOptions['group'], 'custom-select', @$this->data['group_id'])
     ]
-
 ];
+
+if (isset($this->params['id'])) {
+    $elements[0]['element'] = Form::input('text', 'form[username]', @$this->data['username'], 'form-control','readOnly');
+    unset($elements[1]);
+    $elements[2]['element'] = Form::input('text', 'form[email]', @$this->data['email'], 'form-control', 'readOnly');
+}
 ?>
 <div class="container-fluid">
     <div class="row">

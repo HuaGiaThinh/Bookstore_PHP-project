@@ -1,9 +1,9 @@
 <?php
 class Form
 {
-    public static function input($type, $name, $value, $class)
+    public static function input($type, $name, $value, $class, $attr = '')
     {
-        $xhtml = sprintf('<input type="%s" class="%s" name="%s" value="%s">', $type, $class, $name, $value);
+        $xhtml = sprintf('<input type="%s" class="%s" name="%s" value="%s" %s>', $type, $class, $name, $value, $attr);
         return $xhtml;
     }
 
