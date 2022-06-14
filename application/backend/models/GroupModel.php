@@ -26,6 +26,9 @@ class GroupModel extends Model
 		$searchValue = isset($params['search']) ? trim($params['search']) : '';
 		if (!empty($searchValue)) $query[]    = "AND {$this->createSearchQuery($searchValue)}";
 
+		// Filter group acp
+		if (isset($params['group_acp']) && $params['group_acp'] != 'default') $query[] = "AND `group_acp` = '{$params['group_acp']}'";
+
 		$query		= implode(" ", $query);
 		$result = $this->singleRecord($query);
 		return $result;
@@ -45,6 +48,9 @@ class GroupModel extends Model
 
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
+
+		// Filter group acp
+		if (isset($params['group_acp']) && $params['group_acp'] != 'default') $query[] = "AND `group_acp` = '{$params['group_acp']}'";
 
 		// PAGINATION
 		$pagination			= $params['pagination'];

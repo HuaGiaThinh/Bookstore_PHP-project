@@ -95,6 +95,10 @@ $(document).ready(function(){
 	})
 
 	$('#currentPage').parent().addClass('active');
+
+	$('.filter-element').on('change', function () {
+		$('#filter-form').submit();
+	});
 })
 
 

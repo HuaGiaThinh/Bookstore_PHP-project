@@ -94,14 +94,18 @@ class HelperBackend
         return $item;
     }
 
-    public static function showFilterStatus($arrFilter, $params, $searchKeyword = '')
+    public static function showFilterStatus($arrFilter, $params)
     {
         $xhtml = '';
         $keySelected = $params['status'] ?? 'all';
         foreach ($arrFilter as $key => $value) {
             $classActive = $keySelected == $key ? 'info' : 'secondary';
 
-            $link = URl::createLink($params['module'], $params['controller'], $params['action'], ['status' => $key, 'search' => $searchKeyword]);
+            $filterParams = ['status' => $key];
+            if (isset($params['group_acp'])) $filterParams['group_acp'] = $params['group_acp'];
+            if (isset($params['search'])) $filterParams['search'] = $params['search'];
+
+            $link = URl::createLink($params['module'], $params['controller'], $params['action'], $filterParams);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
         }
         return $xhtml;
