@@ -42,10 +42,13 @@ class UserController extends Controller
 		if (isset($this->_arrParam['form'])) {
 			$data       = $this->_arrParam['form'];
 
+			$queryUserName	= "SELECT `id` FROM `".TBL_USER."` WHERE `username` = '".$this->_arrParam['form']['username']."'";
+			$queryEmail		= "SELECT `id` FROM `".TBL_USER."` WHERE `email` = '".$this->_arrParam['form']['email']."'";
+
 			$validate = new Validate($data);
-			$validate->addRule('username', 'string', ['min' => 5, 'max' => 50])
+			$validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
 				->addRule('password', 'password', ['action' => 'edit'], $requirePassword)
-				->addRule('email', 'email')
+				->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
 				->addRule('fullname', 'string', ['min' => 10, 'max' => 100])
 				->addRule('status', 'select')
 				->addRule('group_id', 'select');
@@ -60,7 +63,6 @@ class UserController extends Controller
 					$this->_model->addItem($data);
 				}
 				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
-				$this->_view->flagSuccess = true;
 			} else {
 				$this->_view->data = $data;
 				$this->_view->errors = $validate->showErrors();
