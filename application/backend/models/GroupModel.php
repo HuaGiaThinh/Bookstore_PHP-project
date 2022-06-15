@@ -102,14 +102,14 @@ class GroupModel extends Model
 			$status = ($params['status'] == 'active') ? 'inactive' : 'active';
 
 			$this->update(['status' => $status], [['id', $params['id']]]);
-			Session::set('message', 'Thay đổi trạng thái thành công!');
+			return HelperBackend::showItemStatus($params['id'], $status, $params['module'], $params['controller']);
 		}
 
 		if ($option['task'] == 'change-groupACP') {
 			$groupACP = ($params['group_acp'] == 0) ? 1 : 0;
 
 			$this->update(['group_acp' => $groupACP], [['id', $params['id']]]);
-			Session::set('message', 'Thay đổi group ACP thành công!');
+			return HelperBackend::showItemGroupACP($params['id'], $groupACP, $params['module'], $params['controller']);
 		}
 	}
 

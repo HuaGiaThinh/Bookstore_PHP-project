@@ -67,14 +67,13 @@ class GroupController extends Controller
 	}
 
 	public function changeStatusAction() {
-		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
-		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
-
+		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
+		echo $result;
 	}
 
 	public function changeGroupAcpAction() {
-		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-groupACP']);
-		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-groupACP']);
+		echo $result;
 	}
 
 	public function deleteAction()

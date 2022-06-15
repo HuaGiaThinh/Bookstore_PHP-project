@@ -133,7 +133,7 @@ class Model
 		if (!empty($data)) {
 			foreach ($data as $value) {
 				$newWhere[] = "`$value[0]` = '$value[1]'";
-				$newWhere[] = $value[2];
+				if (isset($value[2])) $newWhere[] = $value[2];
 			}
 			$newWhere = implode(" ", $newWhere);
 		}

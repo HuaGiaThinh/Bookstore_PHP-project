@@ -13,7 +13,7 @@ class Form
         return $xhtml;
     }
 
-    public static function select($name, $arrOptions, $class, $keySelected = '')
+    public static function select($name, $arrOptions, $class, $keySelected = '', $attr = '')
     {
         $options = '';
         foreach ($arrOptions as $key => $value) {
@@ -21,7 +21,7 @@ class Form
             $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
         }
 
-        return sprintf('<select class="form-control %s" name="%s">%s</select>',$class, $name, $options);
+        return sprintf('<select class="form-control %s" name="%s" %s>%s</select>',$class, $name, $attr, $options);
     }
 
     public static function row ($label, $input) {

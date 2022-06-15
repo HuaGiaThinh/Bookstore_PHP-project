@@ -19,12 +19,14 @@ class UserModel extends Model
 
 	public function countItemByStatus($params)
 	{
-
 		$query[] = "SELECT COUNT(`status`) as `all`, SUM(`status` = 'active') as `active`, SUM(`status` = 'inactive') as `inactive` FROM `$this->table` WHERE `id` > 0";
 
 		// search
 		$searchValue = isset($params['search']) ? trim($params['search']) : '';
 		if (!empty($searchValue)) $query[]    = "AND {$this->createSearchQuery($searchValue)}";
+
+		// Filter group id
+		if (isset($params['group_id']) && $params['group_id'] != 'default') $query[] = "AND `group_id` = '{$params['group_id']}'";
 
 		$query		= implode(" ", $query);
 		$result = $this->singleRecord($query);
@@ -45,6 +47,9 @@ class UserModel extends Model
 
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
+
+		// Filter group id
+		if (isset($params['group_id']) && $params['group_id'] != 'default') $query[] = "AND `group_id` = '{$params['group_id']}'";
 
 		//PAGINATION
 		$pagination			= $params['pagination'];
@@ -74,6 +79,9 @@ class UserModel extends Model
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
+		// Filter group id
+		if (isset($params['group_id']) && $params['group_id'] != 'default') $query[] = "AND `group_id` = '{$params['group_id']}'";
+
 		$query		= implode(" ", $query);
 		$result		= $this->singleRecord($query);
 		return $result['total'];
@@ -90,13 +98,31 @@ class UserModel extends Model
 		return $result;
 	}
 
+	public function getGroup($hasDefault = false)
+	{
+		$this->setTable(TBL_GROUP);
+		$query		= "SELECT `id`, `name` FROM `{$this->table}`";
+		$list		= $this->listRecord($query);
+
+		$result = [];
+		if ($hasDefault) $result['default'] = '- Select Group -';
+		foreach ($list as $value) {
+			$result[$value['id']] = $value['name'];
+		}
+		return $result;
+	}
+
 	public function handleStatus($params, $option = null)
 	{
 		if ($option['task'] == 'change-status') {
 			$status = ($params['status'] == 'active') ? 'inactive' : 'active';
 
 			$this->update(['status' => $status], [['id', $params['id']]]);
-			Session::set('message', 'Thay đổi trạng thái thành công!');
+			return HelperBackend::showItemStatus($params['id'], $status, $params['module'], $params['controller']);
+		}
+
+		if ($option['task'] == 'change-group') {
+			$this->update(['group_id' => $params['group_id']], [['id', $params['id']]]);
 		}
 
 		if ($option['task'] == 'change-groupACP') {

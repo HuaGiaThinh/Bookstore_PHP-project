@@ -21,6 +21,7 @@ class UserController extends Controller
 
 		$this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 		$this->_view->items = $this->_model->listItems($this->_arrParam);
+		$this->_view->groupSelect = $this->_model->getGroup(true);
 
 		$this->_view->render($this->_arrParam['controller'] . '/index');
 	}
@@ -50,12 +51,12 @@ class UserController extends Controller
 
 			$validate = new Validate($data);
 			$validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
-				->addRule('password', 'password', null, false)
 				->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
 				->addRule('fullname', 'string', ['min' => 10, 'max' => 100])
 				->addRule('status', 'select')
 				->addRule('group_id', 'select');
 
+			isset($this->_arrParam['id']) ? '' : $validate->addRule('password', 'password', ['action' => 'add']);
 			$validate->run();
 			$error      = $validate->getError();
 
@@ -77,8 +78,13 @@ class UserController extends Controller
 
 	public function changeStatusAction()
 	{
-		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
-		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
+		echo $result;
+	}
+
+	public function changeGroupAction()
+	{
+		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-group']);
 	}
 
 	public function changeGroupAcpAction()

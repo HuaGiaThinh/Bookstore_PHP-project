@@ -15,8 +15,11 @@ if (!empty($items)) {
         $created     = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified    = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
 
-        $arrGroup    = ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'];
-        $groupSelect = Form::select('', $arrGroup, 'custom-select w-auto', $item['group_id']);
+        $groupList = $this->groupSelect;
+        unset($groupList['default']);
+        $linkAjaxGroup = URL::createLink($this->params['module'], $this->params['controller'], 'changeGroup', ['id' => $id, 'group_id' => 'value_new']);
+        $attrGroup = 'data-url="' . $linkAjaxGroup . '"';
+        $groupSelect = Form::select('', $groupList, 'custom-select w-auto slb-group', $item['group_id'], $attrGroup);
 
         $arrInfo     = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
         $info        = HelperBackend::showUserInfo(@$this->params['search'], $arrInfo);
@@ -66,13 +69,12 @@ $xhtmlPagination = $this->pagination->showPagination();
                                 <?= $xhtmlFilterStatus; ?>
                             </div>
                             <div class="area-filter-attribute mb-2">
-                                <select class="form-control custom-select">
-                                    <option> - Select Group - </option>
-                                    <option>Admin</option>
-                                    <option>Manager</option>
-                                    <option>Member</option>
-                                    <option>Register</option>
-                                </select>
+                                <form action="" method="GET" name="filter-form" id="filter-form">
+                                    <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
+                                    <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
+                                    <?= HelperBackend::input('hidden', 'action', 'index'); ?>
+                                    <?= Form::select('group_id', $this->groupSelect, 'custom-select filter-element', @$this->params['group_id']) ?>
+                                </form>
                             </div>
                             <div class="area-search mb-2">
                                 <form action="" method="GET" name="search-form">

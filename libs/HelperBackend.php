@@ -13,7 +13,7 @@ class HelperBackend
 
         $link = URL::createLink($module, $controller, 'changeStatus', ['id' => $id, 'status' => $status]);
 
-        return sprintf('<a id="status-%s" href="%s" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+        return sprintf('<a id="status-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-status"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
     public static function showItemGroupACP($id, $groupACP, $module = 'backend', $controller = 'group')
@@ -28,7 +28,7 @@ class HelperBackend
 
         $link = URL::createLink($module, $controller, 'changeGroupAcp', ['id' => $id, 'group_acp' => $groupACP]);
 
-        return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+        return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-groupAcp"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
     public static function showItemHistory($createdBy, $time)
@@ -104,6 +104,7 @@ class HelperBackend
             $paramsLink = ['status' => $key];
             if (isset($params['search'])) $paramsLink['search'] = $params['search'];
             if (isset($params['group_acp'])) $paramsLink['group_acp'] = $params['group_acp'];
+            if (isset($params['group_id'])) $paramsLink['group_id'] = $params['group_id'];
 
             $link = URl::createLink($params['module'], $params['controller'], $params['action'], $paramsLink);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);

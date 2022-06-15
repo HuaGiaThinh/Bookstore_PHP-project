@@ -1,48 +1,3 @@
-// function changeStatus(url){
-// 	$.get(url, function(data){
-// 		var element		= 'a#status-' + data[0];
-// 		var classRemoveActive = 'btn-success';
-// 		var classRemoveIcon = 'fa-check';
-
-// 		var classAddActive 	= 'btn-danger';
-// 		var classAddIcon 	= 'fa-minus';
-
-// 		if(data[1] == 'active'){
-// 			classRemoveActive = 'btn-danger';
-// 			classRemoveIcon = 'fa-minus';
-// 			classAddActive 	= 'btn-success';
-// 			classAddIcon 	= 'fa-check';
-// 		}
-
-// 		$(element).attr('href', "javascript:changeStatus('"+data[2]+"')")
-// 		$(element).removeClass(classRemoveActive).addClass(classAddActive)
-// 		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
-// 	}, 'json');
-// }
-
-// function changeGroupACP(url){
-// 	$.get(url, function(data){
-// 		var element		= 'a#groupACP-' + data[0];
-// 		var classRemoveActive = 'btn-success';
-// 		var classRemoveIcon = 'fa-check';
-
-// 		var classAddActive 	= 'btn-danger';
-// 		var classAddIcon 	= 'fa-minus';
-
-// 		if(data[1] == 1){
-// 			classRemoveActive = 'btn-danger';
-// 			classRemoveIcon = 'fa-minus';
-// 			classAddActive 	= 'btn-success';
-// 			classAddIcon 	= 'fa-check';
-// 		}
-
-// 		$(element).attr('href', "javascript:changeGroupACP('"+data[2]+"')")
-// 		$(element).removeClass(classRemoveActive).addClass(classAddActive)
-// 		$(element + ' i').removeClass(classRemoveIcon).addClass(classAddIcon)
-// 		console.log(data);
-// 	}, 'json');
-// }
-
 function submitForm(url){
 	$('#main-form').attr('action', url);
 	$('#main-form').submit();
@@ -98,6 +53,51 @@ $(document).ready(function(){
 
 	$('.filter-element').on('change', function () {
 		$('#filter-form').submit();
+	});
+
+	$('.slb-group').on('change', function () {
+		let value = $(this).val();
+		let url = $(this).data('url');
+
+		url = url.replace('value_new', value);
+
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: "data",
+			success: function (response) {
+			}
+		});
+	}); 
+
+	$(document).on('click', '.btn-ajax-status', function (e) {
+		e.preventDefault();
+
+		let url = $(this).attr('href');
+		let parent = $(this).parent();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: "data",
+			success: function (response) {
+				parent.html(response);
+			}
+		});
+	});
+
+	$(document).on('click', '.btn-ajax-groupAcp', function (e) {
+		e.preventDefault();
+
+		let url = $(this).attr('href');
+		let parent = $(this).parent();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: "data",
+			success: function (response) {
+				parent.html(response);
+			}
+		});
 	});
 })
 
