@@ -101,11 +101,11 @@ class HelperBackend
         foreach ($arrFilter as $key => $value) {
             $classActive = $keySelected == $key ? 'info' : 'secondary';
 
-            $filterParams = ['status' => $key];
-            if (isset($params['group_acp'])) $filterParams['group_acp'] = $params['group_acp'];
-            if (isset($params['search'])) $filterParams['search'] = $params['search'];
+            $paramsLink = ['status' => $key];
+            if (isset($params['search'])) $paramsLink['search'] = $params['search'];
+            if (isset($params['group_acp'])) $paramsLink['group_acp'] = $params['group_acp'];
 
-            $link = URl::createLink($params['module'], $params['controller'], $params['action'], $filterParams);
+            $link = URl::createLink($params['module'], $params['controller'], $params['action'], $paramsLink);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
         }
         return $xhtml;

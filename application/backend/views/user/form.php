@@ -8,36 +8,36 @@ $arrOptions = [
 ];
 
 $elements = [
-    [
+    'username' =>   [
         'label'     => Form::label('Username', 'text-danger'),
         'element'   => Form::input('text', 'form[username]', @$this->data['username'], 'form-control'),
     ],
-    [
+    'password' =>   [
         'label'     => Form::label('Password', 'text-danger'),
         'element'   => Form::input('password', 'form[password]', @$this->data['password'], 'form-control'),
     ],
-    [
+    'email' => [
         'label'     => Form::label('Email', 'text-danger'),
         'element'   => Form::input('text', 'form[email]', @$this->data['email'], 'form-control'),
     ],
-    [
+    'fullname' => [
         'label'     => Form::label('Fullname', 'text-danger'),
         'element'   => Form::input('text', 'form[fullname]', @$this->data['fullname'], 'form-control'),
     ],
-    [
+    'status' => [
         'label'     => Form::label('Status', 'text-danger'),
         'element'   => Form::select('form[status]', $arrOptions['status'], 'custom-select', @$this->data['status'])
     ],
-    [
+    'group' => [
         'label'     => Form::label('Group', 'text-danger'),
         'element'   => Form::select('form[group_id]', $arrOptions['group'], 'custom-select', @$this->data['group_id'])
     ]
 ];
 
 if (isset($this->params['id'])) {
-    $elements[0]['element'] = Form::input('text', 'form[username]', @$this->data['username'], 'form-control','readOnly');
-    unset($elements[1]);
-    $elements[2]['element'] = Form::input('text', 'form[email]', @$this->data['email'], 'form-control', 'readOnly');
+    $elements['username']['element'] = Form::input('text', 'form[username]', @$this->data['username'], 'form-control', 'readOnly');
+    unset($elements['password']);
+    $elements['email']['element'] = Form::input('text', 'form[email]', @$this->data['email'], 'form-control', 'readOnly');
 }
 ?>
 <div class="container-fluid">
@@ -47,11 +47,11 @@ if (isset($this->params['id'])) {
             <form action="" method="POST" name="main-form">
                 <div class="card card-outline card-info">
                     <div class="card-body">
-                        <?= Form::showElements($elements);?>
+                        <?= Form::showElements($elements); ?>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a href="<?= $linkIndex;?>" class="btn btn-danger">Cancel</a>
+                        <a href="<?= $linkIndex; ?>" class="btn btn-danger">Cancel</a>
                     </div>
                 </div>
             </form>

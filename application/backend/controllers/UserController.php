@@ -21,7 +21,7 @@ class UserController extends Controller
 
 		$this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 		$this->_view->items = $this->_model->listItems($this->_arrParam);
-	
+
 		$this->_view->render($this->_arrParam['controller'] . '/index');
 	}
 
@@ -29,11 +29,9 @@ class UserController extends Controller
 	{
 		$this->_view->_title = "ADD USER";
 
-		$requirePassword = true;
 		$flagId = false;
 		if (isset($this->_arrParam['id'])) {
 			$this->_view->_title = "EDIT USER";
-			$requirePassword = false;
 			$id = $this->_arrParam['id'];
 			$flagId = true;
 			$this->_view->data = $this->_model->singleItem($this->_arrParam);
@@ -42,12 +40,17 @@ class UserController extends Controller
 		if (isset($this->_arrParam['form'])) {
 			$data       = $this->_arrParam['form'];
 
-			$queryUserName	= "SELECT `id` FROM `".TBL_USER."` WHERE `username` = '".$this->_arrParam['form']['username']."'";
-			$queryEmail		= "SELECT `id` FROM `".TBL_USER."` WHERE `email` = '".$this->_arrParam['form']['email']."'";
+			$queryUserName	= "SELECT `id` FROM `" . TBL_USER . "` WHERE `username` = '" . $this->_arrParam['form']['username'] . "'";
+			$queryEmail		= "SELECT `id` FROM `" . TBL_USER . "` WHERE `email` = '" . $this->_arrParam['form']['email'] . "'";
+
+			if (isset($this->_arrParam['id'])) {
+				$queryUserName 	.= " AND `id` <> '" . $this->_arrParam['id'] . "'";
+				$queryEmail 	.= " AND `id` <> '" . $this->_arrParam['id'] . "'";
+			}
 
 			$validate = new Validate($data);
 			$validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
-				->addRule('password', 'password', ['action' => 'edit'], $requirePassword)
+				->addRule('password', 'password', null, false)
 				->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
 				->addRule('fullname', 'string', ['min' => 10, 'max' => 100])
 				->addRule('status', 'select')
@@ -72,13 +75,14 @@ class UserController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
-	public function changeStatusAction() {
+	public function changeStatusAction()
+	{
 		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
 		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
-
 	}
 
-	public function changeGroupAcpAction() {
+	public function changeGroupAcpAction()
+	{
 		$this->_model->handleStatus($this->_arrParam, ['task' => 'change-groupACP']);
 		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
 	}
