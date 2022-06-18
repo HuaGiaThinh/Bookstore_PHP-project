@@ -16,7 +16,7 @@ class UserController extends Controller
 		$this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
 		$totalItem = $this->_model->countItem($this->_arrParam);
 
-		$configPagination = array('totalItemsPerPage'	=> 4, 'pageRange' => 3);
+		$configPagination = array('totalItemsPerPage'	=> 3, 'pageRange' => 3);
 		$this->setPagination($configPagination);
 
 		$this->_view->pagination = new Pagination($totalItem, $this->_pagination);

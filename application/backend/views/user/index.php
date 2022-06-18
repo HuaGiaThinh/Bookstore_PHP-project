@@ -28,15 +28,15 @@ if (!empty($items)) {
         $linkDelete  = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
         $keyButton   = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
         $editButton  = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
-        $trashButton = HelperBackend::createButton('javascript:deleteItem(\'' . $linkDelete . '\')', 'danger', '<i class="fas fa-trash "></i>', true, true);
+        $trashButton = HelperBackend::createButton($linkDelete, 'danger', '<i class="fas fa-trash "></i>', true, true, 'btn-delete');
 
         $xhtml .= '
             <tr>
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td class="text-left">' . $info . '</td>
-                <td>' . $groupSelect . '</td>
-                <td>' . $status . '</td>
+                <td class="position-relative">' . $groupSelect . '</td>
+                <td class="position-relative">' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
                 <td> ' . $keyButton . $editButton . $trashButton . '</td>

@@ -23,13 +23,13 @@ if (!empty($items)) {
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td>' . $name . '</td>
-                <td>' . $groupACP . '</td>
-                <td>' . $status . '</td>
+                <td class="position-relative">' . $groupACP . '</td>
+                <td class="position-relative">' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
                 <td>
                     <a href="' . $linkEdit . '" class="btn btn-info btn-sm rounded-circle"><i class="fas fa-pen"></i></a>
-                    <a href="javascript:deleteItem(\'' . $linkDelete . '\')" class="btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
+                    <a href="' . $linkDelete . '" class="btn-delete btn btn-danger btn-sm rounded-circle"><i class="fas fa-trash "></i></a>
                 </td>
             </tr>
         ';
@@ -118,7 +118,7 @@ $xhtmlPagination = $this->pagination->showPagination('');
                                         <option value="delete">Delete</option>
                                     </select>
                                     <span class="input-group-append">
-                                        <button type="submit" class="btn btn-info">Apply</button>
+                                        <button type="button" id="btn-apply-bulk-action" class="btn btn-info">Apply</button>
                                     </span>
                                 </div>
                             </div>

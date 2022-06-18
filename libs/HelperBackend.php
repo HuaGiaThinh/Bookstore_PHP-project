@@ -112,12 +112,12 @@ class HelperBackend
         return $xhtml;
     }
 
-    public static function createButton($link, $color, $content, $isCircle = false, $isSmall = false)
+    public static function createButton($link, $color, $content, $isCircle = false, $isSmall = false, $class = '')
     {
         $isCircle   = $isCircle == true ? 'rounded-circle' : '';
         $isSmall    = $isSmall == true ? 'btn-sm' : '';
 
-        return sprintf('<a href="%s" class="btn btn-%s %s %s">%s</a> ', $link, $color, $isCircle, $isSmall, $content);
+        return sprintf('<a href="%s" class="btn btn-%s %s %s %s">%s</a> ', $link, $color, $class, $isCircle, $isSmall, $content);
     }
 
     // USER =================================================================
