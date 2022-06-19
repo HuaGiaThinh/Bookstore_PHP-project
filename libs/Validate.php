@@ -61,7 +61,7 @@ class Validate
 	{
 		foreach ($this->rules as $element => $value) {
 			if ($value['required'] == true && trim($this->source[$element]) == null) {
-				$this->setError($element, 'is not empty');
+				$this->setError($element, 'dữ liệu không được rỗng!');
 			} else {
 				switch ($value['type']) {
 					case 'int':
@@ -106,6 +106,10 @@ class Validate
 						break;
 					case 'email-notExistRecord':
 						$this->validateEmail($element);
+						$this->validateNotExistRecord($element, $value['options']);
+						break;
+					case 'password-notExistRecord':
+						$this->validatePassword($element, $value['options']);
 						$this->validateNotExistRecord($element, $value['options']);
 						break;
 					case 'file':
@@ -219,13 +223,24 @@ class Validate
 	}
 
 	// Validate Password
+	// private function validatePassword($element, $options)
+	// {
+	// 	if ($options['action'] == 'add' || ($options['action'] == 'edit' && $this->source[$element])) {
+	// 		$pattern = '#^(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,8}$#';	// Php4567!
+	// 		if (!preg_match($pattern, $this->source[$element])) {
+	// 			$this->setError($element, 'is an invalid password');
+	// 		};
+	// 	}
+	// }
+
+	// Validate Password
 	private function validatePassword($element, $options)
 	{
 		if ($options['action'] == 'add' || ($options['action'] == 'edit' && $this->source[$element])) {
-			$pattern = '#^(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,8}$#';	// Php4567!
-			if (!preg_match($pattern, $this->source[$element])) {
-				$this->setError($element, 'is an invalid password');
-			};
+			$length = strlen($this->source[$element]);
+			if ($length < 6 || $length > 50) {
+				$this->setError($element, 'password không hợp lệ!');
+			}
 		}
 	}
 

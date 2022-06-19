@@ -23,6 +23,16 @@ function deleteItem(url) {
     }
 }
 
+function generateString(length = 12) {
+    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
 
 $(document).ready(function () {
     $('input[name=checkall-toggle]').change(function () {
@@ -132,4 +142,14 @@ $(document).ready(function () {
             }
         })
     });
+
+    // User changePassword
+    $('.input-password').val(generateString());
+
+    $('.btn-generate').click(function (e) { 
+        e.preventDefault();
+    
+        $('.input-password').val(generateString());
+    });
 })
+

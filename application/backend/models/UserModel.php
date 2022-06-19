@@ -155,8 +155,8 @@ class UserModel extends Model
 
 	public function updateItem($data, $id)
 	{
-		$data['modified'] = date("Y:m:d H:i:s");
-		$data['modified_by'] = 'admin';
+		$data['modified'] 		= date("Y:m:d H:i:s");
+		$data['modified_by'] 	= 'admin';
 
 		if ($data['password'] != null) {
 			$data['password'] = md5($data['password']);

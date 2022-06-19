@@ -79,6 +79,26 @@ class UserController extends Controller
 	public function changePasswordAction()
 	{
 		$this->_view->_title = "Change Password";
+
+		$this->_view->data = $this->_model->singleItem($this->_arrParam);
+
+		if (isset($this->_arrParam['form'])) {
+			$data       = $this->_arrParam['form'];
+
+			$validate = new Validate($data);
+			$validate->addRule('password', 'password', ['action' => 'edit']);
+
+			$validate->run();
+			$error      = $validate->getError();
+
+			if (empty($error)) {
+				$this->_model->updateItem($data, $data['id']);
+				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+			} else {
+				$this->_view->data = $data;
+				$this->_view->errors = $validate->showErrors();
+			}
+		}
 		$this->_view->render($this->_arrParam['controller'] . '/changePassword');
 	}
 
