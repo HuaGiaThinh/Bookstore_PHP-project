@@ -8,15 +8,15 @@ $arrOptions = [
 ];
 $elements = [
     [
-        'label'     => Form::label('Name', 'text-danger'),
+        'label'     => Form::label('Name'),
         'element'   => Form::input('text', 'form[name]', @$this->data['name'], 'form-control'),
     ],
     [
-        'label'     => Form::label('Group ACP', 'text-danger'),
+        'label'     => Form::label('Group ACP'),
         'element'   => Form::select('form[group_acp]', $arrOptions['group_acp'], 'custom-select', @$this->data['group_acp'])
     ],
     [
-        'label'     => Form::label('Status', 'text-danger'),
+        'label'     => Form::label('Status'),
         'element'   => Form::select('form[status]', $arrOptions['status'], 'custom-select', @$this->data['status'])
     ]
 

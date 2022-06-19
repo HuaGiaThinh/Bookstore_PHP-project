@@ -26,7 +26,8 @@ if (!empty($items)) {
 
         $linkEdit    = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
         $linkDelete  = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
-        $keyButton   = HelperBackend::createButton('#', 'secondary', '<i class="fas fa-key"></i>', true, true);
+        $linkPassword = URL::createLink($this->params['module'], $this->params['controller'], 'changePassword', ['id' => $id]);
+        $keyButton   = HelperBackend::createButton($linkPassword, 'secondary', '<i class="fas fa-key"></i>', true, true);
         $editButton  = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
         $trashButton = HelperBackend::createButton($linkDelete, 'danger', '<i class="fas fa-trash "></i>', true, true, 'btn-delete');
 

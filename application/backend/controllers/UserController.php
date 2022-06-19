@@ -76,6 +76,12 @@ class UserController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
+	public function changePasswordAction()
+	{
+		$this->_view->_title = "Change Password";
+		$this->_view->render($this->_arrParam['controller'] . '/changePassword');
+	}
+
 	public function changeStatusAction()
 	{
 		$result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);

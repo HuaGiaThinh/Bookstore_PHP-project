@@ -7,9 +7,10 @@ class Form
         return $xhtml;
     }
 
-    public static function label($text, $class)
+    public static function label($text, $required = true)
     {
-        $xhtml = sprintf('<label>%s <span class="%s">*</span></label>', $text, $class);
+        if ($required) $xthmlRequired = '<span class="text-danger">*</span>';
+        $xhtml = sprintf('<label>%s %s</label>', $text, ($xthmlRequired ?? ''));
         return $xhtml;
     }
 

@@ -9,27 +9,27 @@ $arrOptions = [
 
 $elements = [
     'username' =>   [
-        'label'     => Form::label('Username', 'text-danger'),
+        'label'     => Form::label('Username'),
         'element'   => Form::input('text', 'form[username]', @$this->data['username'], 'form-control'),
     ],
     'password' =>   [
-        'label'     => Form::label('Password', 'text-danger'),
+        'label'     => Form::label('Password'),
         'element'   => Form::input('password', 'form[password]', @$this->data['password'], 'form-control'),
     ],
     'email' => [
-        'label'     => Form::label('Email', 'text-danger'),
+        'label'     => Form::label('Email'),
         'element'   => Form::input('text', 'form[email]', @$this->data['email'], 'form-control'),
     ],
     'fullname' => [
-        'label'     => Form::label('Fullname', 'text-danger'),
+        'label'     => Form::label('Fullname', false),
         'element'   => Form::input('text', 'form[fullname]', @$this->data['fullname'], 'form-control'),
     ],
     'status' => [
-        'label'     => Form::label('Status', 'text-danger'),
+        'label'     => Form::label('Status'),
         'element'   => Form::select('form[status]', $arrOptions['status'], 'custom-select', @$this->data['status'])
     ],
     'group' => [
-        'label'     => Form::label('Group', 'text-danger'),
+        'label'     => Form::label('Group'),
         'element'   => Form::select('form[group_id]', $arrOptions['group'], 'custom-select', @$this->data['group_id'])
     ]
 ];
