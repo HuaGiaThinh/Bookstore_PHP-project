@@ -1,3 +1,6 @@
+<?php
+$linkFE = URL::createLink('frontend', 'index', 'index');
+?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -10,7 +13,7 @@
     <ul class="navbar-nav ml-auto">
 
         <li class="nav-item">
-            <a class="nav-link" href="#" role="button">
+            <a class="nav-link" href="<?= $linkFE;?>" role="button">
                 <i class="fas fa-eye"></i> View Site
             </a>
         </li>
