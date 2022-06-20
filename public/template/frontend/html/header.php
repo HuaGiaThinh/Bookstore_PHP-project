@@ -11,7 +11,7 @@ $linkLogin      = URL::createLink($this->params['module'], $this->params['contro
                 <div class="main-menu">
                     <div class="menu-left">
                         <div class="brand-logo">
-                            <a href="index.html">
+                            <a href="<?= $linkHome;?>">
                                 <h2 class="mb-0" style="color: #5fcbc4">BookStore</h2>
                             </a>
                         </div>
