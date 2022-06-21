@@ -1,6 +1,7 @@
 <?php
-$data = $this->data;
+if (isset($this->data)) $data = $this->data;
 
+$linkLogin = URL::createLink($this->params['module'], $this->params['controller'], 'login');
 ?>
 <div class="breadcrumb-section">
     <div class="container">
@@ -41,6 +42,7 @@ $data = $this->data;
                         </div>
                         <!-- <input type="hidden" id="form[token]" name="form[token]" value="1599208957"> -->
                         <button type="submit" id="submit" name="submit" value="register" class="btn btn-solid">Tạo tài khoản</button>
+                        <p style="margin-top: 20px; font-size: 16px">Bạn đã có tài khoản? Đăng nhập tại <a href="<?= $linkLogin;?>">đây</a></p>
                     </form>
                 </div>
             </div>

@@ -5,7 +5,7 @@ switch ($this->params['type']) {
         $message    = 'Tài khoản của bạn đã được tạo thành công. Xin vui lòng đợi kích hoạt từ người quản trị!';
         break;
     case 'not-permission':
-        $message    = 'Bạn không có quyền truy cập vào chức năng này!';
+        $message    = 'Bạn không đủ quyền để truy cập vào chức năng này!';
         break;
     case 'not-url':
         $message    = 'Đường dẫn không hợp lệ!';

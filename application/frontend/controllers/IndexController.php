@@ -44,7 +44,46 @@ class IndexController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/register');
 	}
 
-	public function noticeAction(){
+	public function loginAction()
+	{
+		$this->_view->_title = "<title>Login</title>";
+		$userInfo	= Session::get('user');
+		if (@$userInfo['login'] == 1 && (@$userInfo['time'] + TIME_LOGIN >= time())) {
+			URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+		}
+
+
+		if (isset($this->_arrParam['form'])) {
+			$data       = $this->_arrParam['form'];
+			$validate	= new Validate($data);
+
+			$email	= $data['email'];
+			$password	= md5($data['password']);
+
+			$query		= "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
+			$validate->addRule('email', 'existRecord', array('database' => $this->_model, 'query' => $query));
+			$validate->run();
+
+			if ($validate->isValid() == true) {
+				$infoUser		= $this->_model->infoItem($this->_arrParam);
+				$arraySession	= [
+					'login'		=> true,
+					'info'		=> $infoUser,
+					'time'		=> time(),
+					'group_acp'	=> $infoUser['group_acp']
+				];
+				Session::set('user', $arraySession);
+				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+			} else {
+				$this->_view->errors	= $validate->showErrorLogin();
+			}
+		}
+
+		$this->_view->render($this->_arrParam['controller'] . '/login');
+	}
+
+	public function noticeAction()
+	{
 		$this->_templateObj->setFolderTemplate('frontend/');
 		$this->_templateObj->setFileTemplate('notice.php');
 		$this->_templateObj->setFileConfig('template.ini');
