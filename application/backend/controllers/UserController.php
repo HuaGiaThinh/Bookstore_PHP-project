@@ -52,7 +52,6 @@ class UserController extends Controller
 			$validate = new Validate($data);
 			$validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
 				->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
-				->addRule('fullname', 'string', ['min' => 10, 'max' => 100])
 				->addRule('status', 'select')
 				->addRule('group_id', 'select');
 

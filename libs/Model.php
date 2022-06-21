@@ -231,4 +231,17 @@ class Model
 		if (mysqli_num_rows($this->resultQuery) > 0) return true;
 		return false;
 	}
+
+	// SINGLE RECORD
+	public function fetchRow($query){
+		$result = [];
+		if(!empty($query)){
+			$resultQuery = $this->query($query);
+			if(mysqli_num_rows($resultQuery) > 0){
+				$result = mysqli_fetch_assoc($resultQuery);
+			}
+			mysqli_free_result($resultQuery);
+		}
+		return $result;
+	}
 }

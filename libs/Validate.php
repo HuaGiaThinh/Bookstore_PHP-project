@@ -178,6 +178,14 @@ class Validate
 		return $xhtml;
 	}
 
+	public function showErrorLogin()
+	{
+		$xhtml = '<div class="alert alert-danger error">';
+		$xhtml .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+		$xhtml .= 'Thông tin đăng nhập không chính xác!</div>';
+		return $xhtml;
+	}
+
 	public function isValid()
 	{
 		if (count($this->errors) > 0) return false;

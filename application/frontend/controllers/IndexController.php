@@ -49,6 +49,8 @@ class IndexController extends Controller
 		$this->_templateObj->setFileTemplate('notice.php');
 		$this->_templateObj->setFileConfig('template.ini');
 		$this->_templateObj->load();
+
+		$this->_view->_title = "<title>Notice</title>";
 		$this->_view->render('index/notice');
 	}
 }
