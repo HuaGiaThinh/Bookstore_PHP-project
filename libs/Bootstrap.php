@@ -13,6 +13,8 @@ class Bootstrap{
 		if(file_exists($filePath)){
 			$this->loadExistingController($filePath, $controllerName);
 			$this->callMethod();
+		} else {
+			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
 		}
 	}
 	
@@ -22,7 +24,8 @@ class Bootstrap{
 		if(method_exists($this->_controllerObject, $actionName)==true){
 			$this->_controllerObject->$actionName();
 		}else{
-			$this->_error();
+			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
+			// $this->_error();
 		}
 	}
 	

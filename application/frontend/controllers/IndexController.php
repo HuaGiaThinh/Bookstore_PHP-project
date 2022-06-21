@@ -35,7 +35,7 @@ class IndexController extends Controller
 
 			if (empty($error)) {
 				$this->_model->addItem($data);
-				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'notice');
+				URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'notice', ['type' => 'register-success']);
 			} else {
 				$this->_view->data = $data;
 				$this->_view->errors = $validate->showErrors();
@@ -44,8 +44,11 @@ class IndexController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/register');
 	}
 
-	public function addAction()
-	{
-		$this->_view->render($this->_arrParam['controller'] . '/index');
+	public function noticeAction(){
+		$this->_templateObj->setFolderTemplate('frontend/');
+		$this->_templateObj->setFileTemplate('notice.php');
+		$this->_templateObj->setFileConfig('template.ini');
+		$this->_templateObj->load();
+		$this->_view->render('index/notice');
 	}
 }

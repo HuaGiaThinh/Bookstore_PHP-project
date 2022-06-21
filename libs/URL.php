@@ -1,8 +1,9 @@
 <?php
 class URL
 {
-    public static function redirect($module = 'default', $controller = 'index', $action = 'index'){
-		header("location: index.php?module=$module&controller=$controller&action=$action");
+	public static function redirect($module = 'default', $controller = 'index', $action = 'index', $options = null){
+		$link	= self::createLink($module, $controller, $action, $options);
+		header('location: ' . $link);
 		exit();
 	}
 
