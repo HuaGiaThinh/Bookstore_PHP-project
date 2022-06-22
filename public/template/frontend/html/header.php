@@ -2,6 +2,7 @@
 $linkHome       = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
+$linkLogout     = URL::createLink($this->params['module'], $this->params['controller'], 'logout');
 ?>
 <header class="my-header sticky">
     <div class="mobile-fix-option"></div>
@@ -46,6 +47,7 @@ $linkLogin      = URL::createLink($this->params['module'], $this->params['contro
                                     <ul class="onhover-show-div">
                                         <li><a href="<?= $linkLogin;?>">Đăng nhập</a></li>
                                         <li><a href="<?= $linkRegister;?>">Đăng ký</a></li>
+                                        <li><a href="<?= $linkLogout;?>">Đăng xuất</a></li>
                                     </ul>
                                 </li>
                             </ul>

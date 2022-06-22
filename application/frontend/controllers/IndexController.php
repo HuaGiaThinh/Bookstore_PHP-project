@@ -92,4 +92,9 @@ class IndexController extends Controller
 		$this->_view->_title = "<title>Notice</title>";
 		$this->_view->render('index/notice');
 	}
+
+	public function logoutAction(){
+		Session::delete('user');
+		URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+	}
 }

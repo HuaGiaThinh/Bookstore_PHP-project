@@ -1,12 +1,6 @@
 <?php
-$linkIndex = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
+$linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
 $linkCancel = URL::createLink($this->params['module'], $this->params['controller'], 'index');
-
-
-$arrOptions = [
-    'group'     => ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'],
-    'status'    => ['default' => '- Select Status -', 'active' => 'Active', 'inactive' => 'Inactive']
-];
 
 $elements = [
     'id' =>   [

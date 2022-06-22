@@ -13,4 +13,8 @@ switch ($this->params['type']) {
 }
 
 ?>
-<div class="container title1 section-t-space"><h3><?= $message; ?><br>Click vào <a href="<?= $linkHome;?>">đây</a> để trở về trang chủ</h3></div>
+<div class="container title1 section-t-space">
+    <h3><?= $message; ?>
+        <br>Click vào <a href="<?= $linkHome; ?>">đây</a> để trở về trang chủ
+    </h3>
+</div>

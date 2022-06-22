@@ -1,7 +1,28 @@
 <?php
 if (isset($this->data)) $data = $this->data;
-
 $linkLogin = URL::createLink($this->params['module'], $this->params['controller'], 'login');
+
+$elements = [
+    [
+        'label'     => Form::label('Tên tài khoản'),
+        'element'   => Form::input('text', 'form[username]', @$data['username'], 'form-control')
+    ],
+    [
+        'label'     => Form::label('Họ và tên', false),
+        'element'   => Form::input('text', 'form[fullname]', @$data['fullname'], 'form-control')
+    ],
+    [
+        'label'     => Form::label('Email'),
+        'element'   => Form::input('email', 'form[email]', @$data['email'], 'form-control')
+    ],
+    [
+        'label'     => Form::label('Mật khẩu'),
+        'element'   => Form::input('password', 'form[password]', '', 'form-control')
+    ]
+];
+
+$xhtml = Form::showElements($elements, 'col-md-6');
+$btnSubmit = HelperFrontend::createButton('submit', 'submit', 'register', 'submit', 'Tạo tài khoản', 'btn-solid');
 ?>
 <div class="breadcrumb-section">
     <div class="container">
@@ -22,26 +43,9 @@ $linkLogin = URL::createLink($this->params['module'], $this->params['controller'
                 <?= $this->errors ?? '';?>
                 <div class="theme-card">
                     <form action="" method="post" id="admin-form" class="theme-form">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <label for="username" class="required">Tên tài khoản</label>
-                                <input type="text" id="form[username]" name="form[username]" value="<?= @$data['username']?>" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="fullname">Họ và tên</label>
-                                <input type="text" id="form[fullname]" name="form[fullname]" value="<?= @$data['fullname']?>" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="required">Email</label>
-                                <input type="email" id="form[email]" name="form[email]" value="<?= @$data['email']?>" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password" class="required">Mật khẩu</label>
-                                <input type="password" id="form[password]" name="form[password]" value="<?= @$data['password']?>" class="form-control">
-                            </div>
-                        </div>
-                        <!-- <input type="hidden" id="form[token]" name="form[token]" value="1599208957"> -->
-                        <button type="submit" id="submit" name="submit" value="register" class="btn btn-solid">Tạo tài khoản</button>
+                        <div class="form-row"><?= $xhtml;?></div>
+                        <?= $btnSubmit?>
+                        
                         <p style="margin-top: 20px; font-size: 16px">Bạn đã có tài khoản? Đăng nhập tại <a href="<?= $linkLogin;?>">đây</a></p>
                     </form>
                 </div>

@@ -1,8 +1,19 @@
 <?php
 $linkHome = URL::createLink('frontend', 'index', 'index');
+
+$iconEmail      = Form::createIconLogin('fas fa-envelope');
+$iconPassword   = Form::createIconLogin('fas fa-lock');
+
+$inputEmail     = Form::input('email', 'form[email]', '', 'form-control', 'placeholder="Email" required');
+$inputPassword  = Form::input('password', 'form[password]', '', 'form-control', 'placeholder="Password" required');
+
+$rowEmail       = Form::row($inputEmail, $iconEmail, 'input-group mb-3');
+$rowPassword    = Form::row($inputPassword, $iconPassword, 'input-group mb-3');
+
+$btnLogin   = HelperFrontend::createButton('submit', '', '', '', 'Sign In', 'btn-info btn-block');
+$btnCancel  = HelperBackend::createButton($linkHome, 'danger', 'Cancel', false, false, 'btn-block')
 ?>
 <div class="login-box">
-    <!-- /.login-logo -->
     <div class="card card-outline card-info">
         <div class="card-header text-center">
             <h2 class="h2"><b>Admin Login</b></h2>
@@ -12,27 +23,9 @@ $linkHome = URL::createLink('frontend', 'index', 'index');
 
             <form action="" method="POST">
                 <?= ($this->errors ?? '') ?>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="form[email]" placeholder="Email" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="form[password]" placeholder="Password" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-info btn-block">Sign In</button>
-                <a href="<?= $linkHome; ?>" class="btn btn-danger btn-block">Cancel</a>
+                <?= $rowEmail . $rowPassword;?>
+                <?= $btnLogin . $btnCancel?>
             </form>
         </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
 </div>

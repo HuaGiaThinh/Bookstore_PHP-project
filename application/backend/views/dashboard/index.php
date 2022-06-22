@@ -1,6 +1,6 @@
-<?php 
-    $linkGroup  = URL::createLink($this->params['module'], 'group', 'index');
-    $linkUser   = URL::createLink($this->params['module'], 'user', 'index');
+<?php
+$linkGroup  = URL::createLink($this->params['module'], 'group', 'index');
+$linkUser   = URL::createLink($this->params['module'], 'user', 'index');
 ?>
 <div class="row">
     <div class="col-lg-3 col-6">
@@ -13,7 +13,7 @@
             <div class="icon">
                 <i class="ion ion-ios-people"></i>
             </div>
-            <a href="<?= $linkGroup;?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="<?= $linkGroup; ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-lg-3 col-6">
@@ -26,7 +26,7 @@
             <div class="icon">
                 <i class="ion ion-ios-person"></i>
             </div>
-            <a href="<?= $linkUser;?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="<?= $linkUser; ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-lg-3 col-6">
