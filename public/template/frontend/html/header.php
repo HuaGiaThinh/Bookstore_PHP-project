@@ -1,8 +1,27 @@
 <?php
-$linkHome       = URL::createLink($this->params['module'], $this->params['controller'], 'index');
+$linkHome       = URL::createLink($this->params['module'], 'index', 'index');
 $linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
-$linkLogout     = URL::createLink($this->params['module'], $this->params['controller'], 'logout');
+$linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
+$linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
+
+if (Session::get('user')) {
+} else {
+}
+
+$arrMenu = [
+    ['text' => 'Đăng nhập', 'link' => $linkLogin],
+    ['text' => 'Đăng ký', 'link' => $linkRegister]
+];
+
+if (Session::get('user')) {
+    $arrMenu = [
+        ['text' => 'Profile', 'link' => $linkProfile],
+        ['text' => 'Đăng xuất', 'link' => $linkLogout]
+    ];
+}
+$userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
+
 ?>
 <header class="my-header sticky">
     <div class="mobile-fix-option"></div>
@@ -12,7 +31,7 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
                 <div class="main-menu">
                     <div class="menu-left">
                         <div class="brand-logo">
-                            <a href="<?= $linkHome;?>">
+                            <a href="<?= $linkHome; ?>">
                                 <h2 class="mb-0" style="color: #5fcbc4">BookStore</h2>
                             </a>
                         </div>
@@ -25,7 +44,7 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
                                     <li>
                                         <div class="mobile-back text-right">Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
                                     </li>
-                                    <li><a href="<?= $linkHome;?>" class="my-menu-link active">Trang chủ</a></li>
+                                    <li><a href="<?= $linkHome; ?>" class="my-menu-link active">Trang chủ</a></li>
                                     <li><a href="list.html">Sách</a></li>
                                     <li>
                                         <a href="category.html">Danh mục</a>
@@ -43,12 +62,8 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
                         <div class="top-header">
                             <ul class="header-dropdown">
                                 <li class="onhover-dropdown mobile-account">
-                                    <img src="<?= $this->_pathImg?>avatar.png" alt="avatar">
-                                    <ul class="onhover-show-div">
-                                        <li><a href="<?= $linkLogin;?>">Đăng nhập</a></li>
-                                        <li><a href="<?= $linkRegister;?>">Đăng ký</a></li>
-                                        <li><a href="<?= $linkLogout;?>">Đăng xuất</a></li>
-                                    </ul>
+                                    <img src="<?= $this->_pathImg ?>avatar.png" alt="avatar">
+                                    <?= $userMenu ?>
                                 </li>
                             </ul>
                         </div>
@@ -57,7 +72,7 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
                                 <ul>
                                     <li class="onhover-div mobile-search">
                                         <div>
-                                            <img src="<?= $this->_pathImg?>search.png" onclick="openSearch()" class="img-fluid blur-up lazyload" alt="">
+                                            <img src="<?= $this->_pathImg ?>search.png" onclick="openSearch()" class="img-fluid blur-up lazyload" alt="">
                                             <i class="ti-search" onclick="openSearch()"></i>
                                         </div>
                                         <div id="search-overlay" class="search-overlay">
@@ -83,7 +98,7 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
                                     <li class="onhover-div mobile-cart">
                                         <div>
                                             <a href="cart.html" id="cart" class="position-relative">
-                                                <img src="<?= $this->_pathImg?>cart.png" class="img-fluid blur-up lazyload" alt="cart">
+                                                <img src="<?= $this->_pathImg ?>cart.png" class="img-fluid blur-up lazyload" alt="cart">
                                                 <i class="ti-shopping-cart"></i>
                                                 <span class="badge badge-warning">0</span>
                                             </a>
