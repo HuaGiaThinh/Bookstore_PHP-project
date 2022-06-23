@@ -29,7 +29,6 @@ class DashboardController extends Controller
 		$this->_templateObj->load();
 
 		$this->_view->_title = "Admin Login";
-
 		if (isset($this->_arrParam['form'])) {
 			$data       = $this->_arrParam['form'];
 			$validate	= new Validate($data);
@@ -37,7 +36,7 @@ class DashboardController extends Controller
 			$email	= $data['email'];
 			$password	= md5($data['password']);
 
-			$query		= "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
+			$query		= "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password' AND `status` = 'active'";
 			$validate->addRule('email', 'existRecord', array('database' => $this->_model, 'query' => $query));
 			$validate->run();
 
@@ -56,6 +55,7 @@ class DashboardController extends Controller
 			}
 		}
 
+		// $this->_view->render('dashboard' . '/login');
 		$this->_view->render($this->_arrParam['controller'] . '/login');
 	}
 

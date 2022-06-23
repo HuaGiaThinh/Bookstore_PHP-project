@@ -31,7 +31,6 @@ class Controller
 
 		$this->setParams($arrParams);
 		$this->_view->params = $this->_arrParam;
-		Session::init();
 	}
 
 	// SET MODEL

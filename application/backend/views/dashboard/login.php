@@ -11,7 +11,7 @@ $rowEmail       = Form::row($inputEmail, $iconEmail, 'input-group mb-3');
 $rowPassword    = Form::row($inputPassword, $iconPassword, 'input-group mb-3');
 
 $btnLogin   = HelperFrontend::createButton('submit', '', '', '', 'Sign In', 'btn-info btn-block');
-$btnCancel  = HelperBackend::createButton($linkHome, 'danger', 'Cancel', false, false, 'btn-block')
+$btnCancel  = HelperBackend::createButton($linkHome, 'danger', 'Back To Home', false, false, 'btn-block')
 ?>
 <div class="login-box">
     <div class="card card-outline card-info">

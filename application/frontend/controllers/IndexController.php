@@ -60,7 +60,7 @@ class IndexController extends Controller
 			$email	= $data['email'];
 			$password	= md5($data['password']);
 
-			$query		= "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
+			$query		= "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password' AND `status` = 'active'";
 			$validate->addRule('email', 'existRecord', array('database' => $this->_model, 'query' => $query));
 			$validate->run();
 
@@ -84,11 +84,6 @@ class IndexController extends Controller
 
 	public function noticeAction()
 	{
-		$this->_templateObj->setFolderTemplate('frontend/');
-		$this->_templateObj->setFileTemplate('notice.php');
-		$this->_templateObj->setFileConfig('template.ini');
-		$this->_templateObj->load();
-
 		$this->_view->_title = "<title>Notice</title>";
 		$this->_view->render('index/notice');
 	}

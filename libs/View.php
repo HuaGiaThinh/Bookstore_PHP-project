@@ -25,7 +25,7 @@ class View{
 				require_once $path;
 			}
 		}else{
-			echo '<h3>' . __METHOD__ . ': Error</h3>';
+			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
 		}
 	}
 	

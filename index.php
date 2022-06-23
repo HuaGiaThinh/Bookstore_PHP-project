@@ -8,6 +8,6 @@ function my_autoload($className)
 }
 
 spl_autoload_register('my_autoload');
-
+Session::init();
 $bootstrap = new Bootstrap();
 $bootstrap->init();

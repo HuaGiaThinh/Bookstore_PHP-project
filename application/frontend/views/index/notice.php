@@ -13,8 +13,20 @@ switch ($this->params['type']) {
 }
 
 ?>
-<div class="container title1 section-t-space">
-    <h3><?= $message; ?>
-        <br>Click vào <a href="<?= $linkHome; ?>">đây</a> để trở về trang chủ
-    </h3>
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title">
+                    <h2 class="py-2">Trang thông báo</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<section class="section-b-space">
+    <div class="container title1 section-t-space">
+        <h3 style="color: #fb5353;"><?= $message; ?> Click vào <a href="<?= $linkHome; ?>">đây</a> để trở về trang chủ
+        </h3>
+    </div>
+</section>

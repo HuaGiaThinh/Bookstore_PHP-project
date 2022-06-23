@@ -43,9 +43,9 @@ class Bootstrap
 				} else {
 					Session::delete('user');
 					require_once (APPLICATION_PATH . $module . DS . 'controllers' . DS . 'DashboardController.php');
+					
 					$dashboardController = new DashboardController($this->_params);
 					$dashboardController->loginAction();
-
 				}
 				// MODULE DEFAULT
 			} else if ($module == 'frontend') {
@@ -53,7 +53,6 @@ class Bootstrap
 			}
 		} else {
 			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
-			// $this->_error();
 		}
 	}
 
@@ -92,7 +91,6 @@ class Bootstrap
 			}
 		} else {
 			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
-			// $this->_error();
 		}
 	}
 
@@ -114,11 +112,11 @@ class Bootstrap
 	}
 
 	// ERROR CONTROLLER
-	// public function _error()
-	// {
-	// 	require_once APPLICATION_PATH . 'default' . DS . 'controllers' . DS . 'ErrorController.php';
-	// 	$this->_controllerObject = new ErrorController();
-	// 	$this->_controllerObject->setView('default');
-	// 	$this->_controllerObject->indexAction();
-	// }
+	public function _error()
+	{
+		require_once APPLICATION_PATH . 'default' . DS . 'controllers' . DS . 'ErrorController.php';
+		$this->_controllerObject = new ErrorController($this->_params);
+		$this->_controllerObject->setView('default');
+		$this->_controllerObject->indexAction();
+	}
 }
