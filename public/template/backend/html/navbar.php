@@ -1,6 +1,7 @@
 <?php
-$linkFE     = URL::createLink('frontend', 'index', 'index');
-$linkLogout = URL::createLink($this->params['module'], 'dashboard', 'logout');
+$linkFE         = URL::createLink('frontend', 'index', 'index');
+$linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
+$linkLogout     = URL::createLink($this->params['module'], 'dashboard', 'logout');
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -35,7 +36,7 @@ $linkLogout = URL::createLink($this->params['module'], 'dashboard', 'logout');
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="<?= $linkProfile;?>" class="btn btn-default btn-flat">Profile</a>
                     <a href="<?= $linkLogout;?>" class="btn btn-default btn-flat float-right">Sign out</a>
                 </li>
             </ul>

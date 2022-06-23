@@ -75,6 +75,21 @@ class UserController extends Controller
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
+	public function profileAction()
+	{
+		$this->_view->_title = "User Profile";
+
+		$userInfo = Session::get('user');
+        $this->_view->data       = $this->_model->infoItem($userInfo);
+
+        if (isset($this->_arrParam['form'])) {
+            $data       = $this->_arrParam['form'];
+            $this->_model->updateProfile($data, $userInfo);
+            URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
+        }
+        $this->_view->render('user' . '/profile');
+	}
+
 	public function changePasswordAction()
 	{
 		$this->_view->_title = "Change Password";
