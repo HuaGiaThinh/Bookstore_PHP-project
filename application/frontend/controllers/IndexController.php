@@ -38,7 +38,7 @@ class IndexController extends Controller
                 URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'notice', ['type' => 'register-success']);
             } else {
                 $this->_view->data = $data;
-                $this->_view->errors = $validate->showErrors();
+                $this->_view->errors = $validate->showErrorsFrontend();
             }
         }
         $this->_view->render($this->_arrParam['controller'] . '/register');

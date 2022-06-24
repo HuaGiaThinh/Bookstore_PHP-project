@@ -3,6 +3,7 @@ $linkHome       = URL::createLink($this->params['module'], $this->params['contro
 $linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
 $linkLogout     = URL::createLink($this->params['module'], $this->params['controller'], 'logout');
+$linkPassword   = URL::createLink($this->params['module'], $this->params['controller'], 'changePassword');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 
 ?>
@@ -15,7 +16,7 @@ $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
     <div class="block-content">
         <ul>
             <li class="active"><a href="<?= $linkProfile;?>">Thông tin tài khoản</a></li>
-            <li class=""><a href="change-password.html">Thay đổi mật khẩu</a></li>
+            <li class=""><a href="<?= $linkPassword;?>">Thay đổi mật khẩu</a></li>
             <li class=""><a href="order-history.html">Lịch sử mua hàng</a></li>
             <li class=""><a href="<?= $linkLogout;?>">Đăng xuất</a>
             </li>

@@ -50,4 +50,20 @@ class UserModel extends Model
 
         $this->update($data, [['id', $userInfo['id']]]);
     }
+
+    public function changePassword($data, $user)
+    {
+        
+        $userInfo = $user['info'];
+        $data['modified']       = date("Y:m:d H:i:s");
+        $data['modified_by']    = $userInfo['username'];
+
+        if ($data['password'] != null) {
+            $data['password'] = md5($data['password']);
+            unset($data['old_password']);
+            unset($data['confirm_password']);
+        }
+
+        $this->update($data, [['id', $userInfo['id']]]);
+    }
 }

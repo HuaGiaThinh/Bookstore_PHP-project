@@ -181,6 +181,22 @@ class Validate
 		return $xhtml;
 	}
 
+	public function showErrorsFrontend()
+	{
+		$xhtml = '<div class="alert alert-danger" role="alert">';
+		$xhtml .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+		$xhtml .= '<h5><i class="icon fa fa-exclamation-triangle"></i> Lỗi!</h5>';
+		if (!empty($this->errors)) {
+			$xhtml .= '<ul class="list-unstyled mb-0">';
+			foreach ($this->errors as $value) {
+				$xhtml .= '<li class="input-group">' . $value . ' </li>';
+			}
+			$xhtml .=  '</ul>';
+		}
+		$xhtml .= '</div>';
+		return $xhtml;
+	}
+
 	public function showErrorLogin()
 	{
 		$xhtml = '<div class="alert alert-danger error">';
