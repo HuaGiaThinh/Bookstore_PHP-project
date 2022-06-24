@@ -91,6 +91,9 @@ class Validate
 					case 'password':
 						$this->validatePassword($element, $value['options']);
 						break;
+					case 'confirm':
+						$this->validateConfirm($element, $value['options']);
+						break;
 					case 'date':
 						$this->validateDate($element, $value['options']['start'], $value['options']['end']);
 						break;
@@ -247,8 +250,16 @@ class Validate
 		if ($options['action'] == 'add' || ($options['action'] == 'edit' && $this->source[$element])) {
 			$length = strlen($this->source[$element]);
 			if ($length < 6 || $length > 50) {
-				$this->setError($element, 'password không hợp lệ!');
+				$this->setError($element, 'password không hợp lệ');
 			}
+		}
+	}
+
+	// Validate Password
+	private function validateConfirm($element, $options)
+	{
+		if ($this->source[$element] != $options['confirm-element']) {
+			$this->setError($element, 'mật khẩu không khớp');
 		}
 	}
 

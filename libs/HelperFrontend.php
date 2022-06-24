@@ -21,7 +21,6 @@ class HelperFrontend
     public static function createNav($arrNav, $params)
     {
         $xhtml = '';
-        
         foreach ($arrNav as $value) {
             $classActive = (ucfirst($params['controller']) == $value['name']) ? 'active' : '';
             if (!isset($value['navChild'])) {

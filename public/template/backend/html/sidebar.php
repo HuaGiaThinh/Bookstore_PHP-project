@@ -45,7 +45,7 @@ $arrNavigation = [
     ],
     [
         'linkNav' => URL::createLink($this->params['module'], 'user', 'changePassword'),
-        'name' => 'Change Password',
+        'name' => 'ChangePassword',
         'icon' => 'fa-key',
     ],
 ];

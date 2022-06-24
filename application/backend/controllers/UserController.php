@@ -92,7 +92,7 @@ class UserController extends Controller
 
 	public function resetPasswordAction()
 	{
-		$this->_view->_title = "Change Password";
+		$this->_view->_title = "Reset Password";
 
 		$this->_view->data = $this->_model->singleItem($this->_arrParam);
 
@@ -114,6 +114,36 @@ class UserController extends Controller
 			}
 		}
 		$this->_view->render($this->_arrParam['controller'] . '/resetPassword');
+	}
+
+	public function changePasswordAction()
+	{
+		$this->_view->_title = "Change Password";
+		$user = Session::get('user');
+		if (isset($this->_arrParam['form'])) {
+			$data       = $this->_arrParam['form'];
+			
+			$password 		= md5($data['old_password']);
+			$newPassword 	= $data['password'];
+			$validate 		= new Validate($data);
+
+			$query		= "SELECT `id` FROM `user` WHERE `password` = '$password'";
+			$validate->addRule('old_password', 'existRecord', array('database' => $this->_model, 'query' => $query))
+					->addRule('password', 'password', ['action' => 'add'])
+					->addRule('confirm_password', 'confirm', ['confirm-element' => $newPassword]);
+
+			$validate->run();
+			$error      = $validate->getError();
+
+			if (empty($error)) {
+				$this->_model->changePassword($data, $user);
+				URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
+			} else {
+				$this->_view->data = $data;
+				$this->_view->errors = $validate->showErrors();
+			}
+		}
+		$this->_view->render($this->_arrParam['controller'] . '/changePassword');
 	}
 
 	public function changeStatusAction()
