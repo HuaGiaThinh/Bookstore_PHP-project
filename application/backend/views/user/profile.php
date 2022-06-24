@@ -16,7 +16,7 @@ $elements = [
     ],
     'phone' => [
         'label'     => Form::label('Phone', false),
-        'element'   => Form::input('text', 'form[phone]', @$data['phone'], 'form-control'),
+        'element'   => Form::input('number', 'form[phone]', @$data['phone'], 'form-control'),
     ],
     'address' => [
         'label'     => Form::label('Address', false),

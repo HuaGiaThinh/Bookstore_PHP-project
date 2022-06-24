@@ -2,7 +2,7 @@
 $linkHome       = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 $linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
-$linkLogout     = URL::createLink($this->params['module'], 'index', 'logout');
+$linkLogout     = URL::createLink($this->params['module'], $this->params['controller'], 'logout');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 
 ?>

@@ -11,7 +11,7 @@ $elements = [
     ],
     [
         'label'     => Form::label('Số điện thoại', false),
-        'element'   => Form::input('text', 'form[phone]', @$data['phone'], 'form-control')
+        'element'   => Form::input('number', 'form[phone]', @$data['phone'], 'form-control')
     ],
     [
         'label'     => Form::label('Địa chỉ', false),

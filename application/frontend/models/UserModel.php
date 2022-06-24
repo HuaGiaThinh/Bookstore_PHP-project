@@ -23,7 +23,7 @@ class UserModel extends Model
         $query[]    = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` = {$params['info']['id']}";
 
-        echo $query      = implode(" ", $query);
+        $query      = implode(" ", $query);
         $result        = $this->fetchRow($query);
         return $result;
     }

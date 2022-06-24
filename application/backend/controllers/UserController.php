@@ -90,7 +90,7 @@ class UserController extends Controller
         $this->_view->render('user' . '/profile');
 	}
 
-	public function changePasswordAction()
+	public function resetPasswordAction()
 	{
 		$this->_view->_title = "Change Password";
 
@@ -113,7 +113,7 @@ class UserController extends Controller
 				$this->_view->errors = $validate->showErrors();
 			}
 		}
-		$this->_view->render($this->_arrParam['controller'] . '/changePassword');
+		$this->_view->render($this->_arrParam['controller'] . '/resetPassword');
 	}
 
 	public function changeStatusAction()

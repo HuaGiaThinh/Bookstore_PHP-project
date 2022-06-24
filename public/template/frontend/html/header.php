@@ -4,21 +4,23 @@ $linkRegister   = URL::createLink($this->params['module'], $this->params['contro
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
 $linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
-
-if (Session::get('user')) {
-} else {
-}
+$linkAdmin    = URL::createLink('backend', 'dashboard', 'index');
 
 $arrMenu = [
     ['text' => 'Đăng nhập', 'link' => $linkLogin],
     ['text' => 'Đăng ký', 'link' => $linkRegister]
 ];
 
-if (Session::get('user')) {
+$userInfo = Session::get('user');
+if ($userInfo) {
     $arrMenu = [
         ['text' => 'Profile', 'link' => $linkProfile],
         ['text' => 'Đăng xuất', 'link' => $linkLogout]
     ];
+
+    if ($userInfo['group_acp'] == 1) {
+        $arrMenu[] = ['text' => 'Admin Panel', 'link' => $linkAdmin];
+    }
 }
 $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
 
