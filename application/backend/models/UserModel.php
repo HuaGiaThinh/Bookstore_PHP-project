@@ -118,7 +118,7 @@ class UserModel extends Model
             $status = ($params['status'] == 'active') ? 'inactive' : 'active';
 
             $this->update(['status' => $status], [['id', $params['id']]]);
-            return HelperBackend::showItemStatus($params['id'], $status, $params['module'], $params['controller']);
+            return HelperBackend::showItemStatus($params['id'], $status, $params);
         }
 
         if ($option['task'] == 'change-group') {

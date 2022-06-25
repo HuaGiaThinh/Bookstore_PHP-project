@@ -30,8 +30,8 @@ $arrNavigation = [
         'name' => 'Category',
         'icon' => 'fa-thumbtack',
         'navChild' => [
-            'linkList'  => '#',
-            'linkAdd'   => '#'
+            'linkList'  => URL::createLink($this->params['module'], 'category', 'index'),
+            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form')
         ]
 
     ],
@@ -39,8 +39,8 @@ $arrNavigation = [
         'name' => 'Book',
         'icon' => 'fa-book-open',
         'navChild' => [
-            'linkList'  => '#',
-            'linkAdd'   => '#'
+            'linkList'  => URL::createLink($this->params['module'], 'book', 'index'),
+            'linkAdd'   => URL::createLink($this->params['module'], 'book', 'form')
         ]
     ],
     [

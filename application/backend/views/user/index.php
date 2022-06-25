@@ -11,7 +11,7 @@ $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
         $id          = $item['id'];
-        $status      = HelperBackend::showItemStatus($id, $item['status'], $this->params['module'], $this->params['controller']);
+        $status      = HelperBackend::showItemStatus($id, $item['status'], $this->params);
         $created     = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified    = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
 

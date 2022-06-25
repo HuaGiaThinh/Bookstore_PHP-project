@@ -11,7 +11,6 @@ if (!empty($items)) {
     foreach ($items as $item) {
         $id         = $item['id'];
         $name       = HelperBackend::highlight(@$this->params['search'], $item['name']);
-        $groupACP   = HelperBackend::showItemGroupACP($id, $item['group_acp'], $this->params);
         $status     = HelperBackend::showItemStatus($id, $item['status'], $this->params);
         $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
@@ -23,7 +22,6 @@ if (!empty($items)) {
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td>' . $name . '</td>
-                <td class="position-relative">' . $groupACP . '</td>
                 <td class="position-relative">' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
@@ -41,7 +39,7 @@ $arrGroupAcp = ['default' => 'Select Group Acp', 1 => 'Active', 0 => 'Inactive']
 $filterGroupAcp = Form::select('group_acp', $arrGroupAcp, 'filter-element', @$this->params['group_acp']);
 
 // pagination
-$xhtmlPagination = $this->pagination->showPagination('');
+$xhtmlPagination = $this->pagination->showPagination();
 ?>
 <div class="row">
     <div class="col-12">
@@ -63,14 +61,14 @@ $xhtmlPagination = $this->pagination->showPagination('');
                             <?= $xhtmlFilterStatus; ?>
                         </div>
 
-                        <div>
+                        <!-- <div>
                             <form action="" method="GET" name="filter-form" id="filter-form">
                                 <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
                                 <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
                                 <?= HelperBackend::input('hidden', 'action', 'index'); ?>
                                 <?= $filterGroupAcp;?>
                             </form>
-                        </div>
+                        </div> -->
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">
                                 <div class="input-group">
@@ -135,7 +133,6 @@ $xhtmlPagination = $this->pagination->showPagination('');
                                     <th><input type="checkbox" name="checkall-toggle"></th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Group ACP</th>
                                     <th>Status</th>
                                     <th>Created</th>
                                     <th>Modified</th>
@@ -151,15 +148,6 @@ $xhtmlPagination = $this->pagination->showPagination('');
                 </form>
             </div>
             <div class="card-footer clearfix">
-                <!-- <ul class="pagination m-0 float-right">
-                    <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                </ul> -->
                 <?= $xhtmlPagination; ?>
             </div>
         </div>

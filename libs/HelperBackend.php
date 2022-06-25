@@ -1,7 +1,8 @@
 <?php
 class HelperBackend
 {
-    public static function showItemStatus($id, $status, $module = 'backend', $controller = 'group')
+    // Lỗi
+    public static function showItemStatus($id, $status, $params)
     {
         $activeClass = 'success';
         $activeIcon = 'check';
@@ -11,12 +12,12 @@ class HelperBackend
             $activeIcon = 'minus';
         }
 
-        $link = URL::createLink($module, $controller, 'changeStatus', ['id' => $id, 'status' => $status]);
+        $link = URL::createLink($params['module'], $params['controller'], 'changeStatus', ['id' => $id, 'status' => $status]);
 
         return sprintf('<a id="status-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-status"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
-    public static function showItemGroupACP($id, $groupACP, $module = 'backend', $controller = 'group')
+    public static function showItemGroupACP($id, $groupACP, $params)
     {
         $activeClass = 'success';
         $activeIcon = 'check';
@@ -26,7 +27,7 @@ class HelperBackend
             $activeIcon = 'minus';
         }
 
-        $link = URL::createLink($module, $controller, 'changeGroupAcp', ['id' => $id, 'group_acp' => $groupACP]);
+        $link = URL::createLink($params['module'], $params['controller'], 'changeGroupAcp', ['id' => $id, 'group_acp' => $groupACP]);
 
         return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-groupAcp"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }

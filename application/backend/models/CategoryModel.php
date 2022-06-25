@@ -1,11 +1,11 @@
 <?php
-class GroupModel extends Model
+class CategoryModel extends Model
 {
 	private $arrAcceptSearchField = ['name'];
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setTable(TBL_GROUP);
+		$this->setTable(TBL_CATEGORY);
 	}
 
 	private function createSearchQuery($value)
@@ -36,7 +36,7 @@ class GroupModel extends Model
 
 	public function listItems($params)
 	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`, `created`, `created_by`, `modified`, `modified_by`";
+		$query[] 	= "SELECT `id`, `name`, `picture`, `status`, `created`, `created_by`, `modified`, `modified_by`";
 		$query[] 	= "FROM `{$this->table}`";
 		$query[]	= "WHERE `id` > 0";
 
@@ -48,9 +48,6 @@ class GroupModel extends Model
 
 		// Filter Status
 		if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
-
-		// Filter group acp
-		if (isset($params['group_acp']) && $params['group_acp'] != 'default') $query[] = "AND `group_acp` = '{$params['group_acp']}'";
 
 		// PAGINATION
 		$pagination			= $params['pagination'];
@@ -87,7 +84,7 @@ class GroupModel extends Model
 
 	public function singleItem($params)
 	{
-		$query[] 	= "SELECT `id`, `name`, `group_acp`, `status`";
+		$query[] 	= "SELECT `id`, `name`, `status`";
 		$query[] 	= "FROM `{$this->table}`";
 		$query[] 	= "WHERE `id` = {$params['id']}";
 		$query		= implode(" ", $query);
@@ -123,10 +120,10 @@ class GroupModel extends Model
 		Session::set('message', 'Dữ liệu đã được xóa thành công!');
 	}
 
-	public function addItem($data)
+	public function addItem($data, $userInfo)
 	{
 		$data['created'] = date("Y:m:d H:i:s");
-		$data['created_by'] = 'admin';
+		$data['created_by'] = $userInfo['username'];
 		$this->insert($data);
 		Session::set('message', 'Thêm phần tử thành công!');
 	}
