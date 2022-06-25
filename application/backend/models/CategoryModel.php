@@ -120,19 +120,21 @@ class CategoryModel extends Model
 		Session::set('message', 'Dữ liệu đã được xóa thành công!');
 	}
 
-	public function addItem($data, $userInfo)
+	public function addItem($params, $userInfo)
 	{
-		$data['created'] = date("Y:m:d H:i:s");
+		$data = $params['form'];
+		$data['created'] 	= date("Y:m:d H:i:s");
 		$data['created_by'] = $userInfo['username'];
 		$this->insert($data);
 		Session::set('message', 'Thêm phần tử thành công!');
 	}
 
-	public function updateItem($data, $id)
+	public function updateItem($params, $userInfo)
 	{
-		$data['modified'] = date("Y:m:d H:i:s");
-		$data['modified_by'] = 'admin';
-		$this->update($data, [['id', $id]]);
+		$data = $params['form'];
+		$data['modified'] 	= date("Y:m:d H:i:s");
+		$data['modified_by'] = $userInfo['username'];
+		$this->update($data, [['id', $params['id']]]);
 		Session::set('message', 'Cập nhật phần tử thành công!');
 	}
 }
