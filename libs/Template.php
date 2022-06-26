@@ -37,7 +37,7 @@ class Template{
 			$view->_pluginJsFiles 	= $view->createLink($this->_folderTemplate . $arrConfig['dirPlugins'], $arrConfig['filePluginJs'], 'js');
 
 			$view->_dirImg 			= $arrConfig['dirImg'];
-			$view->_pathImg        = TEMPLATE_URL . $folderTemplate . $arrConfig['dirImg'] . DS;
+			$view->_pathImg        	= TEMPLATE_URL . $folderTemplate . $arrConfig['dirImg'] . DS;
 					
 			$view->setTemplatePath(TEMPLATE_PATH . $folderTemplate . $fileTemplate);
 		}

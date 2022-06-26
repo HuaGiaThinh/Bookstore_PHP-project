@@ -178,7 +178,7 @@ class UserModel extends Model
 
     public function changePassword($data, $user)
     {
-        
+
         $userInfo = $user['info'];
         $data['modified']       = date("Y:m:d H:i:s");
         $data['modified_by']    = $userInfo['username'];

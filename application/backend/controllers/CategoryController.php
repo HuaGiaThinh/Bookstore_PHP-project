@@ -28,20 +28,22 @@ class CategoryController extends Controller
 	public function formAction()
 	{
 		$this->_view->_title = "ADD CATEGORY";
+		if (isset($_FILES['picture'])) $this->_arrParam['form']['picture'] = $_FILES['picture'];
 
         $user = Session::get('user');
 		$flagId = false;
 		if (isset($this->_arrParam['id'])) {
 			$this->_view->_title = "EDIT CATEGORY";
-			$id = $this->_arrParam['id'];
 			$flagId = true;
 			$this->_view->data = $this->_model->singleItem($this->_arrParam);
 		}
 
 		if (isset($this->_arrParam['form'])) {
+		
 			$validate = new Validate($this->_arrParam['form']);
 			$validate->addRule('name', 'string', ['min' => 5, 'max' => 255])
-				->addRule('status', 'select');
+				->addRule('status', 'select')
+				->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
 
 			$validate->run();
 			$error      = $validate->getError();
@@ -58,7 +60,7 @@ class CategoryController extends Controller
 				$this->_view->errors = $validate->showErrors();
 			}
 		}
-
+		
 		$this->_view->render($this->_arrParam['controller'] . '/form');
 	}
 
