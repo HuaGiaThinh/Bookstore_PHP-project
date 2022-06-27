@@ -85,6 +85,26 @@ $(document).ready(function () {
         });
     });
 
+    $('.slb-category').on('change', function () {
+        let value   = $(this).val();
+        let parent  = $(this).parent();
+        let url     = $(this).data('url');
+
+        url = url.replace('value_new', value);
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                parent.find("select.slb-category").notify("Success", {
+                    className: 'success',
+                    position: 'top-center'
+                });
+            }
+        });
+    });
+
     $(document).on('click', '.btn-ajax-status', function (e) {
         e.preventDefault();
 
@@ -116,6 +136,26 @@ $(document).ready(function () {
             success: function (response) {
                 parent.html(response);
                 parent.find("a.btn-ajax-groupAcp").notify("Success", {
+                    className: 'success',
+                    position: 'top-center'
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-ajax-bookSpecial', function (e) {
+        e.preventDefault();
+
+        let url = $(this).attr('href');
+        let parent = $(this).parent();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                console.log(response);
+                parent.html(response);
+                parent.find("a.btn-ajax-bookSpecial").notify("Success", {
                     className: 'success',
                     position: 'top-center'
                 });

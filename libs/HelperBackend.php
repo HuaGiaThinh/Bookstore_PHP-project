@@ -32,6 +32,21 @@ class HelperBackend
         return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-groupAcp"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
+    public static function showItemBookSpecial($id, $special, $params)
+    {
+        $activeClass = 'success';
+        $activeIcon = 'check';
+
+        if ($special == 0) {
+            $activeClass = 'danger';
+            $activeIcon = 'minus';
+        }
+
+        $link = URL::createLink($params['module'], $params['controller'], 'changeBookSpecial', ['id' => $id, 'special' => $special]);
+
+        return sprintf('<a id="special-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-bookSpecial"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+    }
+
     public static function showItemHistory($createdBy, $time)
     {
         $createdBy = $createdBy == 1 ? 'admin' : $createdBy;
@@ -106,6 +121,7 @@ class HelperBackend
             if (isset($params['search'])) $paramsLink['search'] = $params['search'];
             if (isset($params['group_acp'])) $paramsLink['group_acp'] = $params['group_acp'];
             if (isset($params['group_id'])) $paramsLink['group_id'] = $params['group_id'];
+            if (isset($params['category_id'])) $paramsLink['category_id'] = $params['category_id'];
 
             $link = URl::createLink($params['module'], $params['controller'], $params['action'], $paramsLink);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
@@ -122,12 +138,12 @@ class HelperBackend
     }
 
     // USER =================================================================
-    public static function showUserInfo($searchValue, $arrInfo)
+    public static function showInfo($searchValue, $arrInfo)
     {
         $xhtml = '';
         foreach ($arrInfo as $key => $value) {
             $value = HelperBackend::highlight($searchValue, $value);
-            $xhtml .= sprintf('<p class="mb-0">%s: %s</p>', ucfirst($key), $value);
+            $xhtml .= sprintf('<p class="mb-0">%s: <b>%s</b></p>', ucfirst($key), $value);
         }
         return $xhtml;
     }

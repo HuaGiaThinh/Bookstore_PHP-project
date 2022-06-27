@@ -15,32 +15,42 @@ if (!empty($items)) {
         $created     = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified    = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
 
-        $groupList = $this->groupSelect;
-        unset($groupList['default']);
-        $linkAjaxGroup = URL::createLink($this->params['module'], $this->params['controller'], 'changeGroup', ['id' => $id, 'group_id' => 'value_new']);
-        $attrGroup = 'data-url="' . $linkAjaxGroup . '"';
-        $groupSelect = Form::select('', $groupList, 'custom-select w-auto slb-group', $item['group_id'], $attrGroup);
+        $categoryList = $this->categorySelect;
+        unset($categoryList['default']);
 
-        $arrInfo     = ['username' => $item['username'], 'fullname' => $item['fullname'], 'email' => $item['email']];
+        $linkAjaxCategory = URL::createLink($this->params['module'], $this->params['controller'], 'changeCategory', ['id' => $id, 'category_id' => 'value_new']);
+        $attrCategory = 'data-url="' . $linkAjaxCategory . '"';
+
+        $categorySelect = Form::select('', $categoryList, 'custom-select w-auto slb-category', $item['category_id'], $attrCategory);
+
+        $arrInfo     = ['name' => $item['name'], 'price' => $item['price'], 'sale_off' => $item['sale_off']];
         $info        = HelperBackend::showInfo(@$this->params['search'], $arrInfo);
 
         $linkEdit    = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
         $linkDelete  = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
-        $linkResetPassword = URL::createLink($this->params['module'], $this->params['controller'], 'resetPassword', ['id' => $id]);
-        $keyButton   = HelperBackend::createButton($linkResetPassword, 'secondary', '<i class="fas fa-key"></i>', true, true);
+
+        $special     = HelperBackend::showItemBookSpecial($id, $item['special'], $this->params);
+
         $editButton  = HelperBackend::createButton($linkEdit, 'info', '<i class="fas fa-pen"></i>', true, true);
         $trashButton = HelperBackend::createButton($linkDelete, 'danger', '<i class="fas fa-trash "></i>', true, true, 'btn-delete');
+
+        $picturePath    = UPLOAD_PATH . 'book/' . $item['picture'];
+        $pictureURL     = TEMPLATE_URL . $this->params['module'] . '/images' . '/defaultImage.jpg';
+        if (file_exists($picturePath)) {
+            $pictureURL = UPLOAD_URL . 'book/' . $item['picture'];
+        }
+        $picture = '<img style="height:90px; width:75px" src="' . $pictureURL . '">';
 
         $xhtml .= '
             <tr>
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
-                <td class="text-left">' . $info . '</td>
-                <td class="position-relative">' . $groupSelect . '</td>
+                <td class="text-left wrap">' . $info . '</td>
+                <td>' . $picture . '</td>
+                <td class="position-relative">' . $categorySelect . '</td>
+                <td class="position-relative">' . $special . '</td>
                 <td class="position-relative">' . $status . '</td>
-                <td>' . $created . '</td>
-                <td>' . $modified . '</td>
-                <td> ' . $keyButton . $editButton . $trashButton . '</td>
+                <td>' . $editButton . $trashButton . '</td>
             </tr>
         ';
     }
@@ -74,7 +84,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
                                     <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
                                     <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                    <?= Form::select('group_id', $this->groupSelect, 'custom-select filter-element', @$this->params['group_id']) ?>
+                                    <?= Form::select('category_id', $this->categorySelect, 'custom-select filter-element', @$this->params['category_id']) ?>
                                 </form>
                             </div>
                             <div class="area-search mb-2">
@@ -140,11 +150,11 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <tr>
                                         <th><input type="checkbox" name="checkall-toggle"></th>
                                         <th>ID</th>
-                                        <th class="text-left">Info</th>
-                                        <th>Group</th>
+                                        <th>Book Info</th>
+                                        <th>Picture</th>
+                                        <th>Category</th>
+                                        <th>Special</th>
                                         <th>Status</th>
-                                        <th>Created</th>
-                                        <th>Modified</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

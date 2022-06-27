@@ -17,11 +17,20 @@ if (!empty($items)) {
         $linkDelete = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
         $linkEdit   = URL::createLink($this->params['module'], $this->params['controller'], 'form', ['id' => $id]);
 
+        // picture
+        $picturePath    = UPLOAD_PATH . 'category/' . $item['picture'];
+        $pictureURL     = TEMPLATE_URL . $this->params['module'] . '/images' . '/defaultImage.jpg';
+        if (file_exists($picturePath)) {
+            $pictureURL = UPLOAD_URL . 'category/' . $item['picture'];
+        }
+        $picture = '<img style="height:90px; width:75px" src="' . $pictureURL . '">';
+
         $xhtml .= '
             <tr>
                 <td><input type="checkbox" name="cid[]" value="' . $id . '"></td>
                 <td>' . $id . '</td>
                 <td>' . $name . '</td>
+                <td>' . $picture . '</td>
                 <td class="position-relative">' . $status . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
@@ -66,7 +75,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                 <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
                                 <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
                                 <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                <?= $filterGroupAcp;?>
+                                <?= $filterGroupAcp; ?>
                             </form>
                         </div> -->
                         <div class="area-search mb-2">
@@ -133,6 +142,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <th><input type="checkbox" name="checkall-toggle"></th>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Picture</th>
                                     <th>Status</th>
                                     <th>Created</th>
                                     <th>Modified</th>
