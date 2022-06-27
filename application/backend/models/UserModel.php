@@ -100,8 +100,7 @@ class UserModel extends Model
 
     public function getGroup($hasDefault = false)
     {
-        $this->setTable(TBL_GROUP);
-        $query        = "SELECT `id`, `name` FROM `{$this->table}`";
+        $query        = "SELECT `id`, `name` FROM `group`";
         $list        = $this->listRecord($query);
 
         $result = [];

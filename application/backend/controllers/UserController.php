@@ -29,7 +29,8 @@ class UserController extends Controller
     public function formAction()
     {
         $this->_view->_title = "ADD USER";
-
+        $this->_view->groupSelect = $this->_model->getGroup(true);
+        
         $flagId = false;
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title = "EDIT USER";

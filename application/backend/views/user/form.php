@@ -1,9 +1,6 @@
 <?php
 $linkIndex = URL::createLink($this->params['module'], $this->params['controller'], 'index');
-
-
 $arrOptions = [
-    'group'     => ['default' => '- Select Group -', 1 => 'Admin', 2 => 'Manager', 3 => 'Member', 4 => 'Register'],
     'status'    => ['default' => '- Select Status -', 'active' => 'Active', 'inactive' => 'Inactive']
 ];
 
@@ -30,7 +27,7 @@ $elements = [
     ],
     'group' => [
         'label'     => Form::label('Group'),
-        'element'   => Form::select('form[group_id]', $arrOptions['group'], 'custom-select', @$this->data['group_id'])
+        'element'   => Form::select('form[group_id]', $this->groupSelect, 'custom-select', @$this->data['group_id'])
     ]
 ];
 
