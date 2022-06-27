@@ -85,7 +85,7 @@ class UserController extends Controller
 
         if (isset($this->_arrParam['form'])) {
             $data       = $this->_arrParam['form'];
-            $this->_model->updateProfile($data, $userInfo);
+            $this->_model->updateProfile($data);
             URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
         }
         $this->_view->render('user' . '/profile');
@@ -120,7 +120,6 @@ class UserController extends Controller
     public function changePasswordAction()
     {
         $this->_view->_title = "Change Password";
-        $user = Session::get('user');
         if (isset($this->_arrParam['form'])) {
             $data       = $this->_arrParam['form'];
 
@@ -137,7 +136,7 @@ class UserController extends Controller
             $error      = $validate->getError();
 
             if (empty($error)) {
-                $this->_model->changePassword($data, $user);
+                $this->_model->changePassword($data);
                 URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
             } else {
                 $this->_view->data = $data;

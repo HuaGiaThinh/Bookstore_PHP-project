@@ -30,7 +30,6 @@ class CategoryController extends Controller
         $this->_view->_title = "ADD CATEGORY";
         if (isset($_FILES['picture'])) $this->_arrParam['form']['picture'] = $_FILES['picture'];
 
-        $user = Session::get('user');
         $flagId = false;
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title = "EDIT CATEGORY";
@@ -39,7 +38,6 @@ class CategoryController extends Controller
         }
 
         if (isset($this->_arrParam['form'])) {
-
             if ($flagId) {
                 if ($this->_arrParam['form']['picture']['name'] == null) {
                     unset($this->_arrParam['form']['picture']);
@@ -56,9 +54,9 @@ class CategoryController extends Controller
 
             if (empty($error)) {
                 if ($flagId) {
-                    $this->_model->updateItem($this->_arrParam, $user['info']);
+                    $this->_model->updateItem($this->_arrParam);
                 } else {
-                    $this->_model->addItem($this->_arrParam, $user['info']);
+                    $this->_model->addItem($this->_arrParam);
                 }
                 URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
             } else {

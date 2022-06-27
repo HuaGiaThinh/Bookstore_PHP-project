@@ -6,6 +6,11 @@ class BookModel extends Model
     {
         parent::__construct();
         $this->setTable(TBL_BOOK);
+
+        $this->_uploadObj    = new Upload();
+        
+        $user = Session::get('user');
+        $this->_userInfo = $user['info'];
     }
 
     private function createSearchQuery($value)
@@ -89,7 +94,7 @@ class BookModel extends Model
 
     public function singleItem($params)
     {
-        $query[]    = "SELECT `id`, `username`, `email`, `status`, `fullname`, `created`, `created_by`, `modified`, `modified_by`, `group_id`";
+        $query[]    = "SELECT `id`, `name`, `description`, `price`, `special`, `sale_off`, `picture`, `status`, `created`, `created_by`, `modified`, `modified_by`, `category_id`";
         $query[]     = "FROM `{$this->table}`";
         $query[]     = "WHERE `id` = {$params['id']}";
         $query        = implode(" ", $query);
@@ -100,8 +105,7 @@ class BookModel extends Model
 
     public function getCategory($hasDefault = false)
     {
-        $this->setTable(TBL_CATEGORY);
-        $query        = "SELECT `id`, `name` FROM `{$this->table}`";
+        $query        = "SELECT `id`, `name` FROM `category`";
         $list        = $this->listRecord($query);
 
         $result = [];
@@ -138,59 +142,41 @@ class BookModel extends Model
         if (!empty($params['cid'])) {
             $this->delete($params['cid']);
         } else {
+            $item = $this->singleItem($params);
+            $this->_uploadObj->removeFile('book', $item['picture']);
             $this->delete([$params['id']]);
         }
         Session::set('message', 'Dữ liệu đã được xóa thành công!');
     }
 
-    public function addItem($data)
+    public function addItem($params, $option = null)
     {
-        $data['created'] = date("Y:m:d H:i:s");
-        $data['created_by'] = 'admin';
-        $data['password'] = md5($data['password']);
+        $data = $params['form'];
 
+        $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'book');
+        $data['created']        = date("Y:m:d H:i:s");
+        $data['created_by']     = $this->_userInfo['username'];
         $this->insert($data);
         Session::set('message', 'Thêm phần tử thành công!');
     }
 
-    public function updateItem($data, $id)
+    public function updateItem($params)
     {
-        $data['modified']         = date("Y:m:d H:i:s");
-        $data['modified_by']     = 'admin';
-
-        if ($data['password'] != null) {
-            $data['password'] = md5($data['password']);
-        } else {
-            unset($data['password']);
+        $data = $params['form'];
+        
+        if (isset($data['picture'])) {
+            $item = $this->singleItem($params);
+            $this->_uploadObj->removeFile('book', $item['picture']);
+            $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'book');
         }
-        $this->update($data, [['id', $id]]);
+
+        $data['modified']         = date("Y:m:d H:i:s");
+        $data['modified_by']     = $this->_userInfo['username'];
+
+        $this->update($data, [['id', $params['id']]]);
         Session::set('message', 'Cập nhật phần tử thành công!');
     }
 
-    public function updateProfile($data, $user)
-    {
-        $userInfo = $user['info'];
-        $data['modified']       = date("Y:m:d H:i:s");
-        $data['modified_by']    = $userInfo['username'];
-
-        $this->update($data, [['id', $userInfo['id']]]);
-    }
-
-    public function changePassword($data, $user)
-    {
-
-        $userInfo = $user['info'];
-        $data['modified']       = date("Y:m:d H:i:s");
-        $data['modified_by']    = $userInfo['username'];
-
-        if ($data['password'] != null) {
-            $data['password'] = md5($data['password']);
-            unset($data['old_password']);
-            unset($data['confirm_password']);
-        }
-
-        $this->update($data, [['id', $userInfo['id']]]);
-    }
 
     public function infoItem($params, $option = null)
     {

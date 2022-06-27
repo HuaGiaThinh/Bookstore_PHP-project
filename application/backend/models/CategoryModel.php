@@ -7,6 +7,9 @@ class CategoryModel extends Model
         parent::__construct();
         $this->setTable(TBL_CATEGORY);
         $this->_uploadObj    = new Upload();
+
+        $user = Session::get('user');
+        $this->_userInfo = $user['info'];
     }
 
     private function createSearchQuery($value)
@@ -123,17 +126,17 @@ class CategoryModel extends Model
         Session::set('message', 'Dữ liệu đã được xóa thành công!');
     }
 
-    public function addItem($params, $userInfo)
+    public function addItem($params, $option = null)
     {
         $data = $params['form'];
         $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'category');
         $data['created']        = date("Y:m:d H:i:s");
-        $data['created_by']     = $userInfo['username'];
+        $data['created_by']     = $this->_userInfo['username'];
         $this->insert($data);
         Session::set('message', 'Thêm phần tử thành công!');
     }
 
-    public function updateItem($params, $userInfo)
+    public function updateItem($params, $option = null)
     {
         $data = $params['form'];
 
@@ -144,7 +147,7 @@ class CategoryModel extends Model
         }
         
         $data['modified']       = date("Y:m:d H:i:s");
-        $data['modified_by']    = $userInfo['username'];
+        $data['modified_by']    = $this->_userInfo['username'];
         $this->update($data, [['id', $params['id']]]);
         Session::set('message', 'Cập nhật phần tử thành công!');
     }

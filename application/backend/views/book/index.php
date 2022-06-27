@@ -7,6 +7,7 @@ $addButton  = HelperBackend::createButton($linkAdd, 'info', '<i class="fas fa-pl
 $xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params, ($this->params['search'] ?? ''));
 
 $items = $this->items;
+
 $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {

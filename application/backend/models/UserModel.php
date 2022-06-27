@@ -6,6 +6,9 @@ class UserModel extends Model
     {
         parent::__construct();
         $this->setTable(TBL_USER);
+
+        $user = Session::get('user');
+        $this->_userInfo = $user['info'];
     }
 
     private function createSearchQuery($value)
@@ -145,7 +148,7 @@ class UserModel extends Model
     public function addItem($data)
     {
         $data['created'] = date("Y:m:d H:i:s");
-        $data['created_by'] = 'admin';
+        $data['created_by'] = $this->_userInfo['user'];
         $data['password'] = md5($data['password']);
 
         $this->insert($data);
@@ -155,7 +158,7 @@ class UserModel extends Model
     public function updateItem($data, $id)
     {
         $data['modified']         = date("Y:m:d H:i:s");
-        $data['modified_by']     = 'admin';
+        $data['modified_by']     = $this->_userInfo['user'];
 
         if ($data['password'] != null) {
             $data['password'] = md5($data['password']);
@@ -166,21 +169,18 @@ class UserModel extends Model
         Session::set('message', 'Cập nhật phần tử thành công!');
     }
 
-    public function updateProfile($data, $user)
+    public function updateProfile($data)
     {
-        $userInfo = $user['info'];
         $data['modified']       = date("Y:m:d H:i:s");
-        $data['modified_by']    = $userInfo['username'];
+        $data['modified_by']    = $this->_userInfo['username'];
 
-        $this->update($data, [['id', $userInfo['id']]]);
+        $this->update($data, [['id', $this->_userInfo['id']]]);
     }
 
-    public function changePassword($data, $user)
+    public function changePassword($data)
     {
-
-        $userInfo = $user['info'];
         $data['modified']       = date("Y:m:d H:i:s");
-        $data['modified_by']    = $userInfo['username'];
+        $data['modified_by']    = $this->_userInfo['username'];
 
         if ($data['password'] != null) {
             $data['password'] = md5($data['password']);
@@ -188,7 +188,7 @@ class UserModel extends Model
             unset($data['confirm_password']);
         }
 
-        $this->update($data, [['id', $userInfo['id']]]);
+        $this->update($data, [['id', $this->_userInfo['id']]]);
     }
 
     public function infoItem($params, $option = null)

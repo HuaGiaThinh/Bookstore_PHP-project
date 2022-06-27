@@ -29,45 +29,47 @@ class BookController extends Controller
     public function formAction()
     {
         $this->_view->_title = "ADD BOOK";
+        $this->_view->categorySelect = $this->_model->getCategory(true);
+        
+        if (isset($_FILES['picture'])) $this->_arrParam['form']['picture'] = $_FILES['picture'];
 
+        
         $flagId = false;
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title = "EDIT BOOK";
-            $id = $this->_arrParam['id'];
             $flagId = true;
             $this->_view->data = $this->_model->singleItem($this->_arrParam);
         }
 
         if (isset($this->_arrParam['form'])) {
-            $data       = $this->_arrParam['form'];
-
-            $queryUserName    = "SELECT `id` FROM `" . TBL_USER . "` WHERE `username` = '" . $this->_arrParam['form']['username'] . "'";
-            $queryEmail        = "SELECT `id` FROM `" . TBL_USER . "` WHERE `email` = '" . $this->_arrParam['form']['email'] . "'";
-
-            if (isset($this->_arrParam['id'])) {
-                $queryUserName     .= " AND `id` <> '" . $this->_arrParam['id'] . "'";
-                $queryEmail     .= " AND `id` <> '" . $this->_arrParam['id'] . "'";
+            if ($flagId) {
+                if ($this->_arrParam['form']['picture']['name'] == null) {
+                    unset($this->_arrParam['form']['picture']);
+                }
             }
 
-            $validate = new Validate($data);
-            $validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
-                ->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
+            $validate = new Validate($this->_arrParam['form']);
+            $validate->addRule('name', 'string', ['min' => 3, 'max' => 255])
+                ->addRule('description', 'string', ['min' => 3, 'max' => 255])
+                ->addRule('price', 'string', ['min' => 1, 'max' => 100])
+                ->addRule('special', 'select')
                 ->addRule('status', 'select')
-                ->addRule('group_id', 'select');
+                ->addRule('category_id', 'select')
+                ->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
 
-            isset($this->_arrParam['id']) ? '' : $validate->addRule('password', 'password', ['action' => 'add']);
             $validate->run();
             $error      = $validate->getError();
 
             if (empty($error)) {
                 if ($flagId) {
-                    $this->_model->updateItem($data, $id);
+                    $this->_model->updateItem($this->_arrParam);
                 } else {
-                    $this->_model->addItem($data);
+                    $this->_model->addItem($this->_arrParam);
                 }
                 URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
             } else {
-                $this->_view->data = $data;
+                unset($this->_arrParam['form']['picture']);
+                $this->_view->data = $this->_arrParam['form'];
                 $this->_view->errors = $validate->showErrors();
             }
         }
