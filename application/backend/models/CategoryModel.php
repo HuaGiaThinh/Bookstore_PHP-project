@@ -137,11 +137,12 @@ class CategoryModel extends Model
     {
         $data = $params['form'];
 
-        // remove image
-        $item = $this->singleItem($params);
-        $this->_uploadObj->removeFile('category', $item['picture']);
-
-        $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'category');
+        if (isset($data['picture'])) {
+            $item = $this->singleItem($params);
+            $this->_uploadObj->removeFile('category', $item['picture']);
+            $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'category');
+        }
+        
         $data['modified']       = date("Y:m:d H:i:s");
         $data['modified_by']    = $userInfo['username'];
         $this->update($data, [['id', $params['id']]]);

@@ -21,9 +21,10 @@ $elements = [
 ];
 
 if (isset($this->params['id'])) {
-    $pictureUrl = UPLOAD_URL . 'category/' . $this->data['picture'];
-
-    $picture = sprintf('<img class="input-group" style="width:100px" src="%s" alt="%s" name="picture">', $pictureUrl, $this->data['name']);
+    if (isset($this->data['picture'])) {
+        $pictureUrl = UPLOAD_URL . 'category/' . $this->data['picture'];
+        $picture = sprintf('<img class="input-group" style="width:100px" src="%s" name="picture">', $pictureUrl);
+    }
 }
 ?>
 <div class="content">
