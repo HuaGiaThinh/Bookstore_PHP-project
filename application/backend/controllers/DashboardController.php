@@ -18,11 +18,6 @@ class DashboardController extends Controller
 
     public function loginAction()
     {
-        $userInfo    = Session::get('user');
-        if (@$userInfo['login'] == 1 && (@$userInfo['time'] + TIME_LOGIN >= time())) {
-            URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
-        }
-
         $this->_templateObj->setFolderTemplate('backend/');
         $this->_templateObj->setFileTemplate('login.php');
         $this->_templateObj->setFileConfig('template.ini');
@@ -55,8 +50,7 @@ class DashboardController extends Controller
             }
         }
 
-        // $this->_view->render('dashboard' . '/login');
-        $this->_view->render($this->_arrParam['controller'] . '/login');
+        $this->_view->render('dashboard' . '/login');
     }
 
     public function logoutAction()

@@ -31,7 +31,6 @@ class Bootstrap
 
 			$userInfo	= Session::get('user');
 			$logged		= (@$userInfo['login'] == true && (@$userInfo['time'] + TIME_LOGIN >= time()));
-
 			// MODULE ADMIN
 			if ($module == 'backend') {
 				if ($logged) {
@@ -42,14 +41,26 @@ class Bootstrap
 					}
 				} else {
 					Session::delete('user');
-					require_once (APPLICATION_PATH . $module . DS . 'controllers' . DS . 'DashboardController.php');
-					
+					require_once(APPLICATION_PATH . $module . DS . 'controllers' . DS . 'DashboardController.php');
+
 					$dashboardController = new DashboardController($this->_params);
 					$dashboardController->loginAction();
 				}
 				// MODULE DEFAULT
 			} else if ($module == 'frontend') {
-				$this->_controllerObject->$actionName();
+				if ($controller == 'user') {
+					if ($logged == true) {
+						$this->_controllerObject->$actionName();
+					} else {
+						Session::delete('user');
+						require_once(APPLICATION_PATH . $module . DS . 'controllers' . DS . 'IndexController.php');
+
+						$indexController = new IndexController($this->_params);
+						$indexController->loginAction();
+					}
+				} else {
+					$this->_controllerObject->$actionName();
+				}
 			}
 		} else {
 			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
@@ -82,12 +93,19 @@ class Bootstrap
 					Session::delete('user');
 					if ($pageLogin) $this->_controllerObject->$actionName();;
 					if (!$pageLogin) URL::redirect('backend', 'dashboard', 'login');
-
 				}
-				
+
 				// MODULE DEFAULT
 			} else if ($module == 'frontend') {
-				$this->_controllerObject->$actionName();
+				if ($controller == 'user') {
+					if ($logged == true) {
+						$this->_controllerObject->$actionName();
+					} else {
+						URL::redirect($module, 'index', 'login');
+					}
+				} else {
+					$this->_controllerObject->$actionName();
+				}
 			}
 		} else {
 			URL::redirect('frontend', 'index', 'notice', ['type' => 'not-url']);
