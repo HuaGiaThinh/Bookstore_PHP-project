@@ -244,4 +244,9 @@ class Model
 		}
 		return $result;
 	}
+
+	public function escapeString($string) {
+		$result = mysqli_real_escape_string($this->connect, $string);
+		return $result;
+	}
 }

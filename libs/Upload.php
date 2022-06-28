@@ -8,9 +8,12 @@ class Upload
     public function uploadFile($fileObj, $folderUpload, $options = null)
     {
         if ($options == null) {
+            echo '<pre style="color: red;">';
+            print_r($fileObj);
+            echo '</pre>';
             if ($fileObj['tmp_name'] != null) {
                 $uploadDir        = UPLOAD_PATH . $folderUpload . DS;
-                $fileName        = $this->randomString(10) . '.' . pathinfo($fileObj['name'], PATHINFO_EXTENSION);
+                $fileName         = $this->randomString(10) . '.' . pathinfo($fileObj['name'], PATHINFO_EXTENSION);
 
                 @copy($fileObj['tmp_name'], $uploadDir . $fileName);
 

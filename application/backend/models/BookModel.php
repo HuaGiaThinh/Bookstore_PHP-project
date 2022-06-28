@@ -8,7 +8,7 @@ class BookModel extends Model
         $this->setTable(TBL_BOOK);
 
         $this->_uploadObj    = new Upload();
-        
+
         $user = Session::get('user');
         $this->_userInfo = $user['info'];
     }
@@ -153,6 +153,7 @@ class BookModel extends Model
     {
         $data = $params['form'];
 
+        $data['description']    = $this->escapeString($data['description']);
         $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'book');
         $data['created']        = date("Y:m:d H:i:s");
         $data['created_by']     = $this->_userInfo['username'];
@@ -163,15 +164,17 @@ class BookModel extends Model
     public function updateItem($params)
     {
         $data = $params['form'];
-        
+
         if (isset($data['picture'])) {
             $item = $this->singleItem($params);
-            $this->_uploadObj->removeFile('book', $item['picture']);
+
             $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'book');
+            $this->_uploadObj->removeFile('book', $item['picture']);
         }
 
-        $data['modified']         = date("Y:m:d H:i:s");
-        $data['modified_by']     = $this->_userInfo['username'];
+        $data['description']    = $this->escapeString($data['description']);
+        $data['modified']       = date("Y:m:d H:i:s");
+        $data['modified_by']    = $this->_userInfo['username'];
 
         $this->update($data, [['id', $params['id']]]);
         Session::set('message', 'Cập nhật phần tử thành công!');

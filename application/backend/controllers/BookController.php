@@ -42,6 +42,7 @@ class BookController extends Controller
         }
 
         if (isset($this->_arrParam['form'])) {
+
             if ($flagId) {
                 if ($this->_arrParam['form']['picture']['name'] == null) {
                     unset($this->_arrParam['form']['picture']);
@@ -50,8 +51,7 @@ class BookController extends Controller
 
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('name', 'string', ['min' => 3, 'max' => 255])
-                ->addRule('description', 'string', ['min' => 3, 'max' => 255])
-                ->addRule('price', 'string', ['min' => 1, 'max' => 100])
+                ->addRule('price', 'int', ['min' => 1000, 'max' => 1000000])
                 ->addRule('special', 'select')
                 ->addRule('status', 'select')
                 ->addRule('category_id', 'select')

@@ -12,9 +12,13 @@ $elements = [
         'label'     => Form::label('Tên sách'),
         'element'   => Form::input('text', 'form[name]', @$this->data['name'], 'form-control'),
     ],
+    // 'description' =>   [
+    //     'label'     => Form::label('Mô tả', false),
+    //     'element'   => Form::input('text', 'form[description]', @$this->data['description'], 'form-control'),
+    // ],
     'description' =>   [
         'label'     => Form::label('Mô tả', false),
-        'element'   => Form::input('text', 'form[description]', @$this->data['description'], 'form-control'),
+        'element'   => '<textarea name="form[description]" rows="3" class="form-control">'.@$this->data['description'].'</textarea>',
     ],
     'price' => [
         'label'     => Form::label('Giá bán'),
