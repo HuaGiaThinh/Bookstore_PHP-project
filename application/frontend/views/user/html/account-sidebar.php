@@ -6,6 +6,28 @@ $linkLogout     = URL::createLink($this->params['module'], $this->params['contro
 $linkPassword   = URL::createLink($this->params['module'], $this->params['controller'], 'changePassword');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 
+
+$arrNavigation = [
+    'profile' => [
+        'link' => URL::createLink($this->params['module'], 'user', 'profile'),
+        'text' => 'Thông tin tài khoản',
+    ],
+    'changePassword' => [
+        'link' => URL::createLink($this->params['module'], $this->params['controller'], 'changePassword'),
+        'text' => 'Thay đổi mật khẩu',
+    ],
+    'order-history' => [
+        'link' => URL::createLink($this->params['module'], 'user', 'order-history'),
+        'text' => 'Lịch sử mua hàng',
+    ],
+    'logout' => [
+        'link' => URL::createLink($this->params['module'], $this->params['controller'], 'logout'),
+        'text' => 'Đăng xuất',
+    ],
+
+];
+
+$xhtmlNavigation =  HelperFrontend::createNav($arrNavigation, $this->params);
 ?>
 <div class="account-sidebar">
     <a class="popup-btn">Menu</a>
@@ -14,12 +36,6 @@ $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 <div class="dashboard-left">
     <div class="collection-mobile-back"><span class="filter-back"><i class="fa fa-angle-left" aria-hidden="true"></i> Ẩn</span></div>
     <div class="block-content">
-        <ul>
-            <li class="active"><a href="<?= $linkProfile;?>">Thông tin tài khoản</a></li>
-            <li class=""><a href="<?= $linkPassword;?>">Thay đổi mật khẩu</a></li>
-            <li class=""><a href="order-history.html">Lịch sử mua hàng</a></li>
-            <li class=""><a href="<?= $linkLogout;?>">Đăng xuất</a>
-            </li>
-        </ul>
+        <ul><?= $xhtmlNavigation;?></ul>
     </div>
 </div>

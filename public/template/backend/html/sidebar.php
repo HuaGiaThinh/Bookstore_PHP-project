@@ -50,7 +50,7 @@ $arrNavigation = [
     ],
 ];
 
-$xhtmlNavigation =  HelperFrontend::createNav($arrNavigation, $this->params);
+$xhtmlNavigation =  HelperBackend::createNav($arrNavigation, $this->params);
 ?>
 <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
