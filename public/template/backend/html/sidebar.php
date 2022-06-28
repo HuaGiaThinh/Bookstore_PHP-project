@@ -9,12 +9,13 @@ $arrNavigation = [
 
     ],
     [
+        'linkNav' => '#',
         'name' => 'Group',
         'icon' => 'fa-users',
-        'navChild' => [
-            'linkList'  => URL::createLink($this->params['module'], 'group', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'group', 'form')
-        ]
+        // 'navChild' => [
+        //     'linkList'  => URL::createLink($this->params['module'], 'group', 'index'),
+        //     'linkAdd'   => URL::createLink($this->params['module'], 'group', 'form')
+        // ]
 
     ],
     [

@@ -8,6 +8,9 @@ class GroupController extends Controller
         $this->_templateObj->setFileTemplate('index.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
+
+        // Block Group
+        URL::redirect($this->_arrParam['module'], 'dashboard', 'index');
     }
 
     public function indexAction()

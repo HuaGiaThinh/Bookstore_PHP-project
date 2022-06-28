@@ -148,15 +148,16 @@ class HelperBackend
         return $xhtml;
     }
 
-    public static function randomString($n = 10) {
+    public static function randomString($n = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
-      
+
         for ($i = 0; $i < $n; $i++) {
             $index = rand(0, strlen($characters) - 1);
             $randomString .= $characters[$index];
         }
-      
+
         return $randomString;
     }
 
@@ -176,19 +177,19 @@ class HelperBackend
             } else {
                 $xhtml .= '
                     <li class="nav-item">
-                        <a href="#" class="nav-link '.$classActive.'">
-                            <i class="nav-icon fas '.$value['icon'].'"></i>
-                            <p>'.$value['name'].'<i class="right fas fa-angle-left"></i></p>
+                        <a href="#" class="nav-link ' . $classActive . '">
+                            <i class="nav-icon fas ' . $value['icon'] . '"></i>
+                            <p>' . $value['name'] . '<i class="right fas fa-angle-left"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="'.$value['navChild']['linkList'].'" class="nav-link">
+                                <a href="' . $value['navChild']['linkList'] . '" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="'.$value['navChild']['linkAdd'].'" class="nav-link">
+                                <a href="' . $value['navChild']['linkAdd'] . '" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add</p>
                                 </a>
@@ -196,7 +197,7 @@ class HelperBackend
                         </ul>
                     </li>';
             }
-        }    
+        }
         return $xhtml;
     }
 }
