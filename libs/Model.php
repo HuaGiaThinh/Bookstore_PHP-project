@@ -171,10 +171,10 @@ class Model
 	// LIST RECORD
 	public function listRecord($query)
 	{
-		$result = array();
+		$result = [];
 		if (!empty($query)) {
 			$resultQuery = $this->query($query);
-			if (mysqli_num_rows($resultQuery) > 0) {
+			if (!empty($resultQuery) && mysqli_num_rows($resultQuery) > 0) {
 				while ($row = mysqli_fetch_assoc($resultQuery)) {
 					$result[] = $row;
 				}
@@ -214,7 +214,7 @@ class Model
 		$result = array();
 		if (!empty($query)) {
 			$resultQuery = $this->query($query);
-			if (mysqli_num_rows($resultQuery) > 0) {
+			if (!empty($resultQuery) && mysqli_num_rows($resultQuery) > 0) {
 				$result = mysqli_fetch_assoc($resultQuery);
 			}
 			mysqli_free_result($resultQuery);
@@ -237,7 +237,7 @@ class Model
 		$result = [];
 		if(!empty($query)){
 			$resultQuery = $this->query($query);
-			if(mysqli_num_rows($resultQuery) > 0){
+			if(!empty($resultQuery) && mysqli_num_rows($resultQuery) > 0){
 				$result = mysqli_fetch_assoc($resultQuery);
 			}
 			mysqli_free_result($resultQuery);
