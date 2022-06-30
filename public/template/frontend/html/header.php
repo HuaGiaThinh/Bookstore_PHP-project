@@ -1,5 +1,7 @@
 <?php
-$linkHome       = URL::createLink($this->params['module'], 'index', 'index');
+$userInfo = Session::get('user');
+
+$linkHome       = 'index.php';
 $linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
 $linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
@@ -11,10 +13,9 @@ $arrMenu = [
     ['text' => 'Đăng ký', 'link' => $linkRegister]
 ];
 
-$userInfo = Session::get('user');
 if ($userInfo) {
     $arrMenu = [
-        ['text' => 'Profile', 'link' => $linkProfile],
+        ['text' => 'Tài khoản', 'link' => $linkProfile],
         ['text' => 'Đăng xuất', 'link' => $linkLogout]
     ];
 
@@ -64,7 +65,11 @@ $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
                         <div class="top-header">
                             <ul class="header-dropdown">
                                 <li class="onhover-dropdown mobile-account">
-                                    <img src="<?= $this->_pathImg ?>avatar.png" alt="avatar">
+                                    <div style="display: flex;align-items: center">
+                                        <img src="<?= $this->_pathImg ?>avatar.png" alt="avatar">
+                                        <b>Gia Thịnh</b>
+                                    </div>
+
                                     <?= $userMenu ?>
                                 </li>
                             </ul>

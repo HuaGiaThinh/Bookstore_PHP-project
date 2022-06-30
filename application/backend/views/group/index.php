@@ -1,8 +1,5 @@
 <?php
-$message = HelperBackend::showMessage();
-
 $linkIndex  = URL::createLink($this->params['module'], $this->params['controller'], 'index');
-$linkAdd    = URL::createLink($this->params['module'], $this->params['controller'], 'form');
 $xhtmlFilterStatus = HelperBackend::showFilterStatus($this->countItemFilter, $this->params);
 
 $items = $this->items;
@@ -27,7 +24,7 @@ if (!empty($items)) {
 }
 
 // filter group_acp
-$arrGroupAcp = ['default' => 'Select Group Acp', 1 => 'Active', 0 => 'Inactive'];
+$arrGroupAcp = ['default' => 'All', 1 => 'Active', 0 => 'Inactive'];
 $filterGroupAcp = Form::select('group_acp', $arrGroupAcp, 'filter-element', @$this->params['group_acp']);
 
 // pagination

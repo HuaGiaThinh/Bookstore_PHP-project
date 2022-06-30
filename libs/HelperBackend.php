@@ -191,14 +191,14 @@ class HelperBackend
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="' . $value['navChild']['linkList'] . '" class="nav-link '.$value['navChild']['classChild-list'].'">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fas fa-list-ul nav-icon"></i>
                                     <p>List</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="' . $value['navChild']['linkAdd'] . '" class="nav-link '.$value['navChild']['classChild-form'].'">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add</p>
+                                    <i class="fas fa-edit nav-icon"></i>
+                                    <p>Form</p>
                                 </a>
                             </li>
                         </ul>
