@@ -34,6 +34,26 @@ function generateString(length = 12) {
     return result;
 }
 
+function getUrlVars(key) {
+    var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+    return result && unescape(result[1]) || "";
+}
+
+function activeSidebar() {
+    $controller = getUrlVars('controller');
+    $action     = getUrlVars('action');
+
+    if ($action == 'changePassword') {
+        $('.' + $action).addClass('active');
+        return true;
+    }
+
+    $('.' + $controller).parent().addClass('menu-is-opening menu-open');
+    $('.' + $controller).addClass('active');
+    $('.' + $controller + '-' + $action).addClass('active');
+
+}
+
 $(document).ready(function () {
     $('input[name=checkall-toggle]').change(function () {
         var checkStatus = this.checked;
@@ -191,5 +211,8 @@ $(document).ready(function () {
     
         $('.input-password').val(generateString());
     });
+
+    // handle mene sidebar
+    activeSidebar();
 })
 

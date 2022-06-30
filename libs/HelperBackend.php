@@ -161,11 +161,10 @@ class HelperBackend
         return $randomString;
     }
 
-    public static function createNav($arrNav, $params)
+    public static function createNav($arrNav)
     {
         $xhtml = '';
         foreach ($arrNav as $value) {
-            $classActive = (ucfirst($params['controller']) == $value['name']) ? 'active' : '';
             if (!isset($value['navChild'])) {
                 $xhtml .= sprintf('
                     <li class="nav-item">
@@ -173,23 +172,23 @@ class HelperBackend
                             <i class="nav-icon fas %s"></i>
                             <p>%s</p>
                         </a>
-                    </li>', $value['linkNav'], $classActive, $value['icon'], $value['name']);
+                    </li>', $value['linkNav'], $value['class'], $value['icon'], $value['name']);
             } else {
                 $xhtml .= '
                     <li class="nav-item">
-                        <a href="#" class="nav-link ' . $classActive . '">
+                        <a href="#" class="nav-link '.$value['class'].'">
                             <i class="nav-icon fas ' . $value['icon'] . '"></i>
                             <p>' . $value['name'] . '<i class="right fas fa-angle-left"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="' . $value['navChild']['linkList'] . '" class="nav-link">
+                                <a href="' . $value['navChild']['linkList'] . '" class="nav-link '.$value['navChild']['classChild-list'].'">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="' . $value['navChild']['linkAdd'] . '" class="nav-link">
+                                <a href="' . $value['navChild']['linkAdd'] . '" class="nav-link '.$value['navChild']['classChild-form'].'">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add</p>
                                 </a>

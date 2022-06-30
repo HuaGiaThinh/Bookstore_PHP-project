@@ -1,57 +1,65 @@
 <?php
-$linkHome = URL::createLink($this->params['module'], 'dashboard', 'index');
+$linkHome       = URL::createLink($this->params['module'], 'dashboard', 'index');
+$linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 
 $arrNavigation = [
     [
         'linkNav' => URL::createLink($this->params['module'], 'dashboard', 'index'),
         'name' => 'Dashboard',
+        'class' => 'dashboard',
         'icon' => 'fa-tachometer-alt',
 
     ],
     [
-        'linkNav' => '#',
+        'linkNav' => URL::createLink($this->params['module'], 'group', 'index'),
         'name' => 'Group',
+        'class' => 'group',
         'icon' => 'fa-users',
-        // 'navChild' => [
-        //     'linkList'  => URL::createLink($this->params['module'], 'group', 'index'),
-        //     'linkAdd'   => URL::createLink($this->params['module'], 'group', 'form')
-        // ]
-
     ],
     [
         'name' => 'User',
         'icon' => 'fa-user',
+        'class' => 'user',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'user', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form')
+            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form'),
+            'classChild-list' => 'user-index',
+            'classChild-form' => 'user-form'
         ]
 
     ],
     [
         'name' => 'Category',
         'icon' => 'fa-thumbtack',
+        'class' => 'category',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'category', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form')
+            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form'),
+            'classChild-list' => 'category-index',
+            'classChild-form' => 'category-form',
         ]
 
     ],
     [
         'name' => 'Book',
         'icon' => 'fa-book-open',
+        'class' => 'book',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'book', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'book', 'form')
+            'linkAdd'   => URL::createLink($this->params['module'], 'book', 'form'),
+            'classChild-list' => 'book-index',
+            'classChild-form' => 'book-form',
         ]
     ],
     [
         'linkNav' => URL::createLink($this->params['module'], 'user', 'changePassword'),
         'name' => 'ChangePassword',
+        'class' => 'changePassword',
         'icon' => 'fa-key',
     ],
 ];
 
-$xhtmlNavigation =  HelperBackend::createNav($arrNavigation, $this->params);
+$xhtmlNavigation =  HelperBackend::createNav($arrNavigation);
 ?>
 <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
@@ -68,7 +76,7 @@ $xhtmlNavigation =  HelperBackend::createNav($arrNavigation, $this->params);
                 <img src="<?= $this->_pathImg ?>avatar.jpg" class="img-circle elevation-2" alt="User Image" />
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?= ucfirst($userInfo['username']); ?></a>
+                <a href="<?= $linkProfile; ?>" class="d-block"><?= ucfirst($userInfo['username']); ?></a>
             </div>
         </div>
 
