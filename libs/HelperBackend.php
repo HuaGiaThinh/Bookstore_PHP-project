@@ -32,6 +32,14 @@ class HelperBackend
         return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-groupAcp"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
+    public static function showItemGroupACP_disable($groupACP)
+    {
+        $text = ($groupACP == '0') ? 'Inactive' : 'Active';
+        $color = ($groupACP == '0') ? 'secondary' : 'info';
+
+        return sprintf('<button type="button" class="btn btn-sm btn-%s">%s</button>', $color, $text);
+    }
+
     public static function showItemBookSpecial($id, $special, $params)
     {
         $activeClass = 'success';
@@ -199,4 +207,6 @@ class HelperBackend
         }
         return $xhtml;
     }
+
+
 }

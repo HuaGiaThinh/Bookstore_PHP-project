@@ -54,8 +54,11 @@ class BookController extends Controller
                 ->addRule('price', 'int', ['min' => 1000, 'max' => 1000000])
                 ->addRule('special', 'select')
                 ->addRule('status', 'select')
-                ->addRule('category_id', 'select')
-                ->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
+                ->addRule('category_id', 'select');
+
+                if (isset($this->_arrParam['form']['picture'])) {
+                    $validate->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
+                }
 
             $validate->run();
             $error      = $validate->getError();

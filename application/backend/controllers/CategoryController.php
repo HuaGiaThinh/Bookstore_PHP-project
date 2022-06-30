@@ -46,9 +46,11 @@ class CategoryController extends Controller
 
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('name', 'string', ['min' => 5, 'max' => 255])
-                ->addRule('status', 'select')
-                ->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
-
+                ->addRule('status', 'select');
+            if (isset($this->_arrParam['form']['picture'])) {
+                $validate->addRule('picture', 'file', ['min' => 100, 'max' => 1000000, 'extension' => ['jpg', 'png']], false);
+            }
+                
             $validate->run();
             $error      = $validate->getError();
 

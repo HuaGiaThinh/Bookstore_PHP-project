@@ -8,9 +8,6 @@ class GroupController extends Controller
         $this->_templateObj->setFileTemplate('index.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
-
-        // Block Group
-        URL::redirect($this->_arrParam['module'], 'dashboard', 'index');
     }
 
     public function indexAction()
@@ -30,6 +27,8 @@ class GroupController extends Controller
 
     public function formAction()
     {
+        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+
         $this->_view->_title = "ADD GROUP";
 
         $flagId = false;
@@ -71,18 +70,21 @@ class GroupController extends Controller
 
     public function changeStatusAction()
     {
+        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
         $result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-status']);
         echo $result;
     }
 
     public function changeGroupAcpAction()
     {
+        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
         $result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-groupACP']);
         echo $result;
     }
 
     public function deleteAction()
     {
+        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
         $this->_model->deleteItems($this->_arrParam);
         URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
     }

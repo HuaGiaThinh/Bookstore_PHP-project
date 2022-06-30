@@ -86,7 +86,6 @@ class UserController extends Controller
         if (isset($this->_arrParam['form'])) {
             $data       = $this->_arrParam['form'];
             $this->_model->updateProfile($data);
-            URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
         }
         $this->_view->render('user' . '/profile');
     }
@@ -123,9 +122,9 @@ class UserController extends Controller
         if (isset($this->_arrParam['form'])) {
             $data       = $this->_arrParam['form'];
 
-            $password         = md5($data['old_password']);
-            $newPassword     = $data['password'];
-            $validate         = new Validate($data);
+            $password       = md5($data['old_password']);
+            $newPassword    = $data['password'];
+            $validate       = new Validate($data);
 
             $query        = "SELECT `id` FROM `user` WHERE `password` = '$password'";
             $validate->addRule('old_password', 'existRecord', array('database' => $this->_model, 'query' => $query))
@@ -137,7 +136,6 @@ class UserController extends Controller
 
             if (empty($error)) {
                 $this->_model->changePassword($data);
-                URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
             } else {
                 $this->_view->data = $data;
                 $this->_view->errors = $validate->showErrors();

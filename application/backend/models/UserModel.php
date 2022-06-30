@@ -175,6 +175,7 @@ class UserModel extends Model
         $data['modified_by']    = $this->_userInfo['username'];
 
         $this->update($data, [['id', $this->_userInfo['id']]]);
+        Session::set('message', 'Cập nhật thông tin thành công!');
     }
 
     public function changePassword($data)
@@ -189,6 +190,7 @@ class UserModel extends Model
         }
 
         $this->update($data, [['id', $this->_userInfo['id']]]);
+        Session::set('message', 'Thay đổi mật khẩu thành công!');
     }
 
     public function infoItem($params, $option = null)
