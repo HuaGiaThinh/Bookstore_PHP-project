@@ -153,6 +153,7 @@ class BookModel extends Model
     {
         $data = $params['form'];
 
+        $data['name']           = $this->escapeString($data['name']);
         $data['description']    = $this->escapeString($data['description']);
         $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'book');
         $data['created']        = date("Y:m:d H:i:s");
@@ -172,6 +173,7 @@ class BookModel extends Model
             $this->_uploadObj->removeFile('book', $item['picture']);
         }
 
+        $data['name']           = $this->escapeString($data['name']);
         $data['description']    = $this->escapeString($data['description']);
         $data['modified']       = date("Y:m:d H:i:s");
         $data['modified_by']    = $this->_userInfo['username'];

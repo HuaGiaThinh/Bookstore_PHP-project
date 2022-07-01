@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // activeMenu();
+    activeMenu();
 
     $('.slide-5').on('setPosition', function () {
         $(this).find('.slick-slide').height('auto');
@@ -69,9 +69,11 @@ $(document).ready(function () {
 });
 
 function activeMenu() {
-    // let controller = getUrlParam('controller') == null ? 'index' : getUrlParam('controller');
-    // let action = getUrlParam('action') == null ? 'index' : getUrlParam('action');
-    let dataActive = controller + '-' + action;
+    let controller  = (getUrlParam('controller') == null) ? 'index' : getUrlParam('controller');
+    let action      = (getUrlParam('action') == null) ? 'index' : getUrlParam('action');
+    let dataActive  = controller + '-' + action;
+
+    console.log(dataActive);
     $(`a[data-active=${dataActive}]`).addClass('my-menu-link active');
 }
 

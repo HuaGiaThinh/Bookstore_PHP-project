@@ -2,12 +2,13 @@
 $userInfo = Session::get('user');
 
 $linkHome       = 'index.php';
-$linkRegister   = URL::createLink($this->params['module'], $this->params['controller'], 'register');
-$linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
+$linkRegister   = URL::createLink($this->params['module'], 'index', 'register');
+$linkLogin      = URL::createLink($this->params['module'], 'index', 'login');
 $linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 $linkAdmin      = URL::createLink('backend', 'dashboard', 'index');
 $linkCategory   = URL::createLink($this->params['module'], 'category', 'index');
+$linkBook       = URL::createLink($this->params['module'], 'book', 'list');
 
 $arrMenu = [
     ['text' => 'Đăng nhập', 'link' => $linkLogin],
@@ -28,13 +29,14 @@ $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
 
 
 // Menu category
-function listCategory() {
+function listCategory()
+{
     $model = new Model();
 
     $query[]     = 'SELECT `id`, `name` FROM `' . TBL_CATEGORY . '`';
     $query[]     = "WHERE `status` = 'active'";
     $query[]     = "ORDER BY `ordering` ASC";
-    
+
     $query              = implode(" ", $query);
     $listCategory       = $model->fetchAll($query);
     return $listCategory;
@@ -44,7 +46,7 @@ $listCategory = listCategory();
 $xhtmlCats = '';
 if (!empty($listCategory)) {
     foreach ($listCategory as $value) {
-        $link = '#';
+        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']]);
         $xhtmlCats .= sprintf('<li><a href="%s">%s</a></li>', $link, $value['name']);
     }
 }
@@ -71,10 +73,10 @@ if (!empty($listCategory)) {
                                     <li>
                                         <div class="mobile-back text-right">Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
                                     </li>
-                                    <li><a href="<?= $linkHome; ?>" class="my-menu-link active">Trang chủ</a></li>
-                                    <li><a href="list.html">Sách</a></li>
+                                    <li><a href="<?= $linkHome; ?>" data-active="index-index">Trang chủ</a></li>
+                                    <li><a href="<?= $linkBook; ?>" data-active="book-list">Sách</a></li>
                                     <li>
-                                        <a href="<?= $linkCategory; ?>">Danh mục</a>
+                                        <a href="<?= $linkCategory; ?>" data-active="category-index">Danh mục</a>
                                         <ul>
                                             <?= $xhtmlCats; ?>
                                         </ul>

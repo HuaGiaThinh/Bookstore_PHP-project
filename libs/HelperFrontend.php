@@ -24,7 +24,19 @@ class HelperFrontend
         foreach ($arrNav as $key => $value) {
             $classActive = $key == $params['action'] ? 'active' : '';
             $xhtml .= sprintf('<li class="%s"><a href="%s">%s</a></li>', $classActive, $value['link'], $value['text']);
-        }    
+        }
+        return $xhtml;
+    }
+
+    public static function showItemSaleOff($saleOff)
+    {
+        $xhtml = '';
+        if ($saleOff != 0) {
+            $xhtml = '
+                <div class="lable-block">
+                    <span class="lable4 badge badge-danger"> -' . $saleOff . '%</span>
+                </div>';
+        }
         return $xhtml;
     }
 }
