@@ -232,6 +232,21 @@ class Model
 		return false;
 	}
 
+	// LIST RECORD
+	public function fetchAll($query){
+		$result = array();
+		if(!empty($query)){
+			$resultQuery = $this->query($query);
+			if(!empty($resultQuery) && mysqli_num_rows($resultQuery) > 0){
+				while($row = mysqli_fetch_assoc($resultQuery)){
+					$result[] = $row;
+				}
+				mysqli_free_result($resultQuery);
+			}
+		}
+		return $result;
+	}
+
 	// SINGLE RECORD
 	public function fetchRow($query){
 		$result = [];

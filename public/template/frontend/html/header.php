@@ -6,7 +6,8 @@ $linkRegister   = URL::createLink($this->params['module'], $this->params['contro
 $linkLogin      = URL::createLink($this->params['module'], $this->params['controller'], 'login');
 $linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
-$linkAdmin    = URL::createLink('backend', 'dashboard', 'index');
+$linkAdmin      = URL::createLink('backend', 'dashboard', 'index');
+$linkCategory   = URL::createLink($this->params['module'], 'category', 'index');
 
 $arrMenu = [
     ['text' => 'Đăng nhập', 'link' => $linkLogin],
@@ -24,6 +25,29 @@ if ($userInfo) {
     }
 }
 $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
+
+
+// Menu category
+function listCategory() {
+    $model = new Model();
+
+    $query[]     = 'SELECT `id`, `name` FROM `' . TBL_CATEGORY . '`';
+    $query[]     = "WHERE `status` = 'active'";
+    $query[]     = "ORDER BY `ordering` ASC";
+    
+    $query              = implode(" ", $query);
+    $listCategory       = $model->fetchAll($query);
+    return $listCategory;
+}
+
+$listCategory = listCategory();
+$xhtmlCats = '';
+if (!empty($listCategory)) {
+    foreach ($listCategory as $value) {
+        $link = '#';
+        $xhtmlCats .= sprintf('<li><a href="%s">%s</a></li>', $link, $value['name']);
+    }
+}
 
 ?>
 <header class="my-header sticky">
@@ -50,13 +74,9 @@ $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
                                     <li><a href="<?= $linkHome; ?>" class="my-menu-link active">Trang chủ</a></li>
                                     <li><a href="list.html">Sách</a></li>
                                     <li>
-                                        <a href="category.html">Danh mục</a>
+                                        <a href="<?= $linkCategory; ?>">Danh mục</a>
                                         <ul>
-                                            <li><a href="list.html">Bà mẹ - Em bé</a></li>
-                                            <li><a href="list.html">Chính Trị - Pháp Lý</a></li>
-                                            <li><a href="list.html">Học Ngoại Ngữ</a></li>
-                                            <li><a href="list.html">Công Nghệ Thông Tin</a></li>
-                                            <li><a href="list.html">Giáo Khoa - Giáo Trình</a>
+                                            <?= $xhtmlCats; ?>
                                         </ul>
                                     </li>
                                 </ul>
