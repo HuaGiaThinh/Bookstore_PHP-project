@@ -12,6 +12,7 @@ if (!empty($items)) {
         $id         = $item['id'];
         $name       = HelperBackend::highlight(@$this->params['search'], $item['name']);
         $status     = HelperBackend::showItemStatus($id, $item['status'], $this->params);
+        $ordering   = HelperBackend::showInputOrdering($id, $item['ordering'], $this->params);
         $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
         $linkDelete = URL::createLink($this->params['module'], $this->params['controller'], 'delete', ['id' => $id]);
@@ -23,7 +24,8 @@ if (!empty($items)) {
         if (file_exists($picturePath)) {
             $pictureURL = UPLOAD_URL . 'category/' . $item['picture'];
         }
-        $picture = '<img style="height:90px; width:75px" src="' . $pictureURL . '">';
+        // $picture = '<img style="height:90px; width:75px" src="' . $pictureURL . '">';
+        $picture = '<img class="item-image w-100" src="' . $pictureURL . '">';
 
         $xhtml .= '
             <tr>
@@ -32,6 +34,7 @@ if (!empty($items)) {
                 <td>' . $name . '</td>
                 <td>' . $picture . '</td>
                 <td class="position-relative">' . $status . '</td>
+                <td class="position-relative">' . $ordering . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
                 <td>
@@ -142,8 +145,9 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <th><input type="checkbox" name="checkall-toggle"></th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Picture</th>
+                                    <th style="width: 120px; padding: 5px">Picture</th>
                                     <th>Status</th>
+                                    <th style="width: 90px">Ordering</th>
                                     <th>Created</th>
                                     <th>Modified</th>
                                     <th>Action</th>

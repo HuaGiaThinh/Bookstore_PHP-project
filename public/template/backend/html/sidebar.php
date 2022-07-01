@@ -22,7 +22,7 @@ $arrNavigation = [
         'class' => 'user',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'user', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form'),
+            'linkForm'   => URL::createLink($this->params['module'], 'user', 'form'),
             'classChild-list' => 'user-index',
             'classChild-form' => 'user-form'
         ]
@@ -34,7 +34,7 @@ $arrNavigation = [
         'class' => 'category',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'category', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'user', 'form'),
+            'linkForm'   => URL::createLink($this->params['module'], 'category', 'form'),
             'classChild-list' => 'category-index',
             'classChild-form' => 'category-form',
         ]
@@ -46,7 +46,7 @@ $arrNavigation = [
         'class' => 'book',
         'navChild' => [
             'linkList'  => URL::createLink($this->params['module'], 'book', 'index'),
-            'linkAdd'   => URL::createLink($this->params['module'], 'book', 'form'),
+            'linkForm'   => URL::createLink($this->params['module'], 'book', 'form'),
             'classChild-list' => 'book-index',
             'classChild-form' => 'book-form',
         ]

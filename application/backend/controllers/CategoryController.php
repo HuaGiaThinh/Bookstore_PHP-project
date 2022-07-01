@@ -77,6 +77,12 @@ class CategoryController extends Controller
         echo $result;
     }
 
+    public function changeOrderingAction()
+    {
+        $result = $this->_model->handleStatus($this->_arrParam, ['task' => 'change-ordering']);
+        echo $result;
+    }
+
     public function deleteAction()
     {
         $this->_model->deleteItems($this->_arrParam);

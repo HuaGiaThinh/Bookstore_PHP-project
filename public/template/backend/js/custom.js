@@ -203,6 +203,25 @@ $(document).ready(function () {
         })
     });
 
+    $(document).on('change', '#ordering', function (e) {
+        let value   = $(this).val();
+        let parent  = $(this).parent();
+        let url     = $(this).data('url');
+        url = url.replace('value_new', value);
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                parent.find("input#ordering").notify("Success", {
+                    className: 'success',
+                    position: 'top-center'
+                });
+            }
+        });
+    });
+
     // User changePassword
     $('.input-password').val(generateString());
 

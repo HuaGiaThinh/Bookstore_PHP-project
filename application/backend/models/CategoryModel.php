@@ -40,7 +40,7 @@ class CategoryModel extends Model
 
     public function listItems($params)
     {
-        $query[]     = "SELECT `id`, `name`, `picture`, `status`, `created`, `created_by`, `modified`, `modified_by`";
+        $query[]     = "SELECT `id`, `name`, `picture`, `status`, `ordering`, `created`, `created_by`, `modified`, `modified_by`";
         $query[]     = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` > 0";
 
@@ -88,7 +88,7 @@ class CategoryModel extends Model
 
     public function singleItem($params)
     {
-        $query[]     = "SELECT `id`, `name`, `picture`, `status`";
+        $query[]     = "SELECT `id`, `name`, `picture`, `status`, `ordering`";
         $query[]     = "FROM `{$this->table}`";
         $query[]     = "WHERE `id` = {$params['id']}";
         $query        = implode(" ", $query);
@@ -112,6 +112,10 @@ class CategoryModel extends Model
             $this->update(['group_acp' => $groupACP], [['id', $params['id']]]);
             return HelperBackend::showItemGroupACP($params['id'], $groupACP, $params);
         }
+
+        if ($option['task'] == 'change-ordering') {
+            $this->update(['ordering' => $params['ordering']], [['id', $params['id']]]);
+        }
     }
 
     public function deleteItems($params)
@@ -132,6 +136,8 @@ class CategoryModel extends Model
         $data['picture']        = $this->_uploadObj->uploadFile($data['picture'], 'category');
         $data['created']        = date("Y:m:d H:i:s");
         $data['created_by']     = $this->_userInfo['username'];
+        if ($data['ordering'] == null) $data['ordering'] = 10;
+
         $this->insert($data);
         Session::set('message', 'Thêm phần tử thành công!');
     }

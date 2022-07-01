@@ -69,6 +69,12 @@ class HelperBackend
         );
     }
 
+    public static function showInputOrdering($id, $ordering, $params)
+    {
+        $link = URL::createLink($params['module'], $params['controller'], 'changeOrdering', ['id' => $id, 'ordering' => 'value_new']);
+        return sprintf('<input type="number" value="%s" id="ordering" data-url="%s" class="form-control form-control-sm m-auto text-center" style="width:65px;font-size: 16px;">', $ordering, $link);
+    }
+
     public static function input($type, $name, $value, $class = null, $require = null)
     {
         $xhtml = sprintf('<input type="%s" name="%s" value="%s" class="%s" %s />', $type, $name, $value, $class, $require);
@@ -196,7 +202,7 @@ class HelperBackend
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="' . $value['navChild']['linkAdd'] . '" class="nav-link '.$value['navChild']['classChild-form'].'">
+                                <a href="' . $value['navChild']['linkForm'] . '" class="nav-link '.$value['navChild']['classChild-form'].'">
                                     <i class="fas fa-edit nav-icon"></i>
                                     <p>Form</p>
                                 </a>

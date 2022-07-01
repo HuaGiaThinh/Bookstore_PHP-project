@@ -14,6 +14,10 @@ $elements = [
         'label'     => Form::label('Status'),
         'element'   => Form::select('form[status]', $arrOptions['status'], 'custom-select', @$this->data['status'])
     ],
+    'ordering' => [
+        'label'     => Form::label('Ordering', false),
+        'element'   => Form::input('number', 'form[ordering]', @$this->data['ordering'], 'form-control')
+    ],
     'picture' => [
         'label'     => Form::label('Picture'),
         'element'   => Form::input('file', 'picture', '', 'input-group')
