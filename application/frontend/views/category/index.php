@@ -4,12 +4,7 @@ $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
         $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $item['id']]);
-
-        $picturePath    = UPLOAD_PATH . $this->params['controller'] . DS . $item['picture'];
-        $pictureURL     = UPLOAD_URL . '/default' . '/defaultImage.jpg';
-        if (file_exists($picturePath)) {
-            $pictureURL = UPLOAD_URL . $this->params['controller'] . DS . $item['picture'];
-        }
+        $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
         $xhtml .=
             '<div class="product-box">

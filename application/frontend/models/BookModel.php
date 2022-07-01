@@ -22,6 +22,19 @@ class BookModel extends Model
         
     }
 
+    public function infoItem($params, $option = null)
+    {
+        if ($option == null) {
+            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
+            $query[]     = "FROM `{$this->table}`";
+            $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
+    
+            $query        = implode(" ", $query);
+            $result        = $this->fetchRow($query);
+            return $result;
+        }
+    }
+
     public function listCategory($params)
     {
         $query[]     = 'SELECT `id`, `name` FROM `' . TBL_CATEGORY . '`';
@@ -31,16 +44,5 @@ class BookModel extends Model
         $query       = implode(" ", $query);
         $result      = $this->fetchAll($query);
         return $result;
-    }
-
-    public function addItem($data)
-    {
-        $data['password'] = md5($data['password']);
-        $data['group_id'] = 4;
-        $data['status'] = 'inactive';
-        $data['register_date'] = date("Y:m:d H:i:s");
-        $data['register_ip'] = $_SERVER["REMOTE_ADDR"];
-
-        $this->insert($data);
     }
 }

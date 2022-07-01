@@ -20,13 +20,9 @@ if (!empty($this->items)) {
         $priceAfterSaleOff = $item['price'] - (($item['price'] * $item['sale_off']) / 100);
         $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
 
-        $picturePath    = UPLOAD_PATH . $this->params['controller'] . DS . $item['picture'];
+        $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
-        $pictureURL     = UPLOAD_URL . '/default' . '/defaultImage.jpg';
-        if (file_exists($picturePath)) {
-            $pictureURL = UPLOAD_URL . $this->params['controller'] . DS . $item['picture'];
-        }
-
+        $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id'], 'pictureSrc'=> $pictureURL]);
         $xhtml .= '
             <div class="col-xl-3 col-6 col-grid-box">
                 <div class="product-box">
@@ -38,7 +34,7 @@ if (!empty($this->items)) {
                         </div>
                         <div class="cart-info cart-wrap">
                             <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                            <a href="#" title="Quick View"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
+                            <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                         </div>
                     </div>
                     <div class="product-detail">
@@ -65,7 +61,6 @@ if (!empty($this->items)) {
             <h5 class="text-center alert alert-danger">Dữ liệu đang được cập nhật!</h5>
         </div>';
 }
-
 ?>
 <div class="breadcrumb-section">
     <div class="container">
@@ -197,3 +192,53 @@ if (!empty($this->items)) {
         </div>
     </div>
 </section>
+
+<div class="modal fade bd-example-modal-lg theme-modal" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content quick-view-modal">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12">
+                        <div class="quick-view-img"><img src="blabla.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
+                    </div>
+                    <div class="col-lg-6 rtl-text">
+                        <div class="product-right">
+                            <h2 class="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
+                                distinctio.</h2>
+                            <h3 class="book-price">26.910 ₫ <del>39.000 ₫</del></h3>
+                            <div class="border-product">
+                                <div class="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
+                                    elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
+                                    itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
+                                    in?</div>
+                            </div>
+                            <div class="product-description border-product">
+                                <h6 class="product-title">Số lượng</h6>
+                                <div class="qty-box">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
+                                                <i class="ti-angle-left"></i>
+                                            </button>
+                                        </span>
+                                        <input type="text" name="quantity" class="form-control input-number" value="1">
+                                        <span class="input-group-prepend">
+                                            <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
+                                                <i class="ti-angle-right"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-buttons">
+                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>
+                                <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

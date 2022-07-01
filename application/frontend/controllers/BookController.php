@@ -19,8 +19,16 @@ class BookController extends Controller
     public function listAction()
     {
         $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
-    
         $this->_view->listCategory = $this->_model->listCategory($this->_arrParam);
         $this->_view->render($this->_arrParam['controller'] . '/list');
+    }
+
+    public function ajaxQuickViewAction()
+    {
+        $result = $this->_model->infoItem($this->_arrParam);
+
+        $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
+        $result['pictureURL'] = $pictureURL;
+        echo json_encode($result);
     }
 }

@@ -39,4 +39,15 @@ class HelperFrontend
         }
         return $xhtml;
     }
+
+    public static function createPictureURL($picture, $params)
+    {
+        $picturePath    = UPLOAD_PATH . $params['controller'] . DS . $picture;
+
+        $pictureURL     = UPLOAD_URL . '/default' . '/defaultImage.jpg';
+        if (file_exists($picturePath)) {
+            $pictureURL = UPLOAD_URL . $params['controller'] . DS . $picture;
+        }
+        return $pictureURL;
+    }
 }
