@@ -24,9 +24,10 @@ class BookController extends Controller
         $this->_view->_title = "<title>{$bookInfo['name']}</title>";
 
         $this->_view->bookInfo = $bookInfo;
-
         $this->_arrParam['category_id'] = $bookInfo['category_id'];
         $this->_view->relatedBooks = $this->_model->listItems($this->_arrParam, ['task' => 'related-books']);
+
+        $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
         $this->_view->render($this->_arrParam['controller'] . '/detail');
     }
 
