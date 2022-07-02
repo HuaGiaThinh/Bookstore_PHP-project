@@ -12,7 +12,18 @@ class IndexController extends Controller
 
     public function indexAction()
     {
+
+        $this->_view->specialBook = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
         $this->_view->render($this->_arrParam['controller'] . '/index');
+    }
+
+    public function ajaxQuickViewAction()
+    {
+        $result = $this->_model->infoItem($this->_arrParam, ['task' => 'quick-view-book']);
+
+        $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
+        $result['pictureURL'] = $pictureURL;
+        echo json_encode($result);
     }
 
     public function registerAction()

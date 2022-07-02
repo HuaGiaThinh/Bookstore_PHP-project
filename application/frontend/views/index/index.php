@@ -26,14 +26,10 @@
                     </div>
                     <div class="col-lg-6 rtl-text">
                         <div class="product-right">
-                            <h2 class="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
-                                distinctio.</h2>
-                            <h3 class="book-price">26.910 ₫ <del>39.000 ₫</del></h3>
+                            <h2 class="book-name"></h2>
+                            <h3 class="book-price"></h3>
                             <div class="border-product">
-                                <div class="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
-                                    elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
-                                    itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
-                                    in?</div>
+                                <div class="book-description"></div>
                             </div>
                             <div class="product-description border-product">
                                 <h6 class="product-title">Số lượng</h6>

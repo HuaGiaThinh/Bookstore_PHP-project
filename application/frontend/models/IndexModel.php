@@ -7,6 +7,22 @@ class IndexModel extends Model
         $this->setTable(TBL_USER);
     }
 
+    public function listItems($params, $option = null)
+    {
+        if ($option['task'] == 'special-books') {
+            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
+            $query[]     = "FROM `".TBL_BOOK."`";
+            $query[]     = "WHERE `status` = 'active' AND `special` = 1";
+            $query[]     = "ORDER BY `ordering` ASC";
+            $query[]     = "LIMIT 0, 6";
+    
+            $query        = implode(" ", $query);
+            $result        = $this->fetchAll($query);
+            return $result;
+        }
+        
+    }
+
     public function infoItem($params, $option = null)
     {
         if ($option == null) {
@@ -16,6 +32,16 @@ class IndexModel extends Model
             $query[]    = "FROM `user` AS `u` LEFT JOIN `group` AS g ON `u`.`group_id` = `g`.`id`";
             $query[]    = "WHERE `email` = '$email' AND `password` = '$password'";
 
+            $query        = implode(" ", $query);
+            $result        = $this->fetchRow($query);
+            return $result;
+        }
+
+        if ($option['task'] == 'quick-view-book') {
+            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
+            $query[]     = "FROM `".TBL_BOOK."`";
+            $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
+    
             $query        = implode(" ", $query);
             $result        = $this->fetchRow($query);
             return $result;
