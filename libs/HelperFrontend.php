@@ -52,4 +52,10 @@ class HelperFrontend
         }
         return $pictureURL;
     }
+
+    public static function priceSaleOff($originalPrice, $saleOff) 
+    {
+        $priceAfterSaleOff = $originalPrice - (($originalPrice * $saleOff) / 100);
+        return number_format($priceAfterSaleOff, 0, ',', '.');
+    }
 }

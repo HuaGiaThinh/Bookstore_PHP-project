@@ -12,6 +12,7 @@ class CategoryController extends Controller
 
     public function indexAction()
     {
+        $this->_view->_title = '<title>Danh mục sách</title>';
         $this->_view->items = $this->_model->listItems($this->_arrParam);
 
         $this->_view->render($this->_arrParam['controller'] . '/index');

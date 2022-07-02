@@ -10,15 +10,15 @@ $xhtml = '';
 if (!empty($this->items)) {
     $items = $this->items;
     foreach ($items as $item) {
-        $linkItem = '#';
+        $linkItem = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
         $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
-        $priceAfterSaleOff = $item['price'] - (($item['price'] * $item['sale_off']) / 100);
-        $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
+        $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
+
 
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
@@ -103,16 +103,16 @@ if (!empty($this->items)) {
                                                     <div class="collection-grid-view">
                                                         <ul>
                                                             <li class="my-layout-view" data-number="2">
-                                                                <img src="images/icon/2.png" alt="" class="product-2-layout-view">
+                                                                <img src="<?= $this->_pathImg ?>/icon/2.png" alt="" class="product-2-layout-view">
                                                             </li>
                                                             <li class="my-layout-view" data-number="3">
-                                                                <img src="images/icon/3.png" alt="" class="product-3-layout-view">
+                                                                <img src="<?= $this->_pathImg ?>/icon/3.png" alt="" class="product-3-layout-view">
                                                             </li>
                                                             <li class="my-layout-view active" data-number="4">
-                                                                <img src="images/icon/4.png" alt="" class="product-4-layout-view">
+                                                                <img src="<?= $this->_pathImg ?>/icon/4.png" alt="" class="product-4-layout-view">
                                                             </li>
                                                             <li class="my-layout-view" data-number="6">
-                                                                <img src="images/icon/6.png" alt="" class="product-6-layout-view">
+                                                                <img src="<?= $this->_pathImg ?>/icon/6.png" alt="" class="product-6-layout-view">
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -124,6 +124,7 @@ if (!empty($this->items)) {
                                                                 <option value="price_desc">Giá giảm dần</option>
                                                                 <option value="latest">Mới nhất</option>
                                                             </select>
+                                                            <span style="margin-left: -30px;"><i class="fa fa-caret-down fa-2x text-secondary" aria-hidden="true"></i></span>
                                                         </form>
                                                     </div>
                                                 </div>

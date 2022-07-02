@@ -19,6 +19,20 @@ class BookModel extends Model
             $result        = $this->fetchAll($query);
             return $result;
         }
+
+        if ($option['task'] == 'related-books') {
+            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
+            $query[]    = "FROM `{$this->table}`";
+            $query[]    = "WHERE `status` = 'active'";
+            $query[]    = "AND `category_id` = '{$params['category_id']}'";
+            $query[]    = "AND `id` <> '{$params['book_id']}'";
+            $query[]    = "ORDER BY `ordering` ASC";
+            $query[]    = "LIMIT 0, 6";
+    
+            $query        = implode(" ", $query);
+            $result        = $this->fetchAll($query);
+            return $result;
+        }
         
     }
 

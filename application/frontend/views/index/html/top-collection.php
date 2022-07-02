@@ -3,7 +3,7 @@ $xhtml = '';
 if (!empty($this->specialBook)) {
     $items = $this->specialBook;
     foreach ($items as $item) {
-        $linkItem = '#';
+        $linkItem = URL::createLink($this->params['module'], 'book', 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
         $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
