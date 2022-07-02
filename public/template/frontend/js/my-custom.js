@@ -66,7 +66,6 @@ $(document).ready(function () {
         e.preventDefault();
         let url = $(this).attr('href');
 
-        const PICTURE_URL = '/zvn-php15-project_HuaGiaThinh/public/files/book/';
         $.ajax({
             type: "GET",
             url: url,
@@ -74,11 +73,17 @@ $(document).ready(function () {
             success: function (response) {
                 let data = JSON.parse(response);
                 
-                console.log(data);
+                let description = formatDescription(data.description);
+                
                 let price = formatPriceVND(data.price);
+                let priceAfterSaleOff = data.price - ((data.price * data.sale_off) / 100);
+                priceAfterSaleOff = formatPriceVND(priceAfterSaleOff);
+                let xhtmlPrice =
+                data.sale_off == 0 ? price : `${priceAfterSaleOff} <del>${price}</del>`;
+
                 $('#quick-view .book-name').html(data.name);
-                $('#quick-view .book-price').html(price);
-                $('#quick-view .book-description').html(data.description);
+                $('#quick-view .book-price').html(xhtmlPrice);
+                $('#quick-view .book-description').html(description);
                 $('#quick-view .book-picture').attr('src', data.pictureURL);
             }
         });
@@ -104,33 +109,6 @@ function getUrlParam(key) {
     return searchParams.get(key);
 }
 
-function quickViewBook(link) {
-    // let link = rootURL + `index.php?module=${module}&controller=book&action=ajaxQuickView&book_id=` + id;
-    $.get(
-        link,
-        function (data) {
-            console.log(data);
-            console.log(123);
-            $('#quick-view .book-name').html(data.name);
-            let originalPrice = formatPriceVND(data.price);
-            let salePrice = formatPriceVND(data.sale_price);
-            let xhtmlPrice =
-                data.sale_off == 0 ? originalPrice : `${salePrice} <del>${originalPrice}</del>`;
-            $('#quick-view .book-price').html(xhtmlPrice);
-            $('#quick-view .book-description').html(data.short_description);
-            $('#quick-view .book-picture').attr('src', data.src_picture);
-            // let viewDetailLink = `index.php?module=default&controller=book&action=detail&id=${data.id}`;
-            let viewDetailLink = data.link;
-            $('#quick-view input[name="quantity"]').val(1);
-            $('#quick-view .btn-view-book-detail').attr('href', viewDetailLink);
-            let addToCartLink = `javascript:addToCart(${data.id}, ${data.sale_price})`;
-            $('#quick-view .btn-add-to-cart').attr('href', addToCartLink);
-            $('#quick-view').modal('show');
-        },
-        'json'
-    );
-}
-
 function changeQuantityInCart(link) {
     $.get(link, function (data) {
         $('#cart span').html(data);
@@ -142,4 +120,13 @@ function formatPriceVND(value) {
         style: 'currency',
         currency: 'VND',
     }).format(value);
+}
+
+function formatDescription(description) {
+    let strLen = description.length;
+    
+    if (strLen > 500) {
+        description = description.substring(0, 500);
+    }
+    return description + '...';
 }

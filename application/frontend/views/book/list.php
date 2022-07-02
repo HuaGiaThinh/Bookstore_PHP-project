@@ -22,7 +22,7 @@ if (!empty($this->items)) {
 
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
-        $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id'], 'pictureSrc'=> $pictureURL]);
+        $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
         $xhtml .= '
             <div class="col-xl-3 col-6 col-grid-box">
                 <div class="product-box">
@@ -200,18 +200,14 @@ if (!empty($this->items)) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
                 <div class="row">
                     <div class="col-lg-6 col-xs-12">
-                        <div class="quick-view-img"><img src="blabla.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
+                        <div class="quick-view-img"><img src="" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
                     </div>
                     <div class="col-lg-6 rtl-text">
                         <div class="product-right">
-                            <h2 class="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
-                                distinctio.</h2>
-                            <h3 class="book-price">26.910 ₫ <del>39.000 ₫</del></h3>
+                            <h2 class="book-name"></h2>
+                            <h3 class="book-price"><del></del></h3>
                             <div class="border-product">
-                                <div class="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
-                                    elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
-                                    itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
-                                    in?</div>
+                                <div class="book-description"></div>
                             </div>
                             <div class="product-description border-product">
                                 <h6 class="product-title">Số lượng</h6>

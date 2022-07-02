@@ -89,7 +89,7 @@ if (!empty($listCategory)) {
                                 <li class="onhover-dropdown mobile-account">
                                     <div style="display: flex;align-items: center">
                                         <img src="<?= $this->_pathImg ?>avatar.png" alt="avatar">
-                                        <b>Gia Thịnh</b>
+                                        <b><?= $userInfo['info']['username']?></b>
                                     </div>
 
                                     <?= $userMenu ?>
