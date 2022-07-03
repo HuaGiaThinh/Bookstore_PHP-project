@@ -278,7 +278,7 @@ if (!empty($this->relatedBooks)) {
                     <?php require_once 'html/special-books.php'; ?>
 
                     <!-- New Books -->
-                    <?php require_once 'html/books-new.php'; ?>
+                    <?php require_once 'html/new-books.php'; ?>
                 </div>
 
             </div>

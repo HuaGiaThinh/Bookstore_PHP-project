@@ -46,6 +46,18 @@ class BookModel extends Model
             $result        = $this->fetchAll($query);
             return $result;
         }
+
+        if ($option['task'] == 'new-books') {
+            $query[]     = "SELECT `id`, `name`, `picture`, `price`, `sale_off`";
+            $query[]    = "FROM `{$this->table}`";
+            $query[]    = "WHERE `status` = 'active'";
+            $query[]    = "ORDER BY `id` DESC";
+            $query[]    = "LIMIT 0, 6";
+    
+            $query        = implode(" ", $query);
+            $result        = $this->fetchAll($query);
+            return $result;
+        }
         
     }
 

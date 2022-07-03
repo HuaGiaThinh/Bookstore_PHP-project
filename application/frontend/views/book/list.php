@@ -83,6 +83,7 @@ if (!empty($this->items)) {
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="collection-product-wrapper">
+                                    <!-- filter -->
                                     <div class="product-top-filter">
                                         <div class="row">
                                             <div class="col-xl-12">

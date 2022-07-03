@@ -15,6 +15,7 @@ class BookController extends Controller
         $this->_view->_title = '<title>Danh mục sách</title>';
         $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
         $this->_view->listCategory = $this->_model->listCategory($this->_arrParam);
+        $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
         $this->_view->render($this->_arrParam['controller'] . '/list');
     }
 
@@ -28,6 +29,7 @@ class BookController extends Controller
         $this->_view->relatedBooks = $this->_model->listItems($this->_arrParam, ['task' => 'related-books']);
 
         $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
+        $this->_view->newBooks = $this->_model->listItems($this->_arrParam, ['task' => 'new-books']);
         $this->_view->render($this->_arrParam['controller'] . '/detail');
     }
 
