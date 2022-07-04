@@ -31,7 +31,7 @@ class CategoryModel extends Model
         if (!empty($searchValue)) $query[]    = "AND {$this->createSearchQuery($searchValue)}";
 
         // Filter group acp
-        if (isset($params['group_acp']) && $params['group_acp'] != 'default') $query[] = "AND `group_acp` = '{$params['group_acp']}'";
+        if (isset($params['show_at_home']) && $params['show_at_home'] != 'default') $query[] = "AND `show_at_home` = '{$params['show_at_home']}'";
 
         $query        = implode(" ", $query);
         $result = $this->singleRecord($query);
@@ -40,7 +40,7 @@ class CategoryModel extends Model
 
     public function listItems($params)
     {
-        $query[]     = "SELECT `id`, `name`, `picture`, `status`, `ordering`, `created`, `created_by`, `modified`, `modified_by`";
+        $query[]     = "SELECT `id`, `name`, `picture`, `status`, `show_at_home`, `ordering`, `created`, `created_by`, `modified`, `modified_by`";
         $query[]     = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` > 0";
 
@@ -52,6 +52,9 @@ class CategoryModel extends Model
 
         // Filter Status
         if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
+
+        // Filter category id
+        if (isset($params['show_at_home']) && $params['show_at_home'] != 'default') $query[] = "AND `show_at_home` = '{$params['show_at_home']}'";
 
         // PAGINATION
         $pagination            = $params['pagination'];
@@ -106,11 +109,11 @@ class CategoryModel extends Model
             return HelperBackend::showItemStatus($params['id'], $status, $params);
         }
 
-        if ($option['task'] == 'change-groupACP') {
-            $groupACP = ($params['group_acp'] == 0) ? 1 : 0;
+        if ($option['task'] == 'change-showAtHome') {
+            $showAtHome = ($params['show_at_home'] == 0) ? 1 : 0;
 
-            $this->update(['group_acp' => $groupACP], [['id', $params['id']]]);
-            return HelperBackend::showItemGroupACP($params['id'], $groupACP, $params);
+            $this->update(['show_at_home' => $showAtHome], [['id', $params['id']]]);
+            return HelperBackend::showItemShowAtHome($params['id'], $showAtHome, $params);
         }
 
         if ($option['task'] == 'change-ordering') {

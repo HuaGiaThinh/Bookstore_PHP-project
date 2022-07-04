@@ -14,8 +14,6 @@ function changePage(page) {
     $('#main-form').submit();
 }
 
-
-
 function deleteItem(url) {
     let result = confirm("Bạn có chắc chắn muốn xóa không?");
     if (result) {
@@ -156,6 +154,25 @@ $(document).ready(function () {
             success: function (response) {
                 parent.html(response);
                 parent.find("a.btn-ajax-groupAcp").notify("Success", {
+                    className: 'success',
+                    position: 'top-center'
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-ajax-showAtHome', function (e) {
+        e.preventDefault();
+
+        let url = $(this).attr('href');
+        let parent = $(this).parent();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                parent.html(response);
+                parent.find("a.btn-ajax-showAtHome").notify("Success", {
                     className: 'success',
                     position: 'top-center'
                 });

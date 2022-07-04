@@ -12,6 +12,7 @@ if (!empty($items)) {
         $id         = $item['id'];
         $name       = HelperBackend::highlight(@$this->params['search'], $item['name']);
         $status     = HelperBackend::showItemStatus($id, $item['status'], $this->params);
+        $showAtHome = HelperBackend::showItemShowAtHome($id, $item['show_at_home'], $this->params);
         $ordering   = HelperBackend::showInputOrdering($id, $item['ordering'], $this->params);
         $created    = HelperBackend::showItemHistory($item['created_by'], $item['created']);
         $modified   = HelperBackend::showItemHistory($item['modified_by'], $item['modified']);
@@ -34,6 +35,7 @@ if (!empty($items)) {
                 <td>' . $name . '</td>
                 <td>' . $picture . '</td>
                 <td class="position-relative">' . $status . '</td>
+                <td class="position-relative">' . $showAtHome . '</td>
                 <td class="position-relative">' . $ordering . '</td>
                 <td>' . $created . '</td>
                 <td>' . $modified . '</td>
@@ -47,8 +49,8 @@ if (!empty($items)) {
 }
 
 // filter group_acp
-$arrGroupAcp = ['default' => 'Select Group Acp', 1 => 'Active', 0 => 'Inactive'];
-$filterGroupAcp = Form::select('group_acp', $arrGroupAcp, 'filter-element', @$this->params['group_acp']);
+$arrShowAtHome = ['default' => 'Select Show At Home', 1 => 'Yes', 0 => 'No'];
+$filterShowAtHome = Form::select('show_at_home', $arrShowAtHome, 'filter-element', @$this->params['show_at_home']);
 
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
@@ -73,14 +75,14 @@ $xhtmlPagination = $this->pagination->showPagination();
                             <?= $xhtmlFilterStatus; ?>
                         </div>
 
-                        <!-- <div>
+                        <div>
                             <form action="" method="GET" name="filter-form" id="filter-form">
                                 <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
                                 <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
                                 <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                <?= $filterGroupAcp; ?>
+                                <?= $filterShowAtHome; ?>
                             </form>
-                        </div> -->
+                        </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">
                                 <div class="input-group">
@@ -147,6 +149,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <th>Name</th>
                                     <th style="width: 120px; padding: 5px">Picture</th>
                                     <th>Status</th>
+                                    <th>Show at home</th>
                                     <th style="width: 90px">Ordering</th>
                                     <th>Created</th>
                                     <th>Modified</th>

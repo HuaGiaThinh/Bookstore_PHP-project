@@ -1,7 +1,6 @@
 <?php
 class HelperBackend
 {
-    // Lỗi
     public static function showItemStatus($id, $status, $params)
     {
         $activeClass = 'success';
@@ -30,6 +29,21 @@ class HelperBackend
         $link = URL::createLink($params['module'], $params['controller'], 'changeGroupAcp', ['id' => $id, 'group_acp' => $groupACP]);
 
         return sprintf('<a id="groupACP-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-groupAcp"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
+    }
+
+    public static function showItemShowAtHome($id, $showAtHome, $params)
+    {
+        $activeClass = 'success';
+        $activeIcon = 'check';
+
+        if ($showAtHome == 0) {
+            $activeClass = 'danger';
+            $activeIcon = 'minus';
+        }
+
+        $link = URL::createLink($params['module'], $params['controller'], 'changeShowAtHome', ['id' => $id, 'show_at_home' => $showAtHome]);
+
+        return sprintf('<a id="showAtHome-%s" href="%s" class="btn btn-%s rounded-circle btn-sm btn-ajax-showAtHome"><i class="fas fa-%s"></i></a>', $id, $link, $activeClass, $activeIcon);
     }
 
     public static function showItemGroupACP_disable($groupACP)
@@ -136,6 +150,7 @@ class HelperBackend
             if (isset($params['group_acp'])) $paramsLink['group_acp'] = $params['group_acp'];
             if (isset($params['group_id'])) $paramsLink['group_id'] = $params['group_id'];
             if (isset($params['category_id'])) $paramsLink['category_id'] = $params['category_id'];
+            if (isset($params['show_at_home'])) $paramsLink['show_at_home'] = $params['show_at_home'];
 
             $link = URl::createLink($params['module'], $params['controller'], $params['action'], $paramsLink);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
