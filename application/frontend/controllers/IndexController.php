@@ -22,7 +22,10 @@ class IndexController extends Controller
         $result = $this->_model->infoItem($this->_arrParam, ['task' => 'quick-view-book']);
 
         $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
+        $detailItem = URL::createLink($this->_arrParam['module'], 'book', 'detail', ['book_id' => $result['id']]);
+
         $result['pictureURL'] = $pictureURL;
+        $result['detailItem'] = $detailItem;
         echo json_encode($result);
     }
 

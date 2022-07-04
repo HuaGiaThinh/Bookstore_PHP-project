@@ -85,6 +85,7 @@ $(document).ready(function () {
                 $('#quick-view .book-price').html(xhtmlPrice);
                 $('#quick-view .book-description').html(description);
                 $('#quick-view .book-picture').attr('src', data.pictureURL);
+                $('#quick-view .btn-view-book-detail').attr('href', data.detailItem);
             }
         });
     });

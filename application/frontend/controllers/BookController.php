@@ -13,8 +13,13 @@ class BookController extends Controller
     public function listAction()
     {
         $this->_view->_title = '<title>Danh mục sách</title>';
+
+        $listCategory = $this->_model->listCategory($this->_arrParam);
+        $this->_view->listCategory = $listCategory;
+
+        $this->_arrParam['category_default'] = $listCategory[0]['id'];
         $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
-        $this->_view->listCategory = $this->_model->listCategory($this->_arrParam);
+
         $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
         $this->_view->render($this->_arrParam['controller'] . '/list');
     }

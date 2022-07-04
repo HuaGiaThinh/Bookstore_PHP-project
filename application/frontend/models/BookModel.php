@@ -10,11 +10,13 @@ class BookModel extends Model
     public function listItems($params, $option = null)
     {
         if ($option['task'] == 'book-in-cats') {
+            $categoryID = isset($params['category_id']) ? $params['category_id'] : $params['category_default'];
+
             $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
             $query[]     = "FROM `{$this->table}`";
-            $query[]     = "WHERE `status` = 'active' AND `category_id` = '{$params['category_id']}'";
+            $query[]     = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
             $query[]     = "ORDER BY `ordering` ASC";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);
             return $result;
@@ -28,7 +30,7 @@ class BookModel extends Model
             $query[]    = "AND `id` <> '{$params['book_id']}'";
             $query[]    = "ORDER BY `ordering` ASC";
             $query[]    = "LIMIT 0, 6";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);
             return $result;
@@ -41,7 +43,7 @@ class BookModel extends Model
             $query[]    = "AND `special` = 1";
             $query[]    = "ORDER BY `ordering` ASC";
             $query[]    = "LIMIT 0, 8";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);
             return $result;
@@ -53,12 +55,11 @@ class BookModel extends Model
             $query[]    = "WHERE `status` = 'active'";
             $query[]    = "ORDER BY `id` DESC";
             $query[]    = "LIMIT 0, 6";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);
             return $result;
         }
-        
     }
 
     public function infoItem($params, $option = null)
@@ -67,7 +68,7 @@ class BookModel extends Model
             $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
             $query[]     = "FROM `{$this->table}`";
             $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchRow($query);
             return $result;
