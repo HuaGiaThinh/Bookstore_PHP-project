@@ -12,8 +12,8 @@ class IndexController extends Controller
 
     public function indexAction()
     {
-
         $this->_view->specialBook = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
+        $this->_view->topCategory = $this->_model->listItems($this->_arrParam, ['task' => 'top-category']);
         $this->_view->render($this->_arrParam['controller'] . '/index');
     }
 

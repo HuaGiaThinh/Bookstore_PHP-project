@@ -25,7 +25,6 @@
     ?>
 
     
-
     <!-- phonering -->
     <?php require_once 'html/phonering.php'; ?>
 

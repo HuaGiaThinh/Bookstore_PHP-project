@@ -13,9 +13,7 @@ if (!empty($listCategory)) {
     }
 }
 
-
 // special books
-
 $xhtmlSpecialBooks = '';
 $i = 0;
 if (!empty($this->specialBooks)) {
@@ -25,7 +23,7 @@ if (!empty($this->specialBooks)) {
 
         $picture = HelperFrontend::createPictureURL($book['picture'], $this->params);
         $name = (strlen($book['name']) > 15) ? (substr($book['name'], 0, 15) . '...') : $book['name'];
-        $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
+        $priceAfterSaleOff = HelperFrontend::priceSaleOff($book['price'], $book['sale_off']);
 
         if ($i == 4) $xhtmlSpecialBooks .= '</div><div>';
         $xhtmlSpecialBooks .= '

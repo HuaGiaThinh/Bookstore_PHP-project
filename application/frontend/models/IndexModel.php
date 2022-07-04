@@ -11,16 +11,31 @@ class IndexModel extends Model
     {
         if ($option['task'] == 'special-books') {
             $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `".TBL_BOOK."`";
+            $query[]     = "FROM `" . TBL_BOOK . "`";
             $query[]     = "WHERE `status` = 'active' AND `special` = 1";
             $query[]     = "ORDER BY `ordering` ASC";
             $query[]     = "LIMIT 0, 6";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);
             return $result;
         }
-        
+
+        if ($option['task'] == 'top-category') {
+            $query[]     = "SELECT `id`, `name`";
+            $query[]     = "FROM `" . TBL_CATEGORY . "`";
+            $query[]     = "WHERE `status` = 'active' AND `show_at_home` = 1";
+            $query[]     = "ORDER BY `ordering` ASC";
+            $query[]     = "LIMIT 0, 3";
+
+            $query        = implode(" ", $query);
+            $result       = $this->fetchAll($query);
+
+            foreach ($result as $key => $value) {
+                $result[$key]['books'] = $this->listBooksInCate($value['id']);
+            }
+            return $result;
+        }
     }
 
     public function infoItem($params, $option = null)
@@ -39,13 +54,27 @@ class IndexModel extends Model
 
         if ($option['task'] == 'quick-view-book') {
             $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `".TBL_BOOK."`";
+            $query[]     = "FROM `" . TBL_BOOK . "`";
             $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
-    
+
             $query        = implode(" ", $query);
             $result        = $this->fetchRow($query);
             return $result;
         }
+    }
+
+    private function listBooksInCate($categoryID)
+    {
+        $query[]    = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
+        $query[]    = "FROM `" . TBL_BOOK . "`";
+        $query[]    = "WHERE `status` = 'active'";
+        $query[]    = "AND `category_id` = '$categoryID'";
+        $query[]     = "ORDER BY `ordering` ASC";
+        $query[]     = "LIMIT 0, 8";
+
+        $query        = implode(" ", $query);
+        $result        = $this->fetchAll($query);
+        return $result;
     }
 
     public function addItem($data)

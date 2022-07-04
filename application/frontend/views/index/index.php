@@ -7,7 +7,7 @@
 <!-- Top Collection end-->
 
 <!-- service layout -->
-<?php require_once 'html/service-layout.php'; ?>
+<?php include_once 'html/service-layout.php'; ?>
 <!-- service layout  end -->
 
 <!-- Tab product -->
