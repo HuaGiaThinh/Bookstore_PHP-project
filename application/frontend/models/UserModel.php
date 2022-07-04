@@ -19,13 +19,27 @@ class UserModel extends Model
 
     public function infoItem($params, $option = null)
     {
-        $query[]    = "SELECT `id`, `fullname`, `username`, `email`, `phone`, `address`";
-        $query[]    = "FROM `{$this->table}`";
-        $query[]    = "WHERE `id` = {$params['info']['id']}";
+        if ($option == null) {
+            $query[]    = "SELECT `id`, `fullname`, `username`, `email`, `phone`, `address`";
+            $query[]    = "FROM `{$this->table}`";
+            $query[]    = "WHERE `id` = {$params['info']['id']}";
+    
+            $query      = implode(" ", $query);
+            $result        = $this->fetchRow($query);
+            return $result;
+        }
+    
+        if ($option['task'] == 'login') {
+            $email        = $params['form']['email'];
+            $password    = md5($params['form']['password']);
+            $query[]    = "SELECT `u`.`id`, `u`.`fullname`, `u`.`username`, `u`.`email`, `u`.`group_id`, `g`.`group_acp`";
+            $query[]    = "FROM `user` AS `u` LEFT JOIN `group` AS g ON `u`.`group_id` = `g`.`id`";
+            $query[]    = "WHERE `email` = '$email' AND `password` = '$password'";
 
-        $query      = implode(" ", $query);
-        $result        = $this->fetchRow($query);
-        return $result;
+            $query        = implode(" ", $query);
+            $result        = $this->fetchRow($query);
+            return $result;
+        }
     }
 
     public function getGroup($hasDefault = false)

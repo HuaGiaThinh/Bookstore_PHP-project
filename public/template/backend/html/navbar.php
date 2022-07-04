@@ -1,7 +1,7 @@
 <?php
 $linkFE         = URL::createLink('frontend', 'index', 'index');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
-$linkLogout     = URL::createLink($this->params['module'], 'dashboard', 'logout');
+$linkLogout     = URL::createLink($this->params['module'], 'index', 'logout');
 
 $user = Session::get('user');
 $userInfo = $user['info'];

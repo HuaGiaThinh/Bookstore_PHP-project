@@ -1,3 +1,28 @@
+<?php
+function topCategory()
+{
+    $model = new Model();
+
+    $query[]     = "SELECT `id`, `name`";
+    $query[]     = "FROM `" . TBL_CATEGORY . "`";
+    $query[]     = "WHERE `status` = 'active' AND `show_at_home` = 1";
+    $query[]     = "ORDER BY `ordering` ASC";
+    $query[]     = "LIMIT 0, 3";
+
+    $query        = implode(" ", $query);
+    $result       = $model->fetchAll($query);
+    return $result;
+}
+
+// show category
+$listCategory = topCategory();
+
+$xhtmlCategory = '';
+foreach ($listCategory as $value) {
+    $linkCategory = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']]);
+    $xhtmlCategory .= sprintf('<li><a href="%s">%s</a></li>', $linkCategory, $value['name']);
+}
+?>
 <footer class="footer-light mt-5">
     <section class="section-b-space light-layout">
         <div class="container">
@@ -20,11 +45,7 @@
                             <h4>Danh mục nổi bật</h4>
                         </div>
                         <div class="footer-contant">
-                            <ul>
-                                <li><a href="list.html">Bà mẹ - Em bé</a></li>
-                                <li><a href="list.html">Học Ngoại Ngữ</a></li>
-                                <li><a href="list.html">Công Nghệ Thông Tin</a></li>
-                            </ul>
+                            <ul><?= $xhtmlCategory;?></ul>
                         </div>
                     </div>
                 </div>

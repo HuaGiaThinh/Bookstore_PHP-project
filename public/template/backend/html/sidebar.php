@@ -1,12 +1,12 @@
 <?php
-$linkHome       = URL::createLink($this->params['module'], 'dashboard', 'index');
+$linkHome       = URL::createLink($this->params['module'], 'index', 'dashboard');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 
 $arrNavigation = [
     [
-        'linkNav' => URL::createLink($this->params['module'], 'dashboard', 'index'),
+        'linkNav' => URL::createLink($this->params['module'], 'index', 'dashboard'),
         'name' => 'Dashboard',
-        'class' => 'dashboard',
+        'class' => 'index',
         'icon' => 'fa-tachometer-alt',
 
     ],

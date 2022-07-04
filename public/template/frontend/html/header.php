@@ -6,9 +6,10 @@ $linkRegister   = URL::createLink($this->params['module'], 'index', 'register');
 $linkLogin      = URL::createLink($this->params['module'], 'index', 'login');
 $linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
-$linkAdmin      = URL::createLink('backend', 'dashboard', 'index');
+$linkAdmin      = URL::createLink('backend', 'index', 'dashboard');
 $linkCategory   = URL::createLink($this->params['module'], 'category', 'index');
 $linkBook       = URL::createLink($this->params['module'], 'book', 'list');
+$linkCart       = URL::createLink($this->params['module'], 'user', 'cart');
 
 $arrMenu = [
     ['text' => 'Đăng nhập', 'link' => $linkLogin],
@@ -126,7 +127,7 @@ if (!empty($listCategory)) {
                                     </li>
                                     <li class="onhover-div mobile-cart">
                                         <div>
-                                            <a href="cart.html" id="cart" class="position-relative">
+                                            <a href="<?= $linkCart;?>" id="cart" class="position-relative">
                                                 <img src="<?= $this->_pathImg ?>cart.png" class="img-fluid blur-up lazyload" alt="cart">
                                                 <i class="ti-shopping-cart"></i>
                                                 <span class="badge badge-warning">0</span>

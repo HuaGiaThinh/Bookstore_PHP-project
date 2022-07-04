@@ -13,7 +13,7 @@ class CategoryModel extends Model
         $query[]     = "FROM `{$this->table}`";
         $query[]     = "WHERE `status` = 'active'";
         $query[]     = "ORDER BY `ordering` ASC";
-        
+
         $query        = implode(" ", $query);
         $result        = $this->fetchAll($query);
         return $result;
@@ -21,7 +21,8 @@ class CategoryModel extends Model
 
     public function infoItem($params, $option = null)
     {
-        if ($option == null) {
+    
+        if ($option['task'] == 'login') {
             $email        = $params['form']['email'];
             $password    = md5($params['form']['password']);
             $query[]    = "SELECT `u`.`id`, `u`.`fullname`, `u`.`username`, `u`.`email`, `u`.`group_id`, `g`.`group_acp`";

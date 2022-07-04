@@ -31,6 +31,10 @@ class IndexController extends Controller
 
     public function registerAction()
     {
+        $userInfo    = Session::get('user');
+        if (@$userInfo['login'] == true && (@$userInfo['time'] + TIME_LOGIN >= time())) {
+            URL::redirect($this->_arrParam['module'], 'index', 'index');
+        }
         $this->_view->_title = "<title>Register</title>";
 
         if (isset($this->_arrParam['form'])) {
@@ -62,8 +66,8 @@ class IndexController extends Controller
     {
         $this->_view->_title = "<title>Login</title>";
         $userInfo    = Session::get('user');
-        if (@$userInfo['login'] == 1 && (@$userInfo['time'] + TIME_LOGIN >= time())) {
-            URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+        if (@$userInfo['login'] == true && (@$userInfo['time'] + TIME_LOGIN >= time())) {
+            URL::redirect($this->_arrParam['module'], 'index', 'index');
         }
 
 
@@ -79,7 +83,7 @@ class IndexController extends Controller
             $validate->run();
 
             if ($validate->isValid() == true) {
-                $infoUser        = $this->_model->infoItem($this->_arrParam);
+                $infoUser        = $this->_model->infoItem($this->_arrParam, ['task' => 'login']);
                 $arraySession    = [
                     'login'        => true,
                     'info'        => $infoUser,
@@ -87,13 +91,13 @@ class IndexController extends Controller
                     'group_acp'    => $infoUser['group_acp']
                 ];
                 Session::set('user', $arraySession);
-                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action']);
             } else {
                 $this->_view->errors    = $validate->showErrorLogin();
             }
         }
 
-        $this->_view->render($this->_arrParam['controller'] . '/login');
+        $this->_view->render('index/login');
     }
 
     public function noticeAction()

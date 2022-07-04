@@ -15,6 +15,11 @@ class UserController extends Controller
         $this->_view->render($this->_arrParam['controller'] . '/index');
     }
 
+    public function cartAction()
+    {
+        $this->_view->render($this->_arrParam['controller'] . '/cart');
+    }
+
     public function profileAction()
     {
         $userInfo = Session::get('user');

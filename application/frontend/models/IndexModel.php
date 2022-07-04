@@ -40,7 +40,7 @@ class IndexModel extends Model
 
     public function infoItem($params, $option = null)
     {
-        if ($option == null) {
+        if ($option['task'] == 'login') {
             $email        = $params['form']['email'];
             $password    = md5($params['form']['password']);
             $query[]    = "SELECT `u`.`id`, `u`.`fullname`, `u`.`username`, `u`.`email`, `u`.`group_id`, `g`.`group_acp`";

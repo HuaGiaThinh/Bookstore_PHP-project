@@ -9,7 +9,7 @@ class CategoryModel extends Model
         $this->_uploadObj    = new Upload();
 
         $user = Session::get('user');
-        $this->_userInfo = $user['info'];
+        if (!empty($user)) $this->_userInfo = $user['info'];
     }
 
     private function createSearchQuery($value)
@@ -159,5 +159,20 @@ class CategoryModel extends Model
         $data['modified_by']    = $this->_userInfo['username'];
         $this->update($data, [['id', $params['id']]]);
         Session::set('message', 'Cập nhật phần tử thành công!');
+    }
+
+    public function infoItem($params, $option = null)
+    {
+        if ($option['task'] == 'login') {
+            $email    = $params['form']['email'];
+            $password    = md5($params['form']['password']);
+            $query[]    = "SELECT `u`.`id`, `u`.`fullname`, `u`.`username`, `u`.`email`, `u`.`group_id`, `g`.`group_acp`";
+            $query[]    = "FROM `user` AS `u` LEFT JOIN `group` AS g ON `u`.`group_id` = `g`.`id`";
+            $query[]    = "WHERE `email` = '$email' AND `password` = '$password'";
+
+            $query        = implode(" ", $query);
+            $result        = $this->fetchRow($query);
+            return $result;
+        }
     }
 }
