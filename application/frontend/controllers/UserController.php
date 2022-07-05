@@ -20,10 +20,11 @@ class UserController extends Controller
         $cart       = Session::get('cart');
         $bookID     = $this->_arrParam['book_id'];
         $price      = $this->_arrParam['price'];
-        $quantity   = $this->_arrParam['quantity'];
+        $quantity   = (isset($this->_arrParam['quantity'])) ? $this->_arrParam['quantity'] : 0;
 
-        if ($this->_arrParam['quantity']) {
-            $cart['quantity'][$bookID] = $quantity;
+        
+        if ($quantity > 0) {
+            @$cart['quantity'][$bookID]  += $quantity;
             $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
 
         } else {
@@ -42,7 +43,8 @@ class UserController extends Controller
         }
       
         Session::set('cart', $cart);
-        URL::redirect($this->_arrParam['module'], 'user', 'cart');
+
+        echo $quantityCart   = array_sum($cart['quantity']);
     }
 
     public function cartAction()
@@ -60,12 +62,15 @@ class UserController extends Controller
 
     public function removeItemFromCartAction()
     {
-        $cart       = Session::get('cart');
-        $bookID     = $this->_arrParam['book_id'];
-
-        unset($cart['quantity'][$bookID]);
-        unset($cart['price'][$bookID]);
-
+        if ($this->_arrParam['book_id'] == 'all') {
+            unset($cart);
+        } else {
+            $cart       = Session::get('cart');
+            $bookID     = $this->_arrParam['book_id'];
+    
+            unset($cart['quantity'][$bookID]);
+            unset($cart['price'][$bookID]);
+        }
         Session::set('cart', $cart);
         URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'cart');
     }

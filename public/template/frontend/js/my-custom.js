@@ -72,46 +72,71 @@ $(document).ready(function () {
             data: "data",
             success: function (response) {
                 let data = JSON.parse(response);
-                
-                let description = formatDescription(data.description);
-                
+
+                let description = formatDescription(data.description);     
                 let price = formatPriceVND(data.price);
                 let priceAfterSaleOff = data.price - ((data.price * data.sale_off) / 100);
+
+                let addToCartLink = data.linkToCart;
+                addToCartLink += '&book_id=' + data.id + '&price=' + priceAfterSaleOff;
+
                 priceAfterSaleOff = formatPriceVND(priceAfterSaleOff);
                 let xhtmlPrice =
-                data.sale_off == 0 ? price : `${priceAfterSaleOff} <del>${price}</del>`;
+                    data.sale_off == 0 ? price : `${priceAfterSaleOff} <del>${price}</del>`;
 
                 $('#quick-view .book-name').html(data.name);
                 $('#quick-view .book-price').html(xhtmlPrice);
                 $('#quick-view .book-description').html(description);
                 $('#quick-view .book-picture').attr('src', data.pictureURL);
                 $('#quick-view .btn-view-book-detail').attr('href', data.detailItem);
+                $('#quick-view .btn-add-to-cart').attr('href', addToCartLink);
             }
         });
     });
 
-    // $('.cart-table .qty-box input[name="quantity"]').change(function () {
-    //     let quantity = $(this).val();
-    //     let link = $(this).data('url') + `&quantity=${quantity}`;
-    //     changeQuantityInCart(link);
-    //     location.reload();
-    // });
-
-
     $(document).on('change', '.cart-table .qty-box input[name="quantity"]', function (e) {
-        let value   = $(this).val();
-        let url     = $(this).data('url') + `&quantity=${value}`;
+        let value = $(this).val();
+        let url = $(this).data('url') + `&quantity=${value}`;
         location.reload();
         $.ajax({
             type: "GET",
             url: url,
             data: "data",
-            success: function (response) {
-                
-            }
+            success: function (response) {}
         });
     });
 
+    $(document).on('click', 'a.add-to-cart', function (e) {
+        e.preventDefault();
+        let url = $(this).attr('href');
+        let quantity = $('input[name=quantity]').val();
+        if (quantity > 1) url += '&quantity=' + quantity;
+
+        let element;
+        if ($(document).width() > 576) {
+            position = 'bottom right';
+            element = $('#cart');
+        } else {
+            position = 'top center';
+            element = $('.mobile-fix-option');
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                $('#cart span').html(response);
+                element.notify('Sản phẩm đã được thêm vào giỏ hàng!', {
+                    className: 'success',
+                    position: position,
+                });
+                $('#quick-view').modal('hide');
+                $('#addtocart').modal('show');
+                $('input[name=quantity]').val(1);
+            }
+        });
+    });
 
     setTimeout(function () {
         $('#frontend-message').toggle('slow');
@@ -146,7 +171,7 @@ function formatPriceVND(value) {
 
 function formatDescription(description) {
     let strLen = description.length;
-    
+
     if (strLen > 500) {
         description = description.substring(0, 500);
     }

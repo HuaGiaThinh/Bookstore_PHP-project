@@ -1,4 +1,5 @@
 <?php
+$linkCart = URL::createLink($this->params['module'], 'user', 'cart');
 if (!empty($this->bookInfo)) {
     $bookInfo = $this->bookInfo;
 
@@ -25,7 +26,7 @@ if (!empty($this->bookInfo)) {
 // Related Books
 $xhtmlRelatedBooks = '';
 if (!empty($this->relatedBooks)) {
-    foreach ($this->relatedBooks as $item) {       
+    foreach ($this->relatedBooks as $item) {
         $linkItem   = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
@@ -33,8 +34,11 @@ if (!empty($this->relatedBooks)) {
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
-        $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
+        $priceAfterSaleOff = HelperFrontend::priceAfterSaleOff($item['price'], $item['sale_off']);
 
+        $linkOrderBookRelated = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
+
+        $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
         $pictureSrc = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
         $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
@@ -49,7 +53,7 @@ if (!empty($this->relatedBooks)) {
                             </a>
                         </div>
                         <div class="cart-info cart-wrap">
-                            <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                            <a href="' . $linkOrderBookRelated . '" class="add-to-cart" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                             <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                         </div>
                     </div>
@@ -123,7 +127,7 @@ if (!empty($this->relatedBooks)) {
                                         </div>
                                     </div>
                                     <div class="product-buttons">
-                                        <a href="<?= $linkOrder;?>" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>
+                                        <a href="<?= $linkOrder; ?>" class="btn btn-solid ml-0 add-to-cart"><i class="fa fa-cart-plus"></i> Chọn mua</a>
                                     </div>
                                     <div class="border-product"><?= $bookInfo['description'] ?></div>
                                 </div>
@@ -312,20 +316,19 @@ if (!empty($this->relatedBooks)) {
                                                 </button>
                                                 <div class="media">
                                                     <a href="#">
-                                                        <img class="img-fluid blur-up lazyload pro-img" src="/public/files/book/5rf49ech.jpg" alt="">
+                                                        <img class="img-fluid blur-up lazyload pro-img" src="<?= $pictureURL?>" alt="">
                                                     </a>
                                                     <div class="media-body align-self-center text-center">
                                                         <a href="#">
                                                             <h6>
                                                                 <i class="fa fa-check"></i>Sản phẩm
-                                                                <span class="font-weight-bold">Chờ Đến Mẫu Giáo Thì
-                                                                    Đã Muộn</span>
+                                                                <span class="font-weight-bold"><?= $bookInfo['name'];?></span>
                                                                 <span> đã được thêm vào giỏ hàng!</span>
                                                             </h6>
                                                         </a>
                                                         <div class="buttons">
-                                                            <a href="../gio-hang.html" class="view-cart btn btn-solid">Xem giỏ hàng</a>
-                                                            <a href="#" class="continue btn btn-solid" data-dismiss="modal">Tiếp tục mua sắm</a>
+                                                            <a href="<?= $linkCart?>" class="view-cart btn btn-solid">Xem giỏ hàng</a>
+                                                            <a href="index.php" class="continue btn btn-solid" data-dismiss="modal">Tiếp tục mua sắm</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -372,7 +375,7 @@ if (!empty($this->relatedBooks)) {
                                                 </div>
                                             </div>
                                             <div class="product-buttons">
-                                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>
+                                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart add-to-cart">Chọn Mua</a>
                                                 <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
                                             </div>
                                         </div>

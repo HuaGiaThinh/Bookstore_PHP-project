@@ -1,5 +1,6 @@
 <?php
-$linkSubmit = URL::createLink($this->params['module'], $this->params['controller'], 'buy');
+$linkSubmit     = URL::createLink($this->params['module'], $this->params['controller'], 'buy');
+$linkDeleteAll  = URL::createLink($this->params['module'], 'user', 'removeItemFromCart', ['book_id' => 'all']);
 $xhtml = '';
 $priceTotal = 0;
 if (!empty($this->items)) {
@@ -86,7 +87,7 @@ if (!empty($xhtml)) {
                                     <th scope="col">Tên sách</th>
                                     <th scope="col">Giá</th>
                                     <th scope="col">Số Lượng</th>
-                                    <th scope="col"></th>
+                                    <th scope="col"><a style="color:#777777" href="<?= $linkDeleteAll;?>">Xóa tất cả</a></th>
                                     <th scope="col">Thành tiền</th>
                                 </tr>
                             </thead>

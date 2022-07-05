@@ -43,7 +43,11 @@ class BookController extends Controller
         $result = $this->_model->infoItem($this->_arrParam);
 
         $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
+        $detailItem = URL::createLink($this->_arrParam['module'], $this->_arrParam['controller'], 'detail', ['book_id' => $result['id']]);
+
         $result['pictureURL'] = $pictureURL;
+        $result['detailItem'] = $detailItem;
+        $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'user', 'order');
         echo json_encode($result);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 $userInfo   = Session::get('user');
 $cart       = Session::get('cart');
-$quantityCart   = (!empty($cart)) ? count($cart['quantity']) : 0;
+$quantityCart   = (!empty($cart)) ? array_sum($cart['quantity']) : 0;
 
 $linkHome       = 'index.php';
 $linkRegister   = URL::createLink($this->params['module'], 'index', 'register');

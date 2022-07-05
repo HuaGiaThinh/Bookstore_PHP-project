@@ -11,11 +11,14 @@ if (!empty($this->specialBook)) {
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
         $priceAfterSaleOff = $item['price'] - (($item['price'] * $item['sale_off']) / 100);
+        $linkOrder = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
+
         $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
 
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
         $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
+        
         $xhtml .= '
             <div class="product-box">
                 <div class="img-wrapper">' . $saleOff . '
@@ -25,7 +28,7 @@ if (!empty($this->specialBook)) {
                         </a>
                     </div>
                     <div class="cart-info cart-wrap">
-                        <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                        <a href="'.$linkOrder.'" class="add-to-cart" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                         <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                     </div>
                 </div>

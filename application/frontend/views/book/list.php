@@ -17,9 +17,11 @@ if (!empty($this->items)) {
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
-        $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
+        $priceAfterSaleOff = HelperFrontend::priceAfterSaleOff($item['price'], $item['sale_off']);
 
+        $linkOrder = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
 
+        $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
         $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
@@ -33,7 +35,7 @@ if (!empty($this->items)) {
                             </a>
                         </div>
                         <div class="cart-info cart-wrap">
-                            <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                            <a href="'.$linkOrder.'" class="add-to-cart" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                             <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                         </div>
                     </div>
@@ -230,7 +232,7 @@ if (!empty($this->items)) {
                                 </div>
                             </div>
                             <div class="product-buttons">
-                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>
+                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart add-to-cart">Chọn Mua</a>
                                 <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
                             </div>
                         </div>
