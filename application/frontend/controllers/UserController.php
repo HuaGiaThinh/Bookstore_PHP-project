@@ -15,13 +15,64 @@ class UserController extends Controller
         $this->_view->render($this->_arrParam['controller'] . '/index');
     }
 
+    public function orderAction()
+    {
+        $cart       = Session::get('cart');
+        $bookID     = $this->_arrParam['book_id'];
+        $price      = $this->_arrParam['price'];
+        $quantity   = $this->_arrParam['quantity'];
+
+        if ($this->_arrParam['quantity']) {
+            $cart['quantity'][$bookID] = $quantity;
+            $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
+
+        } else {
+            if (empty($cart)) {
+                $cart['quantity'][$bookID]  = 1;
+                $cart['price'][$bookID]     = $price;
+            } else {
+                if (key_exists($bookID, $cart['quantity'])) {
+                    $cart['quantity'][$bookID]  += 1;
+                    $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
+                } else {
+                    $cart['quantity'][$bookID]  = 1;
+                    $cart['price'][$bookID]     = $price;
+                }
+            }
+        }
+      
+        Session::set('cart', $cart);
+        URL::redirect($this->_arrParam['module'], 'user', 'cart');
+    }
+
     public function cartAction()
     {
+        $this->_view->_title = '<title>Giỏ hàng | BookStore</title>';
+        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'books-in-cart']);
         $this->_view->render($this->_arrParam['controller'] . '/cart');
+    }
+
+    public function buyAction()
+    {
+        $result = $this->_model->saveItems($this->_arrParam, ['task' => 'save-cart']);
+        URL::redirect($this->_arrParam['module'], 'index', 'notice', ['type' => 'payment-success', 'id' => $result['id']]);
+    }
+
+    public function removeItemFromCartAction()
+    {
+        $cart       = Session::get('cart');
+        $bookID     = $this->_arrParam['book_id'];
+
+        unset($cart['quantity'][$bookID]);
+        unset($cart['price'][$bookID]);
+
+        Session::set('cart', $cart);
+        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'cart');
     }
 
     public function profileAction()
     {
+        $this->_view->_title = '<title>Thông tin tài khoản | BookStore</title>';
         $userInfo = Session::get('user');
         $this->_view->data       = $this->_model->infoItem($userInfo);
 
@@ -35,7 +86,7 @@ class UserController extends Controller
 
     public function changePasswordAction()
 	{
-		$this->_view->_title = "Change Password";
+		$this->_view->_title = "<title>Đổi mật khẩu</title>";
 		$user = Session::get('user');
 		if (isset($this->_arrParam['form'])) {
 			$data       = $this->_arrParam['form'];

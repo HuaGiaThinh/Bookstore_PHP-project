@@ -90,6 +90,27 @@ $(document).ready(function () {
         });
     });
 
+    // $('.cart-table .qty-box input[name="quantity"]').change(function () {
+    //     let quantity = $(this).val();
+    //     let link = $(this).data('url') + `&quantity=${quantity}`;
+    //     changeQuantityInCart(link);
+    //     location.reload();
+    // });
+
+
+    $(document).on('change', '.cart-table .qty-box input[name="quantity"]', function (e) {
+        let value   = $(this).val();
+        let url     = $(this).data('url') + `&quantity=${value}`;
+        location.reload();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "data",
+            success: function (response) {
+                
+            }
+        });
+    });
 
 
     setTimeout(function () {

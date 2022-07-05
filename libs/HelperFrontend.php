@@ -42,7 +42,7 @@ class HelperFrontend
 
     public static function createPictureURL($picture, $params)
     {
-        $folder = ($params['controller'] == 'index') ? 'book' : $params['controller'];
+        $folder = ($params['controller'] == 'index' || $params['controller'] == 'user') ? 'book' : $params['controller'];
 
         $picturePath    = UPLOAD_PATH . $folder . DS . $picture;
 
@@ -57,5 +57,16 @@ class HelperFrontend
     {
         $priceAfterSaleOff = $originalPrice - (($originalPrice * $saleOff) / 100);
         return number_format($priceAfterSaleOff, 0, ',', '.');
+    }
+
+    public static function priceAfterSaleOff($originalPrice, $saleOff) 
+    {
+        $priceAfterSaleOff = $originalPrice - (($originalPrice * $saleOff) / 100);
+        return $priceAfterSaleOff;
+    }
+
+    public static function createInput($name, $value, $id)
+    {
+        return sprintf('<input type="hidden" name="form[%s][]" value="%s" id="input_%s">', $name, $value, $id);
     }
 }

@@ -32,6 +32,7 @@
 	define('TBL_USER', 'user');
 	define('TBL_CATEGORY', 'category');
 	define('TBL_BOOK', 'book');
+	define('TBL_CART', 'cart');
 
 	// ====================== CONFIG ===========================
 	define('TIME_LOGIN', 3600);

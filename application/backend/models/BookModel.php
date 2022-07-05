@@ -43,6 +43,7 @@ class BookModel extends Model
         $query[]    = "SELECT `id`, `name`, `description`, `price`, `special`, `sale_off`, `picture`, `status`, `created`, `created_by`, `modified`, `modified_by`, `category_id`";
         $query[]    = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` > 0";
+        $query[]    = "ORDER BY `id` DESC";
 
         // Search
         $searchValue = isset($params['search']) ? trim($params['search']) : '';

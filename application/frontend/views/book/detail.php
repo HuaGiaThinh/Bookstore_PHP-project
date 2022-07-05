@@ -5,7 +5,9 @@ if (!empty($this->bookInfo)) {
     $pictureURL = HelperFrontend::createPictureURL($bookInfo['picture'], $this->params);
 
     $price = number_format($bookInfo['price'], 0, ',', '.');
-    $priceAfterSaleOff = HelperFrontend::priceSaleOff($bookInfo['price'], $bookInfo['sale_off']);
+    $priceAfterSaleOff = HelperFrontend::priceAfterSaleOff($bookInfo['price'], $bookInfo['sale_off']);
+
+    $linkOrder  = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $bookInfo['id'], 'price' => $priceAfterSaleOff]);
 
     if ($bookInfo['sale_off'] != 0) {
         $xhtmlPrice = sprintf(
@@ -23,8 +25,8 @@ if (!empty($this->bookInfo)) {
 // Related Books
 $xhtmlRelatedBooks = '';
 if (!empty($this->relatedBooks)) {
-    foreach ($this->relatedBooks as $item) {
-        $linkItem = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
+    foreach ($this->relatedBooks as $item) {       
+        $linkItem   = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
         $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
@@ -32,7 +34,6 @@ if (!empty($this->relatedBooks)) {
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
         $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
-
 
         $pictureSrc = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
@@ -122,7 +123,7 @@ if (!empty($this->relatedBooks)) {
                                         </div>
                                     </div>
                                     <div class="product-buttons">
-                                        <a href="#" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>
+                                        <a href="<?= $linkOrder;?>" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>
                                     </div>
                                     <div class="border-product"><?= $bookInfo['description'] ?></div>
                                 </div>

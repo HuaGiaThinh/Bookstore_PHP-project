@@ -1,5 +1,7 @@
 <?php
-$userInfo = Session::get('user');
+$userInfo   = Session::get('user');
+$cart       = Session::get('cart');
+$quantityCart   = (!empty($cart)) ? count($cart['quantity']) : 0;
 
 $linkHome       = 'index.php';
 $linkRegister   = URL::createLink($this->params['module'], 'index', 'register');
@@ -130,7 +132,7 @@ if (!empty($listCategory)) {
                                             <a href="<?= $linkCart;?>" id="cart" class="position-relative">
                                                 <img src="<?= $this->_pathImg ?>cart.png" class="img-fluid blur-up lazyload" alt="cart">
                                                 <i class="ti-shopping-cart"></i>
-                                                <span class="badge badge-warning">0</span>
+                                                <span class="badge badge-warning"><?= $quantityCart?></span>
                                             </a>
                                         </div>
                                     </li>

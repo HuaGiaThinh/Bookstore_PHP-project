@@ -6,6 +6,9 @@ class UserModel extends Model
     {
         parent::__construct();
         $this->setTable(TBL_USER);
+
+        $user = Session::get('user');
+        if (!empty($user)) $this->_userInfo = $user['info'];
     }
 
     private function createSearchQuery($value)
@@ -17,18 +20,71 @@ class UserModel extends Model
         return  '(' . rtrim($result, ' OR') . ')';
     }
 
+    public function listItems($params, $option = null)
+    {
+        if ($option['task'] == 'books-in-cart') {
+            $cart = Session::get('cart');
+
+            $result = [];
+            if (!empty($cart)) {
+                $ids = "(";
+                foreach ($cart['quantity'] as $key => $value) $ids .= "'$key', ";
+                $ids .= "'0')";
+
+                $query[]    = "SELECT `id`, `name`, `picture`";
+                $query[]    = "FROM `" . TBL_BOOK . "`";
+                $query[]    = "WHERE `status` = 'active'";
+                $query[]    = "AND `id` IN $ids";
+
+                $query      = implode(" ", $query);
+                $result     = $this->fetchAll($query);
+
+                foreach ($result as $key => $value) {
+                    $result[$key]['quantity']   = $cart['quantity'][$value['id']];
+                    $result[$key]['totalPrice'] = $cart['price'][$value['id']];
+                    $result[$key]['price']      = $result[$key]['totalPrice'] / $result[$key]['quantity'];
+                }
+            }
+            return $result;
+        }
+    }
+
+    public function saveItems($params, $option = null)
+    {
+        if ($option['task'] == 'save-cart') {
+
+            $id             = $this->randomString(10);
+            $username       = $this->_userInfo['username'];
+            $books          = json_encode($params['form']['book_id']);
+            $prices         = json_encode($params['form']['price']);
+            $quantities     = json_encode($params['form']['quantity']);
+            $names          = json_encode($params['form']['name']);
+            $pictures       = json_encode($params['form']['picture']);
+            $date           = date("Y-m-d H:i:s");
+
+            $query    = "INSERT INTO `" . TBL_CART . "`(`id`, `username`, `books`, `prices`, `quantities`, `names`, `pictures`, `status`, `date`)
+                VALUES ('$id', '$username', '$books', '$prices', '$quantities', '$names', '$pictures', '0', '$date')";
+            $this->query($query);
+            Session::delete('cart');
+
+            $result['id'] = $id;
+
+            return $result;
+        }
+    }
+
     public function infoItem($params, $option = null)
     {
         if ($option == null) {
             $query[]    = "SELECT `id`, `fullname`, `username`, `email`, `phone`, `address`";
             $query[]    = "FROM `{$this->table}`";
             $query[]    = "WHERE `id` = {$params['info']['id']}";
-    
+
             $query      = implode(" ", $query);
             $result        = $this->fetchRow($query);
             return $result;
         }
-    
+
         if ($option['task'] == 'login') {
             $email        = $params['form']['email'];
             $password    = md5($params['form']['password']);
@@ -67,7 +123,7 @@ class UserModel extends Model
 
     public function changePassword($data, $user)
     {
-        
+
         $userInfo = $user['info'];
         $data['modified']       = date("Y:m:d H:i:s");
         $data['modified_by']    = $userInfo['username'];
@@ -79,5 +135,16 @@ class UserModel extends Model
         }
 
         $this->update($data, [['id', $userInfo['id']]]);
+    }
+
+    private function randomString($length = 7)
+    {
+
+        $arrCharacter = array_merge(range('a', 'z'), range(0, 9), range('A', 'Z'));
+        $arrCharacter = implode('', $arrCharacter);
+        $arrCharacter = str_shuffle($arrCharacter);
+
+        $result        = substr($arrCharacter, 0, $length);
+        return $result;
     }
 }

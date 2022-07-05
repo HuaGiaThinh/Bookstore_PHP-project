@@ -8,7 +8,7 @@ if (!empty($this->newBooks)) {
 
         $picture = HelperFrontend::createPictureURL($book['picture'], $this->params);
         $name = (strlen($book['name']) > 20) ? (substr($book['name'], 0, 20) . '...') : $book['name'];
-        $priceAfterSaleOff = HelperFrontend::priceSaleOff($item['price'], $item['sale_off']);
+        $priceAfterSaleOff = HelperFrontend::priceSaleOff($book['price'], $book['sale_off']);
 
         if ($i == 3) $xhtmlNewBooks .= '</div><div>';
         $xhtmlNewBooks .= '
