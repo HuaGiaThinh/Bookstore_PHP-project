@@ -16,8 +16,8 @@ $arrNavigation = [
         'link' => URL::createLink($this->params['module'], $this->params['controller'], 'changePassword'),
         'text' => 'Thay đổi mật khẩu',
     ],
-    'order-history' => [
-        'link' => URL::createLink($this->params['module'], 'user', 'order-history'),
+    'orderHistory' => [
+        'link' => URL::createLink($this->params['module'], 'user', 'orderHistory'),
         'text' => 'Lịch sử mua hàng',
     ],
     'logout' => [

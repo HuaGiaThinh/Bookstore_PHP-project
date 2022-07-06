@@ -75,6 +75,13 @@ class UserController extends Controller
         URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'cart');
     }
 
+    public function orderHistoryAction()
+    {
+        $this->_view->_title = '<title>Lịch sử mua hàng | BookStore</title>';
+        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'order-history']);
+        $this->_view->render($this->_arrParam['controller'] . '/orderHistory');
+    }
+
     public function profileAction()
     {
         $this->_view->_title = '<title>Thông tin tài khoản | BookStore</title>';

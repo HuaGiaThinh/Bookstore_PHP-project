@@ -47,6 +47,17 @@ class UserModel extends Model
             }
             return $result;
         }
+
+        if ($option['task'] == 'order-history') {
+
+            $query[]    = "SELECT `id`, `username`, `books`, `prices`, `quantities`, `names`, `pictures`, `status`, `date`";
+            $query[]    = "FROM `" . TBL_CART . "`";
+            $query[]    = "WHERE `username` = '{$this->_userInfo['username']}'";
+
+            $query      = implode(" ", $query);
+            $result     = $this->fetchAll($query);
+            return $result;
+        }
     }
 
     public function saveItems($params, $option = null)
@@ -59,11 +70,13 @@ class UserModel extends Model
             $prices         = json_encode($params['form']['price']);
             $quantities     = json_encode($params['form']['quantity']);
             $names          = json_encode($params['form']['name']);
+            $names          = $this->escapeString($names);
             $pictures       = json_encode($params['form']['picture']);
             $date           = date("Y-m-d H:i:s");
 
             $query    = "INSERT INTO `" . TBL_CART . "`(`id`, `username`, `books`, `prices`, `quantities`, `names`, `pictures`, `status`, `date`)
                 VALUES ('$id', '$username', '$books', '$prices', '$quantities', '$names', '$pictures', '0', '$date')";
+
             $this->query($query);
             Session::delete('cart');
 
