@@ -64,7 +64,7 @@ if (!empty($listCategory)) {
                     <div class="menu-left">
                         <div class="brand-logo">
                             <a href="<?= $linkHome; ?>">
-                                <h2 class="mb-0" style="color: #5fcbc4">BookStore</h2>
+                                <h2 class="mb-0" style="color: #ff9e3e">BookStore</h2>
                             </a>
                         </div>
                     </div>

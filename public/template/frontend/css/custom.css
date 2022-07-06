@@ -8,11 +8,13 @@ table.table.btn-table td {
 }
 
 .my-text-primary {
-    color: #5fcbc4;
+    /* color: #5fcbc4; */
+    color: #ff9e3e;
 }
 
 .my-menu-link.active {
-    color: #5fcbc4;
+    /* color: #5fcbc4; */
+    color: #ff9e3e;
 }
 
 .loader_skeleton {

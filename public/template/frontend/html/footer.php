@@ -33,7 +33,7 @@ foreach ($listCategory as $value) {
                     </div>
                     <div class="footer-contant">
                         <div class="footer-logo">
-                            <h2 style="color: #5fcbc4">BookStore</h2>
+                            <h2 style="color: #ff9e3e">BookStore</h2>
                         </div>
                         <p>Tự hào là website bán sách trực tuyến lớn nhất Việt Nam, cung cấp đầy đủ các thể loại
                             sách, đặc biệt với những đầu sách độc quyền trong nước và quốc tế</p>

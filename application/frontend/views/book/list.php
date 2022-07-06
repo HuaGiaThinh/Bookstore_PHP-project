@@ -12,8 +12,9 @@ if (!empty($this->items)) {
     foreach ($items as $item) {
         $linkItem = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
 
-        $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
-        $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
+        $saleOff        = HelperFrontend::showItemSaleOff($item['sale_off']);
+        $name           = (strlen($item['name']) > 36) ? (substr($item['name'], 0, 36) . '...') : $item['name'];
+        $description    = (strlen($item['description']) > 1000) ? (substr($item['description'], 0, 1000) . '...') : $item['description'];
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
@@ -50,7 +51,7 @@ if (!empty($this->items)) {
                         <a href="' . $linkItem . '" title="' . $item['name'] . '">
                             <h6>' . $name . '</h6>
                         </a>
-                        <p>' . $item['description'] . '</p>
+                        <p>' . $description . '</p>
                         <h4 class="text-lowercase">' . $priceAfterSaleOff . ' đ ' . $price . '</h4>
                     </div>
                 </div>
