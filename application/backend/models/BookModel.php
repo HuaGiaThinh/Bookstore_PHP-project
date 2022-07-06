@@ -43,7 +43,6 @@ class BookModel extends Model
         $query[]    = "SELECT `id`, `name`, `description`, `price`, `special`, `sale_off`, `picture`, `status`, `created`, `created_by`, `modified`, `modified_by`, `category_id`";
         $query[]    = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` > 0";
-        $query[]    = "ORDER BY `id` DESC";
 
         // Search
         $searchValue = isset($params['search']) ? trim($params['search']) : '';
@@ -57,6 +56,7 @@ class BookModel extends Model
         // Filter category id
         if (isset($params['category_id']) && $params['category_id'] != 'default') $query[] = "AND `category_id` = '{$params['category_id']}'";
 
+        $query[]    = "ORDER BY `id` DESC";
         //PAGINATION
         $pagination           = $params['pagination'];
         $totalItemsPerPage    = $pagination['totalItemsPerPage'];
@@ -65,15 +65,15 @@ class BookModel extends Model
             $query[]    = "LIMIT $position, $totalItemsPerPage";
         }
 
-        $query        = implode(" ", $query);
-        $result        = $this->listRecord($query);
+        $query      = implode(" ", $query);
+        $result     = $this->listRecord($query);
         return $result;
     }
 
     public function countItem($params)
     {
-        $query[]     = "SELECT COUNT(`id`) AS `total`";
-        $query[]     = "FROM `{$this->table}`";
+        $query[]    = "SELECT COUNT(`id`) AS `total`";
+        $query[]    = "FROM `{$this->table}`";
         $query[]    = "WHERE `id` > 0";
 
         // Search
@@ -106,8 +106,8 @@ class BookModel extends Model
 
     public function getCategory($hasDefault = false)
     {
-        $query        = "SELECT `id`, `name` FROM `category`";
-        $list        = $this->listRecord($query);
+        $query  = "SELECT `id`, `name` FROM `".TBL_CATEGORY."`";
+        $list   = $this->listRecord($query);
 
         $result = [];
         if ($hasDefault) $result['default'] = 'Select Category';

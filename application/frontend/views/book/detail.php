@@ -30,7 +30,7 @@ if (!empty($this->relatedBooks)) {
         $linkItem   = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
-        $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
+        $name = (strlen($item['name']) > 46) ? (substr($item['name'], 0, 46) . '...') : $item['name'];
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';

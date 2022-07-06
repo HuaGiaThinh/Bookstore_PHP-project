@@ -15,7 +15,7 @@ if (!empty($this->topCategory)) {
             $linkItem = URL::createLink($this->params['module'], 'book', 'detail', ['book_id' => $book['id']]);
 
             $saleOff = HelperFrontend::showItemSaleOff($book['sale_off']);
-            $name = (strlen($book['name']) > 25) ? (substr($book['name'], 0, 25) . '...') : $book['name'];
+            $name = (strlen($book['name']) > 80) ? (substr($book['name'], 0, 80) . '...') : $book['name'];
 
             $price = number_format($book['price'], 0, ',', '.');
             $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';

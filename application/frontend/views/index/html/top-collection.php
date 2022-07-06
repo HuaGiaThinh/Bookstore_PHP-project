@@ -6,7 +6,7 @@ if (!empty($this->specialBook)) {
         $linkItem = URL::createLink($this->params['module'], 'book', 'detail', ['book_id' => $item['id']]);
 
         $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
-        $name = (strlen($item['name']) > 25) ? (substr($item['name'], 0, 25) . '...') : $item['name'];
+        $name = (strlen($item['name']) > 50) ? (substr($item['name'], 0, 50) . '...') : $item['name'];
 
         $price = number_format($item['price'], 0, ',', '.');
         $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';

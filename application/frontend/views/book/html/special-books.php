@@ -7,7 +7,7 @@ if (!empty($this->specialBooks)) {
         $link = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $book['id']]);
 
         $picture = HelperFrontend::createPictureURL($book['picture'], $this->params);
-        $name = (strlen($book['name']) > 15) ? (substr($book['name'], 0, 15) . '...') : $book['name'];
+        $name = (strlen($book['name']) > 40) ? (substr($book['name'], 0, 40) . '...') : $book['name'];
         $priceAfterSaleOff = HelperFrontend::priceSaleOff($book['price'], $book['sale_off']);
 
         if ($i == 4) $xhtmlSpecialBooks .= '</div><div>';
