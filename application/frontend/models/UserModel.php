@@ -53,6 +53,7 @@ class UserModel extends Model
             $query[]    = "SELECT `id`, `username`, `books`, `prices`, `quantities`, `names`, `pictures`, `status`, `date`";
             $query[]    = "FROM `" . TBL_CART . "`";
             $query[]    = "WHERE `username` = '{$this->_userInfo['username']}'";
+            $query[]    = "ORDER BY `date` DESC";
 
             $query      = implode(" ", $query);
             $result     = $this->fetchAll($query);

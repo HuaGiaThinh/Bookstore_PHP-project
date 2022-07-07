@@ -65,7 +65,7 @@ class HelperFrontend
         return $priceAfterSaleOff;
     }
 
-    public static function createInput($name, $value, $id)
+    public static function createInputHidden($name, $value, $id)
     {
         return sprintf('<input type="hidden" name="form[%s][]" value="%s" id="input_%s">', $name, $value, $id);
     }

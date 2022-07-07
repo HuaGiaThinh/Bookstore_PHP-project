@@ -127,7 +127,7 @@ if (!empty($this->relatedBooks)) {
                                         </div>
                                     </div>
                                     <div class="product-buttons">
-                                        <a href="<?= $linkOrder; ?>" class="btn btn-solid ml-0 add-to-cart"><i class="fa fa-cart-plus"></i> Chọn mua</a>
+                                        <a href="<?= $linkOrder; ?>" class="btn btn-solid ml-0 add-to-cart btn-buy"><i class="fa fa-cart-plus"></i> Chọn mua</a>
                                     </div>
                                     <div class="border-product"><?= $bookInfo['description'] ?></div>
                                 </div>

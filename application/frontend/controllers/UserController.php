@@ -20,13 +20,25 @@ class UserController extends Controller
         $cart       = Session::get('cart');
         $bookID     = $this->_arrParam['book_id'];
         $price      = $this->_arrParam['price'];
-        $quantity   = (isset($this->_arrParam['quantity'])) ? $this->_arrParam['quantity'] : 0;
 
+        // $quantity   = (isset($this->_arrParam['quantity'])) ? $this->_arrParam['quantity'] : 0;
+        // if (isset($this->_arrParam['quantity_cart'])) {
+        //     $quantity = (int)$this->_arrParam['quantity_cart'];
+        // }
         
-        if ($quantity > 0) {
-            @$cart['quantity'][$bookID]  += $quantity;
-            $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
+        if (isset($this->_arrParam['quantity_cart'])) {
+            $quantity = @$this->_arrParam['quantity_cart'];
+        } else {
+            $quantity = @$this->_arrParam['quantity'];
+        }
 
+        if ($quantity != null) {
+            if (isset($this->_arrParam['quantity_cart'])) {
+                $cart['quantity'][$bookID]  = $quantity;
+            } else {
+                @$cart['quantity'][$bookID]  += $quantity;
+            }
+            $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
         } else {
             if (empty($cart)) {
                 $cart['quantity'][$bookID]  = 1;
@@ -41,10 +53,10 @@ class UserController extends Controller
                 }
             }
         }
-      
-        Session::set('cart', $cart);
 
-        echo $quantityCart   = array_sum($cart['quantity']);
+        Session::set('cart', $cart);
+        $quantityCart   = array_sum($cart['quantity']);
+        echo $quantityCart;
     }
 
     public function cartAction()
@@ -67,7 +79,7 @@ class UserController extends Controller
         } else {
             $cart       = Session::get('cart');
             $bookID     = $this->_arrParam['book_id'];
-    
+
             unset($cart['quantity'][$bookID]);
             unset($cart['price'][$bookID]);
         }
@@ -97,34 +109,34 @@ class UserController extends Controller
     }
 
     public function changePasswordAction()
-	{
-		$this->_view->_title = "<title>Đổi mật khẩu</title>";
-		$user = Session::get('user');
-		if (isset($this->_arrParam['form'])) {
-			$data       = $this->_arrParam['form'];
-			
-			$password 		= md5($data['old_password']);
-			$newPassword 	= $data['password'];
-			$validate 		= new Validate($data);
+    {
+        $this->_view->_title = "<title>Đổi mật khẩu</title>";
+        $user = Session::get('user');
+        if (isset($this->_arrParam['form'])) {
+            $data       = $this->_arrParam['form'];
 
-			$query		= "SELECT `id` FROM `user` WHERE `password` = '$password'";
-			$validate->addRule('old_password', 'existRecord', array('database' => $this->_model, 'query' => $query))
-					->addRule('password', 'password', ['action' => 'add'])
-					->addRule('confirm_password', 'confirm', ['confirm-element' => $newPassword]);
+            $password         = md5($data['old_password']);
+            $newPassword     = $data['password'];
+            $validate         = new Validate($data);
 
-			$validate->run();
-			$error      = $validate->getError();
+            $query        = "SELECT `id` FROM `user` WHERE `password` = '$password'";
+            $validate->addRule('old_password', 'existRecord', array('database' => $this->_model, 'query' => $query))
+                ->addRule('password', 'password', ['action' => 'add'])
+                ->addRule('confirm_password', 'confirm', ['confirm-element' => $newPassword]);
 
-			if (empty($error)) {
-				$this->_model->changePassword($data, $user);
-				URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
-			} else {
-				$this->_view->data = $data;
-				$this->_view->errors = $validate->showErrorsFrontend();
-			}
-		}
-		$this->_view->render($this->_arrParam['controller'] . '/changePassword');
-	}
+            $validate->run();
+            $error      = $validate->getError();
+
+            if (empty($error)) {
+                $this->_model->changePassword($data, $user);
+                URL::redirect('frontend', 'index', 'notice', ['type' => 'updateProfile-success']);
+            } else {
+                $this->_view->data = $data;
+                $this->_view->errors = $validate->showErrorsFrontend();
+            }
+        }
+        $this->_view->render($this->_arrParam['controller'] . '/changePassword');
+    }
 
     public function logoutAction()
     {

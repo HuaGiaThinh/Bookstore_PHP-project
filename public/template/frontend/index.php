@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <div class="loader_skeleton">
+    <!-- <div class="loader_skeleton">
         <div class="typography_section">
             <div class="typography-box">
                 <div class="typo-content loader-typo">
@@ -14,7 +14,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- header start -->
     <?php require_once 'html/header.php'; ?>

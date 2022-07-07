@@ -52,11 +52,11 @@ if (!empty($this->items)) {
                     <h2 class="td-color text-lowercase">' . $totalPrice . ' đ</h2>
                 </td>
             </tr>';
-        $xhtml .= HelperFrontend::createInput('book_id', $item['id'], "book_id_{$item['id']}");
-        $xhtml .= HelperFrontend::createInput('price', $item['price'], "price_{$item['id']}");
-        $xhtml .= HelperFrontend::createInput('quantity', $item['quantity'], "quantity_{$item['id']}");
-        $xhtml .= HelperFrontend::createInput('name', $item['name'], "name_{$item['id']}");
-        $xhtml .= HelperFrontend::createInput('picture', $item['picture'], "picture_{$item['id']}");
+        $xhtml .= HelperFrontend::createInputHidden('book_id', $item['id'], "book_id_{$item['id']}");
+        $xhtml .= HelperFrontend::createInputHidden('price', $item['price'], "price_{$item['id']}");
+        $xhtml .= HelperFrontend::createInputHidden('quantity', $item['quantity'], "quantity_{$item['id']}");
+        $xhtml .= HelperFrontend::createInputHidden('name', $item['name'], "name_{$item['id']}");
+        $xhtml .= HelperFrontend::createInputHidden('picture', $item['picture'], "picture_{$item['id']}");
     }
 }
 ?>

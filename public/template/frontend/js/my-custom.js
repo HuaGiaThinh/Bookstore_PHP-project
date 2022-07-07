@@ -69,9 +69,9 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: url,
-            data: "data",
-            success: function (response) {
-                let data = JSON.parse(response);
+            dataType: 'json',
+            success: function (data) {  
+                // let data = JSON.parse(response);
 
                 let description = formatDescription(data.description);     
                 let price = formatPriceVND(data.price);
@@ -95,19 +95,21 @@ $(document).ready(function () {
     });
 
     $(document).on('change', '.cart-table .qty-box input[name="quantity"]', function (e) {
-        let value = $(this).val();
-        let url = $(this).data('url') + `&quantity=${value}`;
-        location.reload();
+        let quantity = $(this).val();
+        let url = $(this).data('url') + `&quantity_cart=${quantity}`;
+
         $.ajax({
             type: "GET",
             url: url,
-            data: "data",
-            success: function (response) {}
+            success: function (response) {
+                location.reload();
+            }
         });
     });
 
     $(document).on('click', 'a.add-to-cart', function (e) {
         e.preventDefault();
+        let btn = $(this);
         let url = $(this).attr('href');
         let quantity = $('input[name=quantity]').val();
         if (quantity > 1) url += '&quantity=' + quantity;
@@ -132,7 +134,10 @@ $(document).ready(function () {
                     position: position,
                 });
                 $('#quick-view').modal('hide');
-                $('#addtocart').modal('show');
+
+                if (btn.hasClass('btn-buy')) {
+                    $('#addtocart').modal('show');
+                }
                 $('input[name=quantity]').val(1);
             }
         });
