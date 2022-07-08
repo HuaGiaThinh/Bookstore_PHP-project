@@ -116,7 +116,7 @@ class HelperFrontend
             $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
             $priceAfterSaleOff = self::priceAfterSaleOff($item['price'], $item['sale_off']);
 
-            $linkOrder = URL::createLink($params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
+            $linkOrder = URL::createLink($params['module'], 'index', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
 
             $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
             $pictureURL = self::createPictureURL($item['picture'], $params);

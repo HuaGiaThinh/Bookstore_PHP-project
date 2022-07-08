@@ -17,6 +17,50 @@ class IndexController extends Controller
         $this->_view->render($this->_arrParam['controller'] . '/index');
     }
 
+    public function orderAction()
+    {
+        $cart       = Session::get('cart');
+        $bookID     = $this->_arrParam['book_id'];
+        $price      = $this->_arrParam['price'];
+
+        // $quantity   = (isset($this->_arrParam['quantity'])) ? $this->_arrParam['quantity'] : 0;
+        // if (isset($this->_arrParam['quantity_cart'])) {
+        //     $quantity = (int)$this->_arrParam['quantity_cart'];
+        // }
+        
+        if (isset($this->_arrParam['quantity_cart'])) {
+            $quantity = @$this->_arrParam['quantity_cart'];
+        } else {
+            $quantity = @$this->_arrParam['quantity'];
+        }
+
+        if ($quantity != null) {
+            if (isset($this->_arrParam['quantity_cart'])) {
+                $cart['quantity'][$bookID]  = $quantity;
+            } else {
+                @$cart['quantity'][$bookID]  += $quantity;
+            }
+            $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
+        } else {
+            if (empty($cart)) {
+                $cart['quantity'][$bookID]  = 1;
+                $cart['price'][$bookID]     = $price;
+            } else {
+                if (key_exists($bookID, $cart['quantity'])) {
+                    $cart['quantity'][$bookID]  += 1;
+                    $cart['price'][$bookID]     = $price * $cart['quantity'][$bookID];
+                } else {
+                    $cart['quantity'][$bookID]  = 1;
+                    $cart['price'][$bookID]     = $price;
+                }
+            }
+        }
+
+        Session::set('cart', $cart);
+        $quantityCart   = array_sum($cart['quantity']);
+        echo $quantityCart;
+    }
+
     public function ajaxQuickViewAction()
     {
         $result = $this->_model->infoItem($this->_arrParam, ['task' => 'quick-view-book']);
@@ -26,7 +70,7 @@ class IndexController extends Controller
 
         $result['pictureURL'] = $pictureURL;
         $result['detailItem'] = $detailItem;
-        $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'user', 'order');
+        $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'index', 'order');
         echo json_encode($result);
     }
 

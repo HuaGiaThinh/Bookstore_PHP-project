@@ -10,7 +10,7 @@ if (!empty($this->items)) {
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
         $price      = number_format($item['price'], 0, ',', '.');
         $totalPrice = number_format($item['totalPrice'], 0, ',', '.');
-        $linkInputQuantity = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $item['price']]);
+        $linkInputQuantity = URL::createLink($this->params['module'], 'index', 'order', ['book_id' => $item['id'], 'price' => $item['price']]);
         $linkRemoveItem = URL::createLink($this->params['module'], 'user', 'removeItemFromCart', ['book_id' => $item['id']]);
         $xhtml .= '
             <tr>

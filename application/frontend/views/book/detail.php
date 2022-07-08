@@ -8,7 +8,7 @@ if (!empty($this->bookInfo)) {
     $price = number_format($bookInfo['price'], 0, ',', '.');
     $priceAfterSaleOff = HelperFrontend::priceAfterSaleOff($bookInfo['price'], $bookInfo['sale_off']);
 
-    $linkOrder  = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $bookInfo['id'], 'price' => $priceAfterSaleOff]);
+    $linkOrder  = URL::createLink($this->params['module'], 'index', 'order', ['book_id' => $bookInfo['id'], 'price' => $priceAfterSaleOff]);
     $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
     if ($bookInfo['sale_off'] != 0) {
         $xhtmlPrice = sprintf(

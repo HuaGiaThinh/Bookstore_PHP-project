@@ -48,7 +48,7 @@ class BookController extends Controller
 
         $result['pictureURL'] = $pictureURL;
         $result['detailItem'] = $detailItem;
-        $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'user', 'order');
+        $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'index', 'order');
         echo json_encode($result);
     }
 }
