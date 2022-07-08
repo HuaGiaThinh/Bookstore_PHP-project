@@ -15,7 +15,28 @@ class BookModel extends Model
             $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
             $query[]     = "FROM `{$this->table}`";
             $query[]     = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
-            $query[]     = "ORDER BY `ordering` ASC";
+
+            if (isset($params['sort'])) {
+                $sort = $params['sort'];
+                $price = "`price` - ((`price`*`sale_off`)/100)";
+
+                switch ($sort) {
+                    case 'price_asc':
+                        $query[] = "ORDER BY $price ASC";
+                        break;
+                    case 'price_desc':
+                        $query[] = "ORDER BY $price DESC";
+                        break;
+                    case 'latest':
+                        $query[] = "ORDER BY `id` DESC";
+                        break;
+                    default:
+                        $query[] = "ORDER BY `ordering` ASC";
+                        break;
+                }
+            } else {
+                $query[]     = "ORDER BY `ordering` ASC";
+            }
 
             $query        = implode(" ", $query);
             $result        = $this->fetchAll($query);

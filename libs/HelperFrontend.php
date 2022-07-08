@@ -65,7 +65,27 @@ class HelperFrontend
         return $priceAfterSaleOff;
     }
 
-    public static function createInputHidden($name, $value, $id)
+    public static function createInput($type, $name, $value)
+    {
+        return sprintf('<input type="%s" name="%s" value="%s">', $type, $name, $value);
+    }
+
+    public static function select($name, $id, $arrOptions, $keySelected = null)
+    {
+        $options = '<option> - Sắp xếp - </option>';
+        foreach ($arrOptions as $key => $value) {
+            $selected = $key == $keySelected ? 'selected' : '';
+            $options .= sprintf('<option %s value="%s">%s</option>', $selected, $key, $value);
+        }
+
+        $xhtml = sprintf('
+            <select class="form-select" id="%s" name="%s">
+                %s
+            </select>', $id, $name, $options);
+        return $xhtml;
+    }
+
+    public static function createInputHidden($name, $value, $id = '')
     {
         return sprintf('<input type="hidden" name="form[%s][]" value="%s" id="input_%s">', $name, $value, $id);
     }

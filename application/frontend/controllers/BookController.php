@@ -21,6 +21,7 @@ class BookController extends Controller
         $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
 
         $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
+        $this->_view->categoryDefault = $this->_arrParam['category_default'];
         $this->_view->render($this->_arrParam['controller'] . '/list');
     }
 

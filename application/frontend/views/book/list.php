@@ -71,17 +71,7 @@ if (!empty($this->items)) {
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="product-page-filter">
-                                                        <form action="" id="sort-form" method="GET">
-                                                            <select id="sort" name="sort">
-                                                                <option value="default" selected> - Sắp xếp - </option>
-                                                                <option value="price_asc">Giá tăng dần</option>
-                                                                <option value="price_desc">Giá giảm dần</option>
-                                                                <option value="latest">Mới nhất</option>
-                                                            </select>
-                                                            <span style="margin-left: -30px;"><i class="fa fa-caret-down fa-2x text-secondary" aria-hidden="true"></i></span>
-                                                        </form>
-                                                    </div>
+                                                    <?php require_once 'html/sort.php';?>
                                                 </div>
                                             </div>
                                         </div>

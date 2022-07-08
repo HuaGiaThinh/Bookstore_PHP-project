@@ -62,6 +62,10 @@ $(document).ready(function () {
         $('#sort-form').submit();
     });
 
+    $('#sort').on('change', function () {
+        $('#sort-form').submit();
+    });
+
     $(document).on('click', 'a.quick-view', function (e) {
         e.preventDefault();
         let url = $(this).attr('href');
