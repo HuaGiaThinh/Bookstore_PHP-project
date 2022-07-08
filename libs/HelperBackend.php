@@ -150,11 +150,23 @@ class HelperBackend
             if (isset($params['group_acp'])) $paramsLink['group_acp'] = $params['group_acp'];
             if (isset($params['group_id'])) $paramsLink['group_id'] = $params['group_id'];
             if (isset($params['category_id'])) $paramsLink['category_id'] = $params['category_id'];
+            if (isset($params['special'])) $paramsLink['special'] = $params['special'];
             if (isset($params['show_at_home'])) $paramsLink['show_at_home'] = $params['show_at_home'];
 
             $link = URl::createLink($params['module'], $params['controller'], $params['action'], $paramsLink);
             $xhtml .= sprintf('<a href="%s" class="btn btn-%s">%s <span class="badge badge-pill badge-light">%s</span></a> ', $link, $classActive, ucfirst($key), $value);
         }
+        return $xhtml;
+    }
+
+    public static function filterForm($nameForm, $filterBy, $params, $arrSelect)
+    {
+        $xhtml = sprintf('<form action="" method="GET" name="%s" id="%s-%s">', $nameForm, $nameForm, $filterBy);
+        $xhtml .= self::input('hidden', 'module', $params['module']);
+        $xhtml .= self::input('hidden', 'controller', $params['controller']);
+        $xhtml .= self::input('hidden', 'action', 'index');
+        $xhtml .= Form::select($filterBy, $arrSelect, 'custom-select filter-element-'.$filterBy.'', @$params[$filterBy]);
+        $xhtml .= '</form>';
         return $xhtml;
     }
 

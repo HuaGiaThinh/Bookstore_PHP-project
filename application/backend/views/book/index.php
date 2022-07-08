@@ -57,6 +57,12 @@ if (!empty($items)) {
     }
 }
 
+$arrSpecial = ['default' => 'Filter Special', 1 => 'Yes', 0 => 'No'];
+
+$xhtmlFilterCategory = HelperBackend::filterForm('filter-form', 'category_id', $this->params, $this->categorySelect);
+
+$xhtmlFilterBookSpecial = HelperBackend::filterForm('filter-form', 'special', $this->params, $arrSpecial);
+
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
 ?>
@@ -81,12 +87,10 @@ $xhtmlPagination = $this->pagination->showPagination();
                                 <?= $xhtmlFilterStatus; ?>
                             </div>
                             <div class="area-filter-attribute mb-2">
-                                <form action="" method="GET" name="filter-form" id="filter-form">
-                                    <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
-                                    <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
-                                    <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                    <?= Form::select('category_id', $this->categorySelect, 'custom-select filter-element', @$this->params['category_id']) ?>
-                                </form>
+                                <?= $xhtmlFilterCategory;?>
+
+                                <?= $xhtmlFilterBookSpecial;?>
+                                
                             </div>
                             <div class="area-search mb-2">
                                 <form action="" method="GET" name="search-form">

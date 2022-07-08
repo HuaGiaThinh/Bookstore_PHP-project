@@ -79,8 +79,12 @@ $(document).ready(function () {
 
     $('#currentPage').parent().addClass('active');
 
-    $('.filter-element').on('change', function () {
-        $('#filter-form').submit();
+    $('.filter-element-category_id').on('change', function () {
+        $('#filter-form-category_id').submit();
+    });
+
+    $('.filter-element-special').on('change', function () {
+        $('#filter-form-special').submit();
     });
 
     $('.slb-group').on('change', function () {

@@ -30,8 +30,11 @@ class BookModel extends Model
         $searchValue = isset($params['search']) ? trim($params['search']) : '';
         if (!empty($searchValue)) $query[]  = "AND {$this->createSearchQuery($searchValue)}";
 
-        // Filter group id
+        // Filter category id
         if (isset($params['category_id']) && $params['category_id'] != 'default') $query[] = "AND `category_id` = '{$params['category_id']}'";
+
+        // Filter special
+        if (isset($params['special']) && $params['special'] != 'default') $query[] = "AND `special` = '{$params['special']}'";
 
         $query        = implode(" ", $query);
         $result = $this->singleRecord($query);
@@ -55,6 +58,9 @@ class BookModel extends Model
 
         // Filter category id
         if (isset($params['category_id']) && $params['category_id'] != 'default') $query[] = "AND `category_id` = '{$params['category_id']}'";
+
+        // Filter special
+        if (isset($params['special']) && $params['special'] != 'default') $query[] = "AND `special` = '{$params['special']}'";
 
         $query[]    = "ORDER BY `id` DESC";
         //PAGINATION
@@ -87,6 +93,9 @@ class BookModel extends Model
 
         // Filter category id
         if (isset($params['category_id']) && $params['category_id'] != 'default') $query[] = "AND `category_id` = '{$params['category_id']}'";
+
+        // Filter special
+        if (isset($params['special']) && $params['special'] != 'default') $query[] = "AND `special` = '{$params['special']}'";
 
         $query        = implode(" ", $query);
         $result        = $this->singleRecord($query);
