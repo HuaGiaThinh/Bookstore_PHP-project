@@ -46,7 +46,7 @@
             $('body').css({
                 'overflow': 'auto'
             });
-        }, 200);
+        }, 70);
         $('.loader_skeleton').remove('fast');
         $('body').css({
             'overflow': 'hidden'

@@ -1,7 +1,6 @@
 <?php
 $linkRegister = URL::createLink($this->params['module'], $this->params['controller'], 'register');
 
-
 $elements = [
     [
         'label'     => Form::label('Email'),
@@ -36,8 +35,8 @@ $btnSubmit = HelperFrontend::createButton('submit', 'submit', 'login', 'submit',
                 <div class="theme-card">
                     <form action="" method="post" id="admin-form" class="theme-form" name="login-form">
                         <?= @$this->errors; ?>
-                        <?= $xhtml;?>
-                        <?= $btnSubmit;?>
+                        <?= $xhtml; ?>
+                        <?= $btnSubmit; ?>
                     </form>
                 </div>
             </div>

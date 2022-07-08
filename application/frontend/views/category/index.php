@@ -38,18 +38,6 @@ if (!empty($items)) {
 <section class="ratio_asos j-box pets-box section-b-space" id="category">
     <div class="container">
         <div class="no-slider five-product row">
-            <!-- <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div> -->
             <?= $xhtml;?>
         </div>
 

@@ -2,52 +2,7 @@
 $xhtml = '';
 if (!empty($this->specialBook)) {
     $items = $this->specialBook;
-    foreach ($items as $item) {
-        $linkItem = URL::createLink($this->params['module'], 'book', 'detail', ['book_id' => $item['id']]);
-
-        $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
-        $name = (strlen($item['name']) > 50) ? (substr($item['name'], 0, 50) . '...') : $item['name'];
-
-        $price = number_format($item['price'], 0, ',', '.');
-        $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
-        $priceAfterSaleOff = $item['price'] - (($item['price'] * $item['sale_off']) / 100);
-        $linkOrder = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
-
-        $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
-
-        $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
-
-        $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
-        
-        $xhtml .= '
-            <div class="product-box">
-                <div class="img-wrapper">' . $saleOff . '
-                    <div class="front">
-                        <a href="' . $linkItem . '">
-                            <img src="' . $pictureURL . '" class="img-fluid blur-up lazyload bg-img" alt="">
-                        </a>
-                    </div>
-                    <div class="cart-info cart-wrap">
-                        <a href="'.$linkOrder.'" class="add-to-cart" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                        <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <a href="' . $linkItem . '" title="' . $item['name'] . '">
-                        <h6>' . $name . '</h6>
-                    </a>
-                    <h4 class="text-lowercase">' . $priceAfterSaleOff . ' đ ' . $price . '</h4>
-                </div>
-            </div>    
-        ';
-    }
+    $xhtml = HelperFrontend::createXhtmlBooks($this->specialBook, $this->params);
 }
 ?>
 <!-- Title-->

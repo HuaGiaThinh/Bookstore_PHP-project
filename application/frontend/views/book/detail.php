@@ -24,56 +24,18 @@ if (!empty($this->bookInfo)) {
 }
 
 // Related Books
-$xhtmlRelatedBooks = '';
 if (!empty($this->relatedBooks)) {
-    foreach ($this->relatedBooks as $item) {
-        $linkItem   = URL::createLink($this->params['module'], $this->params['controller'], 'detail', ['book_id' => $item['id']]);
+    $xhtmlRelatedBooks = HelperFrontend::createXhtmlBooks($this->relatedBooks, $this->params, true, 'col-xl-2 col-md-4 col-sm-6');  
+}
 
-        $saleOff = HelperFrontend::showItemSaleOff($item['sale_off']);
-        $name = (strlen($item['name']) > 46) ? (substr($item['name'], 0, 46) . '...') : $item['name'];
+// Special Books
+if (!empty($this->specialBooks)) {
+    $xhtmlSpecialBooks = HelperFrontend::createSliderBooks($this->specialBooks, $this->params, 'Sách nổi bật');
+}
 
-        $price = number_format($item['price'], 0, ',', '.');
-        $price = ($saleOff != null) ? $price = '<del>' . $price . ' đ</del>' : '';
-        $priceAfterSaleOff = HelperFrontend::priceAfterSaleOff($item['price'], $item['sale_off']);
-
-        $linkOrderBookRelated = URL::createLink($this->params['module'], 'user', 'order', ['book_id' => $item['id'], 'price' => $priceAfterSaleOff]);
-
-        $priceAfterSaleOff = number_format($priceAfterSaleOff, 0, ',', '.');
-        $pictureSrc = HelperFrontend::createPictureURL($item['picture'], $this->params);
-
-        $linkQuickView = URL::createLink($this->params['module'], $this->params['controller'], 'ajaxQuickView', ['book_id' => $item['id']]);
-
-        $xhtmlRelatedBooks .= '
-            <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="product-box">
-                    <div class="img-wrapper">' . $saleOff . '
-                        <div class="front">
-                            <a href="' . $linkItem . '">
-                                <img src="' . $pictureSrc . '" class="img-fluid blur-up lazyload bg-img" alt="">
-                            </a>
-                        </div>
-                        <div class="cart-info cart-wrap">
-                            <a href="' . $linkOrderBookRelated . '" class="add-to-cart" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                            <a href="' . $linkQuickView . '" title="Quick View" class="quick-view"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <a href="' . $linkItem . '" title="' . $item['name'] . '">
-                            <h6>' . $name . '</h6>
-                        </a>
-                        <h4 class="text-lowercase">' . $priceAfterSaleOff . ' đ ' . $price . '</h4>
-                    </div>
-                </div>
-            </div>        
-        ';
-    }
+// New books
+if (!empty($this->newBooks)) {
+    $xhtmlNewBooks = HelperFrontend::createSliderBooks($this->newBooks, $this->params, 'Sách mới', 3, 'mt-4');
 }
 ?>
 <div class="breadcrumb-section">
@@ -280,10 +242,10 @@ if (!empty($this->relatedBooks)) {
                     </div>
 
                     <!-- Special Books -->
-                    <?php require_once 'html/special-books.php'; ?>
+                    <?= $xhtmlSpecialBooks;?>
 
                     <!-- New Books -->
-                    <?php require_once 'html/new-books.php'; ?>
+                    <?= $xhtmlNewBooks;?>
                 </div>
 
             </div>
