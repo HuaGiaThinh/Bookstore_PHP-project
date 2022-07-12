@@ -20,19 +20,12 @@ $elements = [
 ];
 
 $xhtml = Form::showElements($elements);
-?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2">Thông Tin Tài khoản</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Thông Tin Tài khoản');
+?>
+
+<?= $xhtmlBreadcrumb;?>
 <section class="faq-section section-b-space">
     <div class="container">
         <div class="row">

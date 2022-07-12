@@ -1,5 +1,4 @@
 <?php
-$data = $this->data;
 $elements = [
     [
         'label'     => Form::label('Mật khẩu cũ'),
@@ -16,19 +15,12 @@ $elements = [
 ];
 
 $xhtml = Form::showElements($elements);
-?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2">Đổi mật khẩu</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Đổi mật khẩu');
+?>
+
+<?= $xhtmlBreadcrumb;?>
 <section class="faq-section section-b-space">
     <div class="container">
         <div class="row">

@@ -59,19 +59,12 @@ if (!empty($this->items)) {
     $xhtmlCart .= '<div class="card-header">';
     $xhtmlCart .= '<h2 style="color:#ff9e3e; font-size: 22px;" class="text-center">:(( Bạn chưa có đơn hàng nào</h2></div>';
 }
-?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2">Lịch sử mua hàng</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Lịch sử mua hàng');
+?>
+
+<?= $xhtmlBreadcrumb;?>
 <section class="faq-section section-b-space">
     <div class="container">
         <div class="row">

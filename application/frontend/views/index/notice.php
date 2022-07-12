@@ -32,18 +32,12 @@ $xhtmlMessage = '';
 if ($flagError) $xhtmlMessage = '<h1>404</h1>';
 
 if (isset($message)) $xhtmlMessage .= "<h2>$message</h2>";
+
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb($title);
 ?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2"><?= $title;?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<?= $xhtmlBreadcrumb;?>
 <?php if ($flagPayment) { ?>
     <section class="section-b-space">
     <div class="container">

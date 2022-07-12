@@ -37,18 +37,12 @@ if (!empty($this->specialBooks)) {
 if (!empty($this->newBooks)) {
     $xhtmlNewBooks = HelperFrontend::createSliderBooks($this->newBooks, $this->params, 'Sách mới', 3, 'mt-4');
 }
+
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb($bookInfo['name']);
 ?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2"><?= $bookInfo['name']; ?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<?= $xhtmlBreadcrumb;?>
 <section class="section-b-space">
     <div class="collection-wrapper">
         <div class="container">

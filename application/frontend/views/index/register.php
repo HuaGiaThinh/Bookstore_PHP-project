@@ -23,18 +23,12 @@ $elements = [
 
 $xhtml = Form::showElements($elements, 'col-md-6');
 $btnSubmit = HelperFrontend::createButton('submit', 'submit', 'register', 'submit', 'Tạo tài khoản', 'btn-solid');
+
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Đăng ký tài khoản');
 ?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2">Đăng ký tài khoản</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<?= $xhtmlBreadcrumb;?>
 <section class="register-page section-b-space">
     <div class="container">
         <div class="row">

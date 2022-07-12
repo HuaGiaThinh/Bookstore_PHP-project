@@ -42,12 +42,12 @@ if (!empty($this->items)) {
                 <td>
                     <div class="qty-box">
                         <div class="input-group">
-                            <input type="number" name="quantity" value="' . $item['quantity'] . '" class="form-control input-number" id="quantity-'.$item['id'].'" min="1"
-                             data-url="'.$linkInputQuantity.'">
+                            <input type="number" name="quantity" value="' . $item['quantity'] . '" class="form-control input-number" id="quantity-' . $item['id'] . '" min="1"
+                             data-url="' . $linkInputQuantity . '">
                         </div>
                     </div>
                 </td>
-                <td><a href="'.$linkRemoveItem.'" class="icon"><i class="ti-close"></i></a></td>
+                <td><a href="' . $linkRemoveItem . '" class="icon"><i class="ti-close"></i></a></td>
                 <td>
                     <h2 class="td-color text-lowercase">' . $totalPrice . ' đ</h2>
                 </td>
@@ -59,20 +59,13 @@ if (!empty($this->items)) {
         $xhtml .= HelperFrontend::createInputHidden('picture', $item['picture'], "picture_{$item['id']}");
     }
 }
+
+// breadcrumb
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Giỏ hàng');
 ?>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title">
-                    <h2 class="py-2">Giỏ hàng</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php
+echo $xhtmlBreadcrumb;
 if (!empty($xhtml)) {
 ?>
     <form action="<?= $linkSubmit ?>" method="POST" name="admin-form" id="admin-form">
@@ -87,7 +80,7 @@ if (!empty($xhtml)) {
                                     <th scope="col">Tên sách</th>
                                     <th scope="col">Giá</th>
                                     <th scope="col">Số Lượng</th>
-                                    <th scope="col"><a style="color:#777777" href="<?= $linkDeleteAll;?>">Xóa tất cả</a></th>
+                                    <th scope="col"><a style="color:#777777" href="<?= $linkDeleteAll; ?>">Xóa tất cả</a></th>
                                     <th scope="col">Thành tiền</th>
                                 </tr>
                             </thead>

@@ -101,11 +101,27 @@ class HelperFrontend
                 </div>';
     }
 
+    public static function createBreadcrumb($text)
+    {
+        $xhtml = '<div class="breadcrumb-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title">
+                                    <h2 class="py-2">'.$text.'</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+        return $xhtml;
+    }
+
     public static function createXhtmlBooks($listBooks, $params, $hasSize = false, $classSize = '', $hasDescription = false)
     {
         $xhtml = '';
         foreach ($listBooks as $item) {
-            $linkItem = URL::createLink($params['module'], $params['controller'], 'detail', ['book_id' => $item['id']]);
+            $linkItem = URL::createLink($params['module'], 'book', 'detail', ['book_id' => $item['id']]);
 
             $saleOff        = self::showItemSaleOff($item['sale_off']);
             $name           = (strlen($item['name']) > 36) ? (substr($item['name'], 0, 36) . '...') : $item['name'];
