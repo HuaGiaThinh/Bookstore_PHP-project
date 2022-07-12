@@ -27,6 +27,9 @@ class Controller
 		$this->setView($arrParams['module']);
 
 		$this->_pagination['currentPage'] = (isset($arrParams['filter_page'])) ? $arrParams['filter_page'] : 1;
+		if ($arrParams['module'] == 'frontend') {
+			$this->_pagination['currentPage'] = (isset($arrParams['page'])) ? $arrParams['page'] : 1;
+		}
 		$arrParams['pagination'] = $this->_pagination;
 
 		$this->setParams($arrParams);

@@ -65,6 +65,8 @@ $xhtmlFilterBookSpecial = HelperBackend::filterForm('filter-form', 'special', $t
 
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
+// $linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
+// $xhtmlPagination = $this->pagination->showPaginationBackend($linkPage);
 ?>
 <div class="container-fluid">
     <div class="row">

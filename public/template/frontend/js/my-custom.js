@@ -31,6 +31,9 @@ $(document).ready(function () {
         $('#btn-view-more').show();
     }
 
+    // active pagination
+    $('#currentPage').parent().addClass('active');
+    
     $('#btn-view-more').on('click', function () {
         $('.category-item:gt(9)').toggle();
         $(this).text() === 'Xem thêm' ? $(this).text('Thu gọn') : $(this).text('Xem thêm');

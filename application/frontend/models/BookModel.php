@@ -16,6 +16,7 @@ class BookModel extends Model
             $query[]     = "FROM `{$this->table}`";
             $query[]     = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
 
+            // sort
             if (isset($params['sort'])) {
                 $sort = $params['sort'];
                 $price = "`price` - ((`price`*`sale_off`)/100)";
@@ -36,6 +37,15 @@ class BookModel extends Model
                 }
             } else {
                 $query[]     = "ORDER BY `ordering` ASC";
+            }
+
+            //PAGINATION
+            
+            $pagination           = $params['pagination'];
+            $totalItemsPerPage    = $pagination['totalItemsPerPage'];
+            if ($totalItemsPerPage > 0) {
+                $position    = ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+                $query[]    = "LIMIT $position, $totalItemsPerPage";
             }
 
             $query        = implode(" ", $query);
@@ -117,5 +127,18 @@ class BookModel extends Model
         $query       = implode(" ", $query);
         $result      = $this->fetchAll($query);
         return $result;
+    }
+
+    public function countItem($params)
+    {
+        $categoryID = isset($params['category_id']) ? $params['category_id'] : $params['category_default'];
+
+        $query[]    = "SELECT COUNT(`id`) AS `total`";
+        $query[]    = "FROM `{$this->table}`";
+        $query[]    = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
+
+        $query        = implode(" ", $query);
+        $result        = $this->singleRecord($query);
+        return $result['total'];
     }
 }

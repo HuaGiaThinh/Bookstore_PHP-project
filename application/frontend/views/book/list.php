@@ -15,6 +15,10 @@ if (!empty($this->items)) {
             <h5 class="text-center alert alert-danger">Dữ liệu đang được cập nhật!</h5>
         </div>';
 }
+
+// pagination
+$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], ['category_id' => ($this->params['category_id'] ?? $this->categoryDefault)]);
+$xhtmlPagination = $this->pagination->showPaginationFrontend($linkPage);
 ?>
 <div class="breadcrumb-section">
     <div class="container">
@@ -87,36 +91,37 @@ if (!empty($this->items)) {
 
 
                                     <!-- pagination -->
-                                    <div class="product-pagination">
+                                    <?= $xhtmlPagination;?>
+                                    <!-- <div class="product-pagination">
                                         <div class="theme-paggination-block">
                                             <div class="container-fluid p-0">
                                                 <div class="row">
                                                     <div class="col-xl-6 col-md-6 col-sm-12">
                                                         <nav aria-label="Page navigation">
                                                             <nav>
-                                                                <ul class="pagination">
-                                                                    <li class="page-item disabled">
-                                                                        <a href="" class="page-link"><i class="fa fa-angle-double-left"></i></a>
-                                                                    </li>
-                                                                    <li class="page-item disabled">
-                                                                        <a href="" class="page-link"><i class="fa fa-angle-left"></i></a>
-                                                                    </li>
-                                                                    <li class="page-item active">
-                                                                        <a class="page-link">1</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#">2</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#">3</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#"><i class="fa fa-angle-double-right"></i></a>
-                                                                    </li>
-                                                                </ul>
+                                                                    <ul class="pagination">
+                                                                        <li class="page-item disabled">
+                                                                            <a href="" class="page-link"><i class="fa fa-angle-double-left"></i></a>
+                                                                        </li>
+                                                                        <li class="page-item disabled">
+                                                                            <a href="" class="page-link"><i class="fa fa-angle-left"></i></a>
+                                                                        </li>
+                                                                        <li class="page-item active">
+                                                                            <a class="page-link">1</a>
+                                                                        </li>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="#">2</a>
+                                                                        </li>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="#">3</a>
+                                                                        </li>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                                                                        </li>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="#"><i class="fa fa-angle-double-right"></i></a>
+                                                                        </li>
+                                                                    </ul>
                                                             </nav>
                                                         </nav>
                                                     </div>
@@ -128,7 +133,7 @@ if (!empty($this->items)) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

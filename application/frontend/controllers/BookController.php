@@ -18,10 +18,17 @@ class BookController extends Controller
         $this->_view->listCategory = $listCategory;
 
         $this->_arrParam['category_default'] = $listCategory[0]['id'];
-        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
 
-        $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
+        // pagination
+        $totalItem = $this->_model->countItem($this->_arrParam);
+        $configPagination = array('totalItemsPerPage'    => 12, 'pageRange' => 3);
+        $this->setPagination($configPagination);
+        $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
+
+        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
         $this->_view->categoryDefault = $this->_arrParam['category_default'];
+        $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
+
         $this->_view->render($this->_arrParam['controller'] . '/list');
     }
 

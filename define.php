@@ -10,7 +10,8 @@
 	define ('TEMPLATE_PATH'		, PUBLIC_PATH . 'template' . DS);		// Định nghĩa đường dẫn đến thư mục public							
 	
 	// Đường dẫn tương đối
-	define	('ROOT_URL'			, DS . 'zvn-php15-project_HuaGiaThinh' . DS);
+	// define	('ROOT_URL'			, DS . 'zvn-php15-project_HuaGiaThinh' . DS);
+	define	('ROOT_URL'			, DS);
 	define	('APPLICATION_URL'	, ROOT_URL . 'application' . DS);
 	define	('PUBLIC_URL'		, ROOT_URL . 'public' . DS);
 	define 	('UPLOAD_URL'		, PUBLIC_URL  . 'files' . DS);
