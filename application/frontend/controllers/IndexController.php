@@ -27,7 +27,7 @@ class IndexController extends Controller
         // if (isset($this->_arrParam['quantity_cart'])) {
         //     $quantity = (int)$this->_arrParam['quantity_cart'];
         // }
-        
+
         if (isset($this->_arrParam['quantity_cart'])) {
             $quantity = @$this->_arrParam['quantity_cart'];
         } else {
@@ -66,11 +66,13 @@ class IndexController extends Controller
         $result = $this->_model->infoItem($this->_arrParam, ['task' => 'quick-view-book']);
 
         $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
-        $detailItem = URL::createLink($this->_arrParam['module'], 'book', 'detail', ['book_id' => $result['id']]);
+
+        $detailItem = URL::createLinkBookForUser($result, $this->_arrParam);
 
         $result['pictureURL'] = $pictureURL;
         $result['detailItem'] = $detailItem;
         $result['linkToCart'] = URL::createLink($this->_arrParam['module'], 'index', 'order');
+
         echo json_encode($result);
     }
 
@@ -112,7 +114,7 @@ class IndexController extends Controller
         $this->_view->_title = "<title>Login</title>";
         $userInfo    = Session::get('user');
         if (@$userInfo['login'] == true && (@$userInfo['time'] + TIME_LOGIN >= time())) {
-            URL::redirect($this->_arrParam['module'], 'index', 'index');
+            URL::redirect($this->_arrParam['module'], 'index', 'index', null, 'trang-chu.html');
         }
 
 

@@ -3,6 +3,7 @@ $pageTitle = 'Tất cả sách';
 foreach ($this->listCategory as $value) {
     if (isset($this->params['category_id']) && $this->params['category_id'] == $value['id']) {
         $pageTitle = $value['name'];
+        $this->params['category_name'] = $value['name'];
         break;
     }
 }
@@ -18,7 +19,9 @@ if (!empty($this->items)) {
 }
 
 // pagination
-$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], ['category_id' => ($this->params['category_id'] ?? $this->categoryDefault)]);
+$categoryName = URL::filterURL($categoryName);
+$linkParams = isset($this->params['category_id']) ? ['category_id' => $this->params['category_id']] : '';
+$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], $linkParams);
 $xhtmlPagination = $this->pagination->showPaginationFrontend($linkPage);
 
 // breadcrumb

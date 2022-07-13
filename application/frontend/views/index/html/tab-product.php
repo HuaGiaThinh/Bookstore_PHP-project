@@ -15,7 +15,9 @@ if (!empty($this->topCategory)) {
         // books in category
         $xhtmlBooks .= HelperFrontend::createXhtmlBooks($category['books'], $this->params);
 
-        $linkCategory = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $category['id']]);
+        $categoryID         = $category['id'];
+        $categoryNameURL    = URL::filterURL($category['name']);
+        $linkCategory = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $category['id']], "$categoryNameURL-$categoryID.html");
         $xhtmlBooks .= sprintf('</div><div class="text-center"><a href="%s" class="btn btn-solid">Xem tất cả</a></div></div>', $linkCategory);
     }
 }

@@ -98,6 +98,6 @@ class UserController extends Controller
     {
         Session::delete('user');
         Session::delete('cart');
-        URL::redirect($this->_arrParam['module'], 'index', 'index');
+        URL::redirect($this->_arrParam['module'], 'index', 'index', null, 'trang-chu.html');
     }
 }

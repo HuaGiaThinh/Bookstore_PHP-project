@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    activeMenu();
-
     $('.slide-5').on('setPosition', function () {
         $(this).find('.slick-slide').height('auto');
         var slickTrack = $(this).find('.slick-track');
@@ -78,8 +76,7 @@ $(document).ready(function () {
             url: url,
             dataType: 'json',
             success: function (data) {  
-                // let data = JSON.parse(response);
-
+                
                 let description = formatDescription(data.description);     
                 let price = formatPriceVND(data.price);
                 let priceAfterSaleOff = data.price - ((data.price * data.sale_off) / 100);

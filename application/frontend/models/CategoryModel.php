@@ -14,6 +14,14 @@ class CategoryModel extends Model
         $query[]     = "WHERE `status` = 'active'";
         $query[]     = "ORDER BY `ordering` ASC";
 
+        //PAGINATION
+        $pagination           = $params['pagination'];
+        $totalItemsPerPage    = $pagination['totalItemsPerPage'];
+        if ($totalItemsPerPage > 0) {
+            $position    = ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+            $query[]    = "LIMIT $position, $totalItemsPerPage";
+        }
+
         $query        = implode(" ", $query);
         $result        = $this->fetchAll($query);
         return $result;
@@ -21,7 +29,7 @@ class CategoryModel extends Model
 
     public function infoItem($params, $option = null)
     {
-    
+
         if ($option['task'] == 'login') {
             $email        = $params['form']['email'];
             $password    = md5($params['form']['password']);
@@ -35,14 +43,14 @@ class CategoryModel extends Model
         }
     }
 
-    public function addItem($data)
+    public function countItem($params)
     {
-        $data['password'] = md5($data['password']);
-        $data['group_id'] = 4;
-        $data['status'] = 'inactive';
-        $data['register_date'] = date("Y:m:d H:i:s");
-        $data['register_ip'] = $_SERVER["REMOTE_ADDR"];
+        $query[]    = "SELECT COUNT(`id`) AS `total`";
+        $query[]    = "FROM `{$this->table}`";
+        $query[]    = "WHERE `status` = 'active'";
 
-        $this->insert($data);
+        $query        = implode(" ", $query);
+        $result        = $this->singleRecord($query);
+        return $result['total'];
     }
 }

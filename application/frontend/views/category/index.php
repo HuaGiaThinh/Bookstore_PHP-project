@@ -3,7 +3,8 @@ $items = $this->items;
 $xhtml = '';
 if (!empty($items)) {
     foreach ($items as $item) {
-        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $item['id']]);
+        $nameURL = URL::filterURL($item['name']);
+        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $item['id']], "$nameURL-{$item['id']}.html");
         $pictureURL = HelperFrontend::createPictureURL($item['picture'], $this->params);
 
         $xhtml .=
@@ -26,6 +27,10 @@ if (!empty($items)) {
 
 // breadcrumb
 $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Danh mục sách');
+
+// pagination
+$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], null, 'danh-muc.html?');
+$xhtmlPagination = $this->pagination->showPaginationFrontend($linkPage);
 ?>
 
 <?= $xhtmlBreadcrumb;?>
@@ -35,6 +40,7 @@ $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Danh mục sách');
             <?= $xhtml;?>
         </div>
 
+        <?= $xhtmlPagination;?>
         <!-- <div class="product-pagination">
             <div class="theme-paggination-block">
                 <div class="container-fluid p-0">

@@ -22,6 +22,10 @@ class Controller
 
 	public function __construct($arrParams)
 	{
+		echo '<pre style="color: red;">';
+        print_r($arrParams);
+        echo '</pre>';
+        die('The function die has been called');
 		$this->setModel($arrParams['module'], $arrParams['controller']);
 		$this->setTemplate($this);
 		$this->setView($arrParams['module']);
@@ -94,6 +98,6 @@ class Controller
 		$this->_pagination['totalItemsPerPage'] = $config['totalItemsPerPage'];
 		$this->_pagination['pageRange']			= $config['pageRange'];
 		$this->_arrParam['pagination']			= $this->_pagination;
-		$this->_view->arrParam					=$this->_arrParam;
+		$this->_view->arrParam					= $this->_arrParam;
 	}
 }

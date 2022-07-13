@@ -4,7 +4,8 @@ $listCategory = $this->listCategory;
 $xhtmlCategory = '';
 if (!empty($listCategory)) {
     foreach ($listCategory as $category) {
-        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $category['id']]);
+        $categoryNameURl = URL::filterURL($category['name']);
+        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $category['id']], "$categoryNameURl-{$category['id']}.html");
         $classActive = (@$this->params['category_id'] == $category['id']) ? 'my-text-primary' : 'text-dark';
         $xhtmlCategory .= '
             <div class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
@@ -19,7 +20,6 @@ if (!empty($this->specialBooks)) {
 }
 ?>
 <div class="col-sm-3 collection-filter">
-
     <!-- side-bar colleps block stat -->
     <div class="collection-filter-block">
         <!-- brand filter start -->

@@ -17,16 +17,18 @@ class BookController extends Controller
         $listCategory = $this->_model->listCategory($this->_arrParam);
         $this->_view->listCategory = $listCategory;
 
-        $this->_arrParam['category_default'] = $listCategory[0]['id'];
-
         // pagination
         $totalItem = $this->_model->countItem($this->_arrParam);
-        $configPagination = array('totalItemsPerPage'    => 12, 'pageRange' => 3);
+        $configPagination = array('totalItemsPerPage'    => 8, 'pageRange' => 3);
         $this->setPagination($configPagination);
         $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 
-        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
-        $this->_view->categoryDefault = $this->_arrParam['category_default'];
+        if (isset($this->_arrParam['category_id'])) {
+            $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
+        } else {
+            $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'list-all-books']);
+        }
+
         $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
 
         $this->_view->render($this->_arrParam['controller'] . '/list');
@@ -35,6 +37,8 @@ class BookController extends Controller
     public function detailAction()
     {
         $bookInfo = $this->_model->infoItem($this->_arrParam);
+        if (empty($bookInfo)) URL::redirect($this->_arrParam['module'], 'index', 'notice', ['type' => 'not-url']);
+        
         $this->_view->_title = "<title>{$bookInfo['name']}</title>";
 
         $this->_view->bookInfo = $bookInfo;
@@ -51,7 +55,7 @@ class BookController extends Controller
         $result = $this->_model->infoItem($this->_arrParam);
 
         $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
-        $detailItem = URL::createLink($this->_arrParam['module'], $this->_arrParam['controller'], 'detail', ['book_id' => $result['id']]);
+        $detailItem = URL::createLinkBookForUser($result, $this->_arrParam);
 
         $result['pictureURL'] = $pictureURL;
         $result['detailItem'] = $detailItem;

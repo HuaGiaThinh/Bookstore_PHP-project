@@ -3,15 +3,15 @@ $userInfo   = Session::get('user');
 $cart       = Session::get('cart');
 $quantityCart   = (!empty($cart)) ? array_sum($cart['quantity']) : 0;
 
-$linkHome       = 'index.php';
-$linkRegister   = URL::createLink($this->params['module'], 'index', 'register');
-$linkLogin      = URL::createLink($this->params['module'], 'index', 'login');
-$linkLogout     = URL::createLink($this->params['module'], 'user', 'logout');
-$linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
+$linkHome       = URL::createLink($this->params['module'], 'index', 'index', null, 'trang-chu.html');
+$linkRegister   = URL::createLink($this->params['module'], 'index', 'register', null, 'dang-ky.html');
+$linkLogin      = URL::createLink($this->params['module'], 'index', 'login', null, 'dang-nhap.html');
+$linkLogout     = URL::createLink($this->params['module'], 'user', 'logout', null, 'dang-xuat.html');
+$linkProfile    = URL::createLink($this->params['module'], 'user', 'profile', null, 'tai-khoan.html');
 $linkAdmin      = URL::createLink('backend', 'index', 'dashboard');
-$linkCategory   = URL::createLink($this->params['module'], 'category', 'index');
-$linkBook       = URL::createLink($this->params['module'], 'book', 'list');
-$linkCart       = URL::createLink($this->params['module'], 'user', 'cart');
+$linkCategory   = URL::createLink($this->params['module'], 'category', 'index', null, 'danh-muc.html');
+$linkBook       = URL::createLink($this->params['module'], 'book', 'list', null, 'sach.html');
+$linkCart       = URL::createLink($this->params['module'], 'user', 'cart', null, 'gio-hang.html');
 
 $arrMenu = [
     ['text' => 'Đăng nhập', 'link' => $linkLogin],
@@ -49,11 +49,14 @@ $listCategory = listCategory();
 $xhtmlCats = '';
 if (!empty($listCategory)) {
     foreach ($listCategory as $value) {
-        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']]);
+        $nameURL = URL::filterURL($value['name']);
+        $link = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']], "$nameURL-{$value['id']}.html");
         $xhtmlCats .= sprintf('<li><a href="%s">%s</a></li>', $link, $value['name']);
     }
 }
 
+$controller = !empty($this->params['controller']) ? $this->params['controller'] : 'index';
+$action     = !empty($this->params['action']) ? $this->params['action'] : 'index';
 ?>
 <header class="my-header sticky">
     <div class="mobile-fix-option"></div>
@@ -145,3 +148,11 @@ if (!empty($listCategory)) {
         </div>
     </div>
 </header>
+
+<script type="text/javascript">
+    let controller = '<?= $controller?>';
+    let action = '<?= $action?>';
+    let dataActive = controller + '-' + action;
+
+    document.querySelector(`a[data-active=${dataActive}]`).classList.add("my-menu-link", "active");
+</script>

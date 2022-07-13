@@ -10,10 +10,9 @@ class IndexModel extends Model
     public function listItems($params, $option = null)
     {
         if ($option['task'] == 'special-books') {
-            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `" . TBL_BOOK . "`";
-            $query[]     = "WHERE `status` = 'active' AND `special` = 1";
-            $query[]     = "ORDER BY `ordering` ASC";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]     = "AND `b`.`status` = 'active' AND `b`.`special` = 1";
+            $query[]     = "ORDER BY `b`.`ordering` ASC";
             $query[]     = "LIMIT 0, 6";
 
             $query        = implode(" ", $query);
@@ -53,9 +52,8 @@ class IndexModel extends Model
         }
 
         if ($option['task'] == 'quick-view-book') {
-            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `" . TBL_BOOK . "`";
-            $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]     = "AND `b`.`status` = 'active' AND `b`.`id` = '{$params['book_id']}'";
 
             $query        = implode(" ", $query);
             $result        = $this->fetchRow($query);
@@ -65,11 +63,10 @@ class IndexModel extends Model
 
     private function listBooksInCate($categoryID)
     {
-        $query[]    = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-        $query[]    = "FROM `" . TBL_BOOK . "`";
-        $query[]    = "WHERE `status` = 'active'";
+        $query[]     = HelperFrontend::createQueryBooks();
+        $query[]    = "AND `b`.`status` = 'active'";
         $query[]    = "AND `category_id` = '$categoryID'";
-        $query[]     = "ORDER BY `ordering` ASC";
+        $query[]     = "ORDER BY `b`.`ordering` ASC";
         $query[]     = "LIMIT 0, 8";
 
         $query        = implode(" ", $query);

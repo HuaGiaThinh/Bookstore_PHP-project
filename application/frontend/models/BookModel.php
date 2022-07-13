@@ -9,38 +9,43 @@ class BookModel extends Model
 
     public function listItems($params, $option = null)
     {
-        if ($option['task'] == 'book-in-cats') {
-            $categoryID = isset($params['category_id']) ? $params['category_id'] : $params['category_default'];
-
-            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `{$this->table}`";
-            $query[]     = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
+        if ($option['task'] == 'list-all-books') {
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]     = "AND `b`.`status` = 'active'";
 
             // sort
             if (isset($params['sort'])) {
-                $sort = $params['sort'];
-                $price = "`price` - ((`price`*`sale_off`)/100)";
-
-                switch ($sort) {
-                    case 'price_asc':
-                        $query[] = "ORDER BY $price ASC";
-                        break;
-                    case 'price_desc':
-                        $query[] = "ORDER BY $price DESC";
-                        break;
-                    case 'latest':
-                        $query[] = "ORDER BY `id` DESC";
-                        break;
-                    default:
-                        $query[] = "ORDER BY `ordering` ASC";
-                        break;
-                }
+                $query[] = $this->sort($params['sort']);
             } else {
-                $query[]     = "ORDER BY `ordering` ASC";
+                $query[]     = "ORDER BY `b`.`ordering` ASC";
             }
 
             //PAGINATION
-            
+            $pagination           = $params['pagination'];
+            $totalItemsPerPage    = $pagination['totalItemsPerPage'];
+            if ($totalItemsPerPage > 0) {
+                $position    = ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+                $query[]    = "LIMIT $position, $totalItemsPerPage";
+            }
+
+            $query        = implode(" ", $query);
+            $result        = $this->fetchAll($query);
+            return $result;
+        }
+
+        if ($option['task'] == 'book-in-cats') {
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]     = "AND `b`.`status` = 'active'";
+            $query[]     = "AND `b`.`category_id` = '{$params['category_id']}'";
+
+            // sort
+            if (isset($params['sort'])) {
+                $query[] = $this->sort($params['sort']);
+            } else {
+                $query[]     = "ORDER BY `b`.`ordering` ASC";
+            }
+
+            //PAGINATION
             $pagination           = $params['pagination'];
             $totalItemsPerPage    = $pagination['totalItemsPerPage'];
             if ($totalItemsPerPage > 0) {
@@ -54,12 +59,11 @@ class BookModel extends Model
         }
 
         if ($option['task'] == 'related-books') {
-            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]    = "FROM `{$this->table}`";
-            $query[]    = "WHERE `status` = 'active'";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]    = "AND `b`.`status` = 'active'";
             $query[]    = "AND `category_id` = '{$params['category_id']}'";
-            $query[]    = "AND `id` <> '{$params['book_id']}'";
-            $query[]    = "ORDER BY `ordering` ASC";
+            $query[]    = "AND `b`.`id` <> '{$params['book_id']}'";
+            $query[]    = "ORDER BY `b`.`ordering` ASC";
             $query[]    = "LIMIT 0, 6";
 
             $query        = implode(" ", $query);
@@ -68,11 +72,10 @@ class BookModel extends Model
         }
 
         if ($option['task'] == 'special-books') {
-            $query[]     = "SELECT `id`, `name`, `picture`, `price`, `sale_off`";
-            $query[]    = "FROM `{$this->table}`";
-            $query[]    = "WHERE `status` = 'active'";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]    = "AND `b`.`status` = 'active'";
             $query[]    = "AND `special` = 1";
-            $query[]    = "ORDER BY `ordering` ASC";
+            $query[]    = "ORDER BY `b`.`ordering` ASC";
             $query[]    = "LIMIT 0, 8";
 
             $query        = implode(" ", $query);
@@ -81,10 +84,9 @@ class BookModel extends Model
         }
 
         if ($option['task'] == 'new-books') {
-            $query[]     = "SELECT `id`, `name`, `picture`, `price`, `sale_off`";
-            $query[]    = "FROM `{$this->table}`";
-            $query[]    = "WHERE `status` = 'active'";
-            $query[]    = "ORDER BY `id` DESC";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]    = "AND `b`.`status` = 'active'";
+            $query[]    = "ORDER BY `b`.`id` DESC";
             $query[]    = "LIMIT 0, 6";
 
             $query        = implode(" ", $query);
@@ -93,12 +95,32 @@ class BookModel extends Model
         }
     }
 
+    private function sort($sort)
+    {
+        $sort = $sort;
+        $price = "`price` - ((`price`*`sale_off`)/100)";
+
+        switch ($sort) {
+            case 'price_asc':
+                $query[] = "ORDER BY $price ASC";
+                break;
+            case 'price_desc':
+                $query[] = "ORDER BY $price DESC";
+                break;
+            case 'latest':
+                $query[] = "ORDER BY `b`.id` DESC";
+                break;
+            default:
+                $query[] = "ORDER BY `b`.`ordering` ASC";
+                break;
+        }
+        return $query[0];
+    }
     public function infoItem($params, $option = null)
     {
         if ($option == null) {
-            $query[]     = "SELECT `id`, `name`, `description`, `picture`, `price`, `sale_off`, `category_id`";
-            $query[]     = "FROM `{$this->table}`";
-            $query[]     = "WHERE `status` = 'active' AND `id` = '{$params['book_id']}'";
+            $query[]     = HelperFrontend::createQueryBooks();
+            $query[]     = "AND `b`.`status` = 'active' AND `b`.`id` = '{$params['book_id']}'";
 
             $query        = implode(" ", $query);
             $result        = $this->fetchRow($query);
@@ -131,11 +153,10 @@ class BookModel extends Model
 
     public function countItem($params)
     {
-        $categoryID = isset($params['category_id']) ? $params['category_id'] : $params['category_default'];
-
         $query[]    = "SELECT COUNT(`id`) AS `total`";
         $query[]    = "FROM `{$this->table}`";
-        $query[]    = "WHERE `status` = 'active' AND `category_id` = '$categoryID'";
+        $query[]    = "WHERE `status` = 'active'";
+        if (isset($params['category_id'])) $query[] = "AND `category_id` = '{$params['category_id']}'";
 
         $query        = implode(" ", $query);
         $result        = $this->singleRecord($query);
