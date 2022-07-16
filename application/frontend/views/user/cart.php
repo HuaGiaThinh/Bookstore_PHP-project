@@ -102,7 +102,7 @@ if (!empty($xhtml)) {
                     </div>
                 </div>
                 <div class="row cart-buttons">
-                    <div class="col-6"><a href="index.php" class="btn btn-solid">Tiếp tục mua sắm</a></div>
+                    <div class="col-6"><a href="trang-chu.html" class="btn btn-solid">Tiếp tục mua sắm</a></div>
                     <div class="col-6"><button type="submit" class="btn btn-solid">Đặt hàng</button></div>
                 </div>
             </div>
@@ -115,7 +115,7 @@ if (!empty($xhtml)) {
                 <div class="col-sm-12 text-center">
                     <i class="fa fa-cart-plus fa-5x my-text-primary"></i>
                     <h5 class="my-3">Không có sản phẩm nào trong giỏ hàng của bạn</h5>
-                    <a href="index.php" class="btn btn-solid">Tiếp tục mua sắm</a>
+                    <a href="trang-chu.html" class="btn btn-solid">Tiếp tục mua sắm</a>
                 </div>
             </div>
         </div>

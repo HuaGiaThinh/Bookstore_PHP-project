@@ -23,11 +23,6 @@ class IndexController extends Controller
         $bookID     = $this->_arrParam['book_id'];
         $price      = $this->_arrParam['price'];
 
-        // $quantity   = (isset($this->_arrParam['quantity'])) ? $this->_arrParam['quantity'] : 0;
-        // if (isset($this->_arrParam['quantity_cart'])) {
-        //     $quantity = (int)$this->_arrParam['quantity_cart'];
-        // }
-
         if (isset($this->_arrParam['quantity_cart'])) {
             $quantity = @$this->_arrParam['quantity_cart'];
         } else {
@@ -64,9 +59,7 @@ class IndexController extends Controller
     public function ajaxQuickViewAction()
     {
         $result = $this->_model->infoItem($this->_arrParam, ['task' => 'quick-view-book']);
-
         $pictureURL = HelperFrontend::createPictureURL($result['picture'], $this->_arrParam);
-
         $detailItem = URL::createLinkBookForUser($result, $this->_arrParam);
 
         $result['pictureURL'] = $pictureURL;

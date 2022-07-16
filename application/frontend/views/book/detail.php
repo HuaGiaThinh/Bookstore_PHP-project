@@ -1,5 +1,5 @@
 <?php
-$linkCart = URL::createLink($this->params['module'], 'user', 'cart');
+$linkCart = URL::createLink($this->params['module'], 'user', 'cart', null, 'gio-hang.html');
 if (!empty($this->bookInfo)) {
     $bookInfo = $this->bookInfo;
 

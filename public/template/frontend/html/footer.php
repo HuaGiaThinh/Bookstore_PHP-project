@@ -19,7 +19,8 @@ $listCategory = topCategory();
 
 $xhtmlCategory = '';
 foreach ($listCategory as $value) {
-    $linkCategory = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']]);
+    $nameURL = URL::filterURL($value['name']);
+    $linkCategory = URL::createLink($this->params['module'], 'book', 'list', ['category_id' => $value['id']], "$nameURL-{$value['id']}.html");
     $xhtmlCategory .= sprintf('<li><a href="%s">%s</a></li>', $linkCategory, $value['name']);
 }
 ?>
@@ -35,8 +36,7 @@ foreach ($listCategory as $value) {
                         <div class="footer-logo">
                             <h2 style="color: #ff9e3e">BookStore</h2>
                         </div>
-                        <p>Tự hào là website bán sách trực tuyến lớn nhất Việt Nam, cung cấp đầy đủ các thể loại
-                            sách, đặc biệt với những đầu sách độc quyền trong nước và quốc tế</p>
+                        <p>Tự hào là website bán sách trực tuyến lớn nhất Việt Nam, cung cấp đầy đủ các thể loại sách, đặc biệt với những đầu sách độc quyền trong nước và quốc tế</p>
                     </div>
                 </div>
                 <div class="col offset-xl-1">
@@ -45,7 +45,7 @@ foreach ($listCategory as $value) {
                             <h4>Danh mục nổi bật</h4>
                         </div>
                         <div class="footer-contant">
-                            <ul><?= $xhtmlCategory;?></ul>
+                            <ul><?= $xhtmlCategory; ?></ul>
                         </div>
                     </div>
                 </div>

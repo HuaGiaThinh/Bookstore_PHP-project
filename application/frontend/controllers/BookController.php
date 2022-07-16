@@ -23,11 +23,8 @@ class BookController extends Controller
         $this->setPagination($configPagination);
         $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 
-        if (isset($this->_arrParam['category_id'])) {
-            $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'book-in-cats']);
-        } else {
-            $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => 'list-all-books']);
-        }
+        $taskList = isset($this->_arrParam['category_id']) ? 'book-in-cats' : 'list-all-books';
+        $this->_view->items = $this->_model->listItems($this->_arrParam, ['task' => $taskList]);
 
         $this->_view->specialBooks = $this->_model->listItems($this->_arrParam, ['task' => 'special-books']);
 
