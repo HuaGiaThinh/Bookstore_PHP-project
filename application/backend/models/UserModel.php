@@ -217,4 +217,42 @@ class UserModel extends Model
             return $result;
         }
     }
+
+    public function multyActive($params, $option = null)
+    {
+        $query = $this->setQueryMultyAction($params, 'active');
+        $this->query($query);
+        Session::set('message', 'Cập nhật thành công!');
+    }
+
+    public function multyInactive($params, $option = null)
+    {
+        $query = $this->setQueryMultyAction($params, 'inactive');
+        $this->query($query);
+        Session::set('message', 'Cập nhật thành công!');
+    }
+
+    public function setQueryMultyAction($params, $action)
+    {
+        $ids = '(';
+        foreach ($params['cid'] as $id) {
+            $ids .= "$id,";
+        }
+        $ids .= "0)";
+
+        $data['modified']       = date("Y:m:d H:i:s");
+        $data['modified_by']    = $this->_userInfo['username'];
+
+        $query = "UPDATE `{$this->table}` SET `status` = '$action' WHERE id IN $ids";
+        return $query;
+    }
+
+    public function multyDelete($params, $option = null)
+    {
+        $data['modified']       = date("Y:m:d H:i:s");
+        $data['modified_by']    = $this->_userInfo['username'];
+
+        $this->delete($params['cid']);
+        Session::set('message', 'Xoá phần tử thành công!');
+    }
 }

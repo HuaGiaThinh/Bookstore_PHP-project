@@ -22,10 +22,10 @@ function deleteItem(url) {
 }
 
 function generateString(length = 12) {
-    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
+    for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
@@ -39,7 +39,7 @@ function getUrlVars(key) {
 
 function activeSidebar() {
     $controller = getUrlVars('controller');
-    $action     = getUrlVars('action');
+    $action = getUrlVars('action');
 
     if ($action == 'changePassword') {
         $('.' + $action).addClass('active');
@@ -58,6 +58,46 @@ $(document).ready(function () {
         $('div.table-responsive').find(':checkbox').each(function () {
             this.checked = checkStatus;
         });
+    })
+
+    // bulk action
+    $('.btn-bulk-apply').click(function () {
+        let checked = $('input[type="checkbox"]:checked').length;
+        if (checked < 1) {
+            alert("Vui lòng chọn ít nhất một phần tử để thực hiện hành động!");
+        } else {
+            let action = $('.bulk-select').find(":selected").val();
+
+            if (action != 'default') {
+                let url = $('.btn-bulk-apply').data('url');
+                url = url.replace('value_new', action);
+
+                $('#main-form').attr('action', url);
+
+                if (action == 'multy_delete') {
+                    Swal.fire({
+                        title: 'Bạn chắc chứ???',
+                        text: "Thực hiện hành động này sẽ không thể hoàn tác",
+                        icon: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Không',
+                        confirmButtonText: 'Có'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#main-form').submit();
+                        }
+                    })
+                } else {
+                    $('#main-form').submit();
+                }
+            } else {
+                alert('Vui lòng chọn action!');
+            }
+        }
+
+
     })
 
     $('#filter-bar button[name=submit-keyword]').click(function () {
@@ -88,9 +128,9 @@ $(document).ready(function () {
     });
 
     $('.slb-group').on('change', function () {
-        let value   = $(this).val();
-        let parent  = $(this).parent();
-        let url     = $(this).data('url');
+        let value = $(this).val();
+        let parent = $(this).parent();
+        let url = $(this).data('url');
 
         url = url.replace('value_new', value);
 
@@ -108,9 +148,9 @@ $(document).ready(function () {
     });
 
     $('.slb-category').on('change', function () {
-        let value   = $(this).val();
-        let parent  = $(this).parent();
-        let url     = $(this).data('url');
+        let value = $(this).val();
+        let parent = $(this).parent();
+        let url = $(this).data('url');
 
         url = url.replace('value_new', value);
 
@@ -225,9 +265,9 @@ $(document).ready(function () {
     });
 
     $(document).on('change', '#ordering', function (e) {
-        let value   = $(this).val();
-        let parent  = $(this).parent();
-        let url     = $(this).data('url');
+        let value = $(this).val();
+        let parent = $(this).parent();
+        let url = $(this).data('url');
         url = url.replace('value_new', value);
 
         $.ajax({
@@ -246,13 +286,12 @@ $(document).ready(function () {
     // User changePassword
     $('.input-password').val(generateString());
 
-    $('.btn-generate').click(function (e) { 
+    $('.btn-generate').click(function (e) {
         e.preventDefault();
-    
+
         $('.input-password').val(generateString());
     });
 
     // handle mene sidebar
     activeSidebar();
 })
-

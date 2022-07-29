@@ -75,6 +75,7 @@ $(document).ready(function () {
             type: "GET",
             url: url,
             dataType: 'json',
+            // beforeSend
             success: function (data) {  
                 
                 let description = formatDescription(data.description);     
@@ -98,7 +99,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('change', '.cart-table .qty-box input[name="quantity"]', function (e) {
+    $('.cart-table .qty-box input[name="quantity"]').on('change', function (e) {
         let quantity = $(this).val();
         let url = $(this).data('url') + `&quantity_cart=${quantity}`;
 

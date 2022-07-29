@@ -165,7 +165,7 @@ class HelperBackend
         $xhtml .= self::input('hidden', 'module', $params['module']);
         $xhtml .= self::input('hidden', 'controller', $params['controller']);
         $xhtml .= self::input('hidden', 'action', 'index');
-        $xhtml .= Form::select($filterBy, $arrSelect, 'custom-select filter-element-'.$filterBy.'', @$params[$filterBy]);
+        $xhtml .= Form::select($filterBy, $arrSelect, 'custom-select filter-element-' . $filterBy . '', @$params[$filterBy]);
         $xhtml .= '</form>';
         return $xhtml;
     }
@@ -217,19 +217,19 @@ class HelperBackend
             } else {
                 $xhtml .= '
                     <li class="nav-item">
-                        <a href="#" class="nav-link '.$value['class'].'">
+                        <a href="#" class="nav-link ' . $value['class'] . '">
                             <i class="nav-icon fas ' . $value['icon'] . '"></i>
                             <p>' . $value['name'] . '<i class="right fas fa-angle-left"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="' . $value['navChild']['linkList'] . '" class="nav-link '.$value['navChild']['classChild-list'].'">
+                                <a href="' . $value['navChild']['linkList'] . '" class="nav-link ' . $value['navChild']['classChild-list'] . '">
                                     <i class="fas fa-list-ul nav-icon"></i>
                                     <p>List</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="' . $value['navChild']['linkForm'] . '" class="nav-link '.$value['navChild']['classChild-form'].'">
+                                <a href="' . $value['navChild']['linkForm'] . '" class="nav-link ' . $value['navChild']['classChild-form'] . '">
                                     <i class="fas fa-edit nav-icon"></i>
                                     <p>Form</p>
                                 </a>
@@ -241,5 +241,21 @@ class HelperBackend
         return $xhtml;
     }
 
-
+    public static function createBulkAction($params)
+    {
+        $link = URL::createLink($params['module'], $params['controller'], 'value_new');
+        $xhtml = '
+            <div class="input-group">
+                <select class="form-control custom-select bulk-select">
+                    <option value="default">Bulk Action</option>
+                    <option value="multy_active">Active</option>
+                    <option value="multy_inactive">Inactive</option>
+                    <option value="multy_delete">Delete</option>
+                </select>
+                <span class="input-group-append">
+                    <button data-url="' . $link . '" type="button" class="btn btn-info btn-bulk-apply">Apply</button>
+                </span>
+            </div>';
+        return $xhtml;
+    }
 }

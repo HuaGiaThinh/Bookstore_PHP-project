@@ -31,7 +31,7 @@ switch ($this->params['type']) {
 $xhtmlMessage = '';
 if ($flagError) $xhtmlMessage = '<h1>404</h1>';
 
-if (isset($message)) $xhtmlMessage .= "<h2>$message</h2>";
+if (isset($message)) $xhtmlMessage .= sprintf('<h2 style="line-height: 50px">%s</h2>', $message);
 
 // breadcrumb
 $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb($title);

@@ -16,7 +16,7 @@ class UserController extends Controller
         $this->_view->countItemFilter = $this->_model->countItemByStatus($this->_arrParam);
         $totalItem = $this->_model->countItem($this->_arrParam);
 
-        $configPagination = array('totalItemsPerPage'    => 3, 'pageRange' => 3);
+        $configPagination = array('totalItemsPerPage'    => 7, 'pageRange' => 3);
         $this->setPagination($configPagination);
 
         $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
@@ -165,5 +165,29 @@ class UserController extends Controller
     {
         $this->_model->deleteItems($this->_arrParam);
         URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+    }
+
+    public function multy_activeAction()
+    {
+        if (isset($this->_arrParam['cid'])) {
+            $this->_model->multyActive($this->_arrParam);
+            URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+        }
+    }
+
+    public function multy_inactiveAction()
+    {
+        if (isset($this->_arrParam['cid'])) {
+            $this->_model->multyInactive($this->_arrParam);
+            URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+        }
+    }
+
+    public function multy_deleteAction()
+    {
+        if (isset($this->_arrParam['cid'])) {
+            $this->_model->multyDelete($this->_arrParam);
+            URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+        }
     }
 }

@@ -71,7 +71,7 @@ class IndexController extends Controller
                     'group_acp'     => $infoUser['group_acp']
                 ];
                 Session::set('user', $arraySession);
-                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'index');
+                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action']);
             } else {
                 $this->_view->errors    = $validate->showErrorLogin();
             }
@@ -83,6 +83,6 @@ class IndexController extends Controller
     public function logoutAction()
     {
         Session::delete('user');
-        URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], 'login');
+        URL::redirect($this->_arrParam['module'], 'index', 'login');
     }
 }

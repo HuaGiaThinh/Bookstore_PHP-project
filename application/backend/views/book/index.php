@@ -65,8 +65,6 @@ $xhtmlFilterBookSpecial = HelperBackend::filterForm('filter-form', 'special', $t
 
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
-// $linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action']);
-// $xhtmlPagination = $this->pagination->showPaginationBackend($linkPage);
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -133,17 +131,8 @@ $xhtmlPagination = $this->pagination->showPagination();
                         <div class="container-fluid">
                             <div class="row align-items-center justify-content-between mb-2">
                                 <div>
-                                    <div class="input-group">
-                                        <select class="form-control custom-select">
-                                            <option>Bulk Action</option>
-                                            <option>Delete</option>
-                                            <option>Active</option>
-                                            <option>Inactive</option>
-                                        </select>
-                                        <span class="input-group-append">
-                                            <button type="button" class="btn btn-info">Apply</button>
-                                        </span>
-                                    </div>
+                                    <!-- BULK ACTION -->
+                                    <?= HelperBackend::createBulkAction($this->params)?>
                                 </div>
                                 <div>
                                     <?= $addButton; ?>
@@ -157,7 +146,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                     <tr>
                                         <th><input type="checkbox" name="checkall-toggle"></th>
                                         <th>ID</th>
-                                        <th>Book Info</th>
+                                        <th style="width:35%">Book Info</th>
                                         <th>Picture</th>
                                         <th>Category</th>
                                         <th>Special</th>

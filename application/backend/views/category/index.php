@@ -122,17 +122,8 @@ $xhtmlPagination = $this->pagination->showPagination();
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between mb-2">
                             <div>
-                                <div class="input-group">
-                                    <select class="form-control custom-select">
-                                        <option selected disabled>Bulk Action</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
-                                        <option value="delete">Delete</option>
-                                    </select>
-                                    <span class="input-group-append">
-                                        <button type="button" id="btn-apply-bulk-action" class="btn btn-info">Apply</button>
-                                    </span>
-                                </div>
+                                <!-- BULK ACTION -->
+                                <?= HelperBackend::createBulkAction($this->params)?>
                             </div>
                             <div>
                                 <a href="<?= $linkAdd; ?>" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
