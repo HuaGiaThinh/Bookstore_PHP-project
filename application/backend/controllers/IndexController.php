@@ -13,15 +13,37 @@ class IndexController extends Controller
     public function dashboardAction()
     {
         $this->_view->_title = "Dashboard";
+        $items = $this->_model->countTableItem();
+
+        $arrItems = [
+            'group'     => [
+                'icon' => 'ion-ios-people'
+            ],
+            'user'     => [
+                'icon' => 'ion-ios-person'
+            ],
+            'category'     => [
+                'icon' => 'ion-clipboard'
+            ],
+            'book'     => [
+                'icon' => 'ion-ios-book'
+            ],
+        ];
+
+        foreach ($items as $key => $item) {
+            $arrItems[$key]['count'] = $item;
+        }
+
+        $this->_view->items = $arrItems;
         $this->_view->render('index/index');
     }
 
     public function loginAction()
     {
-        $userInfo	= Session::get('user');
-		if(@$userInfo['login'] == true && $userInfo['time'] + TIME_LOGIN >= time()){
-			URL::redirect('backend', 'index', 'dashboard');
-		}
+        $userInfo    = Session::get('user');
+        if (@$userInfo['login'] == true && $userInfo['time'] + TIME_LOGIN >= time()) {
+            URL::redirect('backend', 'index', 'dashboard');
+        }
 
         $this->_templateObj->setFolderTemplate('backend/');
         $this->_templateObj->setFileTemplate('login.php');

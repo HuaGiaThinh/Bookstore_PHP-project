@@ -7,6 +7,17 @@ class IndexModel extends Model
         $this->setTable(TBL_USER);
     }
 
+    public function countTableItem()
+    {
+        $query = 'SELECT
+            (SELECT COUNT(`id`) FROM `group`) as `group`, 
+            (SELECT COUNT(`id`) FROM `user`) as `user`,
+            (SELECT COUNT(`id`) FROM `category`) as `category`,
+            (SELECT COUNT(`id`) FROM `book`) as `book`';
+        $result = $this->fetchRow($query);
+        return $result;
+    }
+
     public function infoItem($params, $option = null)
     {
         if ($option['task'] == 'login') {
