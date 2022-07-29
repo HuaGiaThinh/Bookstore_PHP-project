@@ -9,7 +9,7 @@ class URL
 
     public static function createLink($module, $controller, $action, $params = null, $router = null){
 
-		if(!empty($router)) return ROOT_URL . $router;
+		if(URL_FRIENDLY && !empty($router)) return ROOT_URL . $router;
 
 		$queryParams = '';
 		if (!empty($params)) {
@@ -73,7 +73,7 @@ class URL
 		$replaceCharaterU = 'u';
 		$value = preg_replace($charaterU,$replaceCharaterU,$value);
 		
-		$charaterY = '#(ỳ|ỷ|ỹ|ý)#imsU';
+		$charaterY = '#(ỳ|ỷ|ỹ|ý|Ý)#imsU';
 		$replaceCharaterY = 'y';
 		$value = preg_replace($charaterY,$replaceCharaterY,$value);
 		

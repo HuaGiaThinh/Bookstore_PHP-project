@@ -37,3 +37,4 @@
 
 	// ====================== CONFIG ===========================
 	define('TIME_LOGIN', 3600);
+	define('URL_FRIENDLY', true);

@@ -2,11 +2,12 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{QUERY_STRING} -l [OR]
 RewriteRule ^.*$ - [NC,L]
 
 RewriteRule trang-chu.html              index.php?module=frontend&controller=index&action=index
-RewriteRule danh-muc.html               index.php?module=frontend&controller=category&action=index
-RewriteRule sach.html                   index.php?module=frontend&controller=book&action=list
+RewriteRule danh-muc.html(.*)               index.php?module=frontend&controller=category&action=index&1 [QSA]
+RewriteRule sach.html(.*)                   index.php?module=frontend&controller=book&action=list$1 [QSA]
 RewriteRule dang-nhap.html              index.php?module=frontend&controller=index&action=login
 RewriteRule dang-ky.html                index.php?module=frontend&controller=index&action=register
 RewriteRule gio-hang.html               index.php?module=frontend&controller=user&action=cart

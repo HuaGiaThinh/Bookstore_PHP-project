@@ -125,18 +125,19 @@ class IndexController extends Controller
             if ($validate->isValid() == true) {
                 $infoUser        = $this->_model->infoItem($this->_arrParam, ['task' => 'login']);
                 $arraySession    = [
-                    'login'        => true,
-                    'info'        => $infoUser,
-                    'time'        => time(),
-                    'group_acp'    => $infoUser['group_acp']
+                    'login'         => true,
+                    'info'          => $infoUser,
+                    'time'          => time(),
+                    'group_acp'     => $infoUser['group_acp']
                 ];
                 Session::set('user', $arraySession);
-                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action']);
+                
+                $urlRedirect = ROOT_URL .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                URL::redirect($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], null, $urlRedirect);
             } else {
-                $this->_view->errors    = $validate->showErrorLogin();
+                $this->_view->errors    = $validate->showErrorLogin(); 
             }
         }
-
         $this->_view->render('index/login');
     }
 
