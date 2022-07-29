@@ -6,8 +6,8 @@ RewriteCond %{QUERY_STRING} -l [OR]
 RewriteRule ^.*$ - [NC,L]
 
 RewriteRule trang-chu.html              index.php?module=frontend&controller=index&action=index
-RewriteRule danh-muc.html(.*)               index.php?module=frontend&controller=category&action=index&1 [QSA]
-RewriteRule sach.html(.*)                   index.php?module=frontend&controller=book&action=list$1 [QSA]
+RewriteRule danh-muc.html(.*)           index.php?module=frontend&controller=category&action=index&1 [QSA]
+RewriteRule sach.html(.*)               index.php?module=frontend&controller=book&action=list$1 [QSA]
 RewriteRule dang-nhap.html              index.php?module=frontend&controller=index&action=login
 RewriteRule dang-ky.html                index.php?module=frontend&controller=index&action=register
 RewriteRule gio-hang.html               index.php?module=frontend&controller=user&action=cart
@@ -17,5 +17,6 @@ RewriteRule lich-su-mua-hang.html       index.php?module=frontend&controller=use
 RewriteRule dang-xuat.html              index.php?module=frontend&controller=user&action=logout
 RewriteRule them-vao-gio-hang.html      index.php?module=frontend&controller=index&action=order
 
-RewriteRule ([A-Za-z0-9_-]+)-([0-9]+)\.html 		index.php?module=frontend&controller=book&action=list&category_id=$2
+RewriteRule ([A-Za-z0-9_-]+)-([0-9]+)\.html(.*) 		index.php?module=frontend&controller=book&action=list&category_id=$2 [QSA]
+
 RewriteRule	([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)-([0-9]+)-([0-9]+)\.html 		index.php?module=frontend&controller=book&action=detail&category_id=$3&book_id=$4

@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
         // pagination
         $totalItem = $this->_model->countItem($this->_arrParam);
-        $configPagination = ['totalItemsPerPage'    => 5, 'pageRange' => 3];
+        $configPagination = ['totalItemsPerPage'    => 15, 'pageRange' => 3];
         $this->setPagination($configPagination);
         $this->_view->pagination = new Pagination($totalItem, $this->_pagination);
 

@@ -101,6 +101,25 @@ class HelperFrontend
                 </div>';
     }
 
+    // public static function createBreadcrumb($value, $params)
+    // {
+    //     $nameCategoryURL = URL::filterURL($value['category_name']);
+    //     $linkCategory = URL::createLink($params['module'], 'book', 'list', ['category_id' => $value['category_id']], "$nameCategoryURL-{$value['id']}.html");
+    //     $xhtml = '<div class="breadcrumb-section">
+    //                 <div class="container">
+    //                     <div class="row">
+    //                         <div class="col-12">
+    //                             <div class="page-title">
+    //                                 <h2 class="py-2"><a href="">'.$value['category_name'].'</a></h2>
+    //                                 <h2 class="py-2">  / ' . $value['name'] . '</h2>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>';
+    //     return $xhtml;
+    // }
+
     public static function createBreadcrumb($text)
     {
         $xhtml = '<div class="breadcrumb-section">
@@ -124,7 +143,7 @@ class HelperFrontend
             $linkItem = URL::createLinkBookForUser($item, $params);
 
             $saleOff        = self::showItemSaleOff($item['sale_off']);
-            $name           = (strlen($item['name']) > 36) ? (substr($item['name'], 0, 36) . '...') : $item['name'];
+            $name           = (strlen($item['name']) > 45) ? (substr($item['name'], 0, 45) . '...') : $item['name'];
             $description    = (strlen($item['description']) > 1000) ? (substr($item['description'], 0, 1000) . '...') : $item['description'];
             $xhtmlDescription = $hasDescription ? '<p>' . $description . '</p>' : '';
 

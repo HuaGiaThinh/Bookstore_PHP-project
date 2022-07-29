@@ -61,10 +61,11 @@ if (!empty($this->items)) {
 }
 
 // breadcrumb
-$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Giỏ hàng');
+$xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Thông tin giỏ hàng');
 ?>
 
 <?php
+// echo $xhtmlBreadcrumb;
 echo $xhtmlBreadcrumb;
 if (!empty($xhtml)) {
 ?>

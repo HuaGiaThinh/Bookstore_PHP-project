@@ -19,9 +19,10 @@ if (!empty($this->items)) {
 }
 
 // pagination
-$categoryName = URL::filterURL($categoryName);
+$categoryName = URL::filterURL(@$this->params['category_name']);
 $linkParams = isset($this->params['category_id']) ? ['category_id' => $this->params['category_id']] : '';
-$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], $linkParams);
+$route = isset($this->params['category_id']) ? "$categoryName-{$this->params['category_id']}" : 'sach';
+$linkPage = URL::createLink($this->params['module'], $this->params['controller'], $this->params['action'], $linkParams, "$route.html?");
 $xhtmlPagination = $this->pagination->showPaginationFrontend($linkPage);
 
 // breadcrumb
