@@ -8,7 +8,7 @@ $arrSort = [
 $selectBoxSort = HelperFrontend::select('sort', 'sort', $arrSort, @$this->params['sort']);
 ?>
 <div class="product-page-filter">
-    <form action="" id="sort-form" method="GET">
+    <form action="" id="sort-form" method="post">
         <?= HelperFrontend::createInput('hidden', 'module', $this->params['module']) ?>
         <?= HelperFrontend::createInput('hidden', 'controller', $this->params['controller']) ?>
         <?= HelperFrontend::createInput('hidden', 'action', $this->params['action']) ?>

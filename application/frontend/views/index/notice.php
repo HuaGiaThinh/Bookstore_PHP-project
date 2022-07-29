@@ -35,6 +35,8 @@ if (isset($message)) $xhtmlMessage .= sprintf('<h2 style="line-height: 50px">%s<
 
 // breadcrumb
 $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb($title);
+
+$linkOrderHistory    = URL::createLink($this->params['module'], 'user', 'orderHistory', null, 'lich-su-mua-hang.html');
 ?>
 
 <?= $xhtmlBreadcrumb;?>
@@ -47,6 +49,7 @@ $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb($title);
                     <h2>Cảm ơn bạn đã mua hàng</h2>
                     <p>Hàng hóa sẽ được chuyển đến bạn trong thời gian sớm nhất</p>
                     <p>Mã đơn hàng: <b><?= $this->params['id'];?></b></p>
+                    <a href="<?= $linkOrderHistory; ?>" class="btn btn-solid">Kiểm tra đơn hàng</a>
                 </div>
             </div>
         </div>

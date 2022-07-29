@@ -108,7 +108,7 @@ class BookModel extends Model
                 $query[] = "ORDER BY $price DESC";
                 break;
             case 'latest':
-                $query[] = "ORDER BY `b`.id` DESC";
+                $query[] = "ORDER BY `b`.`id` DESC";
                 break;
             default:
                 $query[] = "ORDER BY `b`.`ordering` ASC";

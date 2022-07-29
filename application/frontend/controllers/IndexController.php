@@ -84,7 +84,7 @@ class IndexController extends Controller
             $queryEmail        = "SELECT `id` FROM `" . TBL_USER . "` WHERE `email` = '" . $this->_arrParam['form']['email'] . "'";
 
             $validate = new Validate($data);
-            $validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 100])
+            $validate->addRule('username', 'string-notExistRecord', ['database' => $this->_model, 'query' => $queryUserName, 'min' => 5, 'max' => 25])
                 ->addRule('email', 'email-notExistRecord', ['database' => $this->_model, 'query' => $queryEmail])
                 ->addRule('password', 'password', ['action' => 'add']);
 
@@ -113,12 +113,12 @@ class IndexController extends Controller
 
         if (isset($this->_arrParam['form'])) {
             $data       = $this->_arrParam['form'];
-            $validate    = new Validate($data);
+            $validate   = new Validate($data);
 
-            $email    = $data['email'];
-            $password    = md5($data['password']);
+            $email      = $data['email'];
+            $password   = md5($data['password']);
 
-            $query        = "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password' AND `status` = 'active'";
+            $query = "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password' AND `status` = 'active'";
             $validate->addRule('email', 'existRecord', array('database' => $this->_model, 'query' => $query));
             $validate->run();
 

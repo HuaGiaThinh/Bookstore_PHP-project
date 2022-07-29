@@ -57,6 +57,9 @@ if (!empty($listCategory)) {
 
 $controller = !empty($this->params['controller']) ? $this->params['controller'] : 'index';
 $action     = !empty($this->params['action']) ? $this->params['action'] : 'index';
+
+$userName = $userInfo['info']['username'];
+$userName = strlen($userName) > 15 ? (substr($userName, 0, 15) . '...') : $userName;
 ?>
 <header class="my-header sticky">
     <div class="mobile-fix-option"></div>
@@ -95,7 +98,7 @@ $action     = !empty($this->params['action']) ? $this->params['action'] : 'index
                                 <li class="onhover-dropdown mobile-account">
                                     <div style="display: flex;align-items: center">
                                         <img src="<?= $this->_pathImg ?>avatar.png" alt="avatar">
-                                        <b><?= ($userInfo['info']['username'] ?? '')?></b>
+                                        <b><?= $userName ?? ''?></b>
                                     </div>
 
                                     <?= $userMenu ?>
