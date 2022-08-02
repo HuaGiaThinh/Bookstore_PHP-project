@@ -27,6 +27,9 @@ if ($userInfo) {
     if ($userInfo['group_acp'] == 1) {
         $arrMenu[] = ['text' => 'Admin Panel', 'link' => $linkAdmin];
     }
+
+    $userName = $userInfo['info']['username'];
+    $userName = strlen($userName) > 15 ? (substr($userName, 0, 15) . '...') : $userName;
 }
 $userMenu = HelperFrontend::createMenu($arrMenu, 'onhover-show-div');
 
@@ -57,9 +60,6 @@ if (!empty($listCategory)) {
 
 $controller = !empty($this->params['controller']) ? $this->params['controller'] : 'index';
 $action     = !empty($this->params['action']) ? $this->params['action'] : 'index';
-
-$userName = $userInfo['info']['username'];
-$userName = strlen($userName) > 15 ? (substr($userName, 0, 15) . '...') : $userName;
 ?>
 <header class="my-header sticky">
     <div class="mobile-fix-option"></div>
