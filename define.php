@@ -21,12 +21,19 @@
 	define	('DEFAULT_CONTROLLER'	, 'index');
 	define	('DEFAULT_ACTION'		, 'index');
 
-	// ====================== DATABASE ===========================
-	define ('DB_HOST'			, 'localhost');
-	define ('DB_USER'			, 'root');						
-	define ('DB_PASS'			, '');						
-	define ('DB_NAME'			, 'bookstore_php_off');						
+	// ====================== DATABASE HEROKU ===========================
+	define ('DB_HOST'			, 'us-cdbr-east-06.cleardb.net');
+	define ('DB_USER'			, 'b1f8376b2a9dc1');						
+	define ('DB_PASS'			, '0cc9fc55');						
+	define ('DB_NAME'			, 'heroku_267d085bf6b52aa');						
 	define ('DB_TABLE'			, 'group');	
+
+	// ====================== DATABASE LOCAL ===========================
+	// define ('DB_HOST'			, 'localhost');
+	// define ('DB_USER'			, 'root');						
+	// define ('DB_PASS'			, '');						
+	// define ('DB_NAME'			, 'bookstore_php_off');						
+	// define ('DB_TABLE'			, 'group');	
 	
 	//==================
 	define('TBL_GROUP', 'group');
