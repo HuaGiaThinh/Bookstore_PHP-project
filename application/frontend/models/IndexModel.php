@@ -76,11 +76,11 @@ class IndexModel extends Model
 
     public function addItem($data)
     {
-        $data['password'] = md5($data['password']);
-        $data['group_id'] = 4;
-        $data['status'] = 'inactive';
-        $data['register_date'] = date("Y:m:d H:i:s");
-        $data['register_ip'] = $_SERVER["REMOTE_ADDR"];
+        $data['password']       = md5($data['password']);
+        $data['group_id']       = 4;
+        $data['status']         = 'active';
+        $data['register_date']  = date("Y:m:d H:i:s");
+        $data['register_ip']    = $_SERVER["REMOTE_ADDR"];
 
         $this->insert($data);
     }
