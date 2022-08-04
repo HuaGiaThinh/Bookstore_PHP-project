@@ -1,14 +1,14 @@
 <?php
-$linkRegister = URL::createLink($this->params['module'], $this->params['controller'], 'register');
+$linkRegister = URL::createLink($this->params['module'], $this->params['controller'], 'register', null, 'dang-ky.html');
 
 $elements = [
     [
         'label'     => Form::label('Email'),
-        'element'   => Form::input('email', 'form[email]', '', 'form-control', 'required')
+        'element'   => Form::input('email', 'form[email]', 'demo01@bookstore.xyz', 'form-control', 'required')
     ],
     [
         'label'     => Form::label('Mật khẩu'),
-        'element'   => Form::input('password', 'form[password]', '', 'form-control', 'required')
+        'element'   => Form::input('password', 'form[password]', '123456', 'form-control', 'required')
     ]
 ];
 
