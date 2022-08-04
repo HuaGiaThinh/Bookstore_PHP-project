@@ -5,7 +5,8 @@ $title = 'Trang thông báo';
 $linkHome = URL::createLink($this->params['module'], $this->params['controller'], 'index');
 switch ($this->params['type']) {
     case 'register-success':
-        $message    = 'Tài khoản của bạn đã được tạo thành công. Xin vui lòng đợi kích hoạt từ người quản trị';
+        // $message    = 'Tài khoản của bạn đã được tạo thành công. Xin vui lòng đợi kích hoạt từ người quản trị';
+        $message    = 'Tài khoản của bạn đã được tạo thành công!';
         break;
     case 'not-permission':
         $flagError  = true;

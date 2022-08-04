@@ -25,7 +25,8 @@ class UserController extends Controller
     public function buyAction()
     {
         $result = $this->_model->saveItems($this->_arrParam, ['task' => 'save-cart']);
-        URL::redirect($this->_arrParam['module'], 'index', 'notice', ['type' => 'payment-success', 'id' => $result['id']]);
+        $linkParams = ['type' => 'payment-success', 'id' => $result['id']];
+        URL::redirect($this->_arrParam['module'], 'index', 'notice', $linkParams, "mua-hang-thanh-cong.html?type={$linkParams['type']}&id={$linkParams['id']}");
     }
 
     public function removeItemFromCartAction()

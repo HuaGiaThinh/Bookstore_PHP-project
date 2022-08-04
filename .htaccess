@@ -16,6 +16,7 @@ RewriteRule thay-doi-mat-khau.html      index.php?module=frontend&controller=use
 RewriteRule lich-su-mua-hang.html       index.php?module=frontend&controller=user&action=orderHistory
 RewriteRule dang-xuat.html              index.php?module=frontend&controller=user&action=logout
 RewriteRule them-vao-gio-hang.html      index.php?module=frontend&controller=index&action=order
+RewriteRule mua-hang-thanh-cong.html(.*)          index.php?module=frontend&controller=index&action=notice [QSA]
 
 RewriteRule ([A-Za-z0-9_-]+)-([0-9]+)\.html(.*) 		index.php?module=frontend&controller=book&action=list&category_id=$2 [QSA]
 
