@@ -48,9 +48,9 @@ if (!empty($items)) {
     }
 }
 
-// filter group_acp
+// filter show at home
 $arrShowAtHome = ['default' => 'Select Show At Home', 1 => 'Yes', 0 => 'No'];
-$filterShowAtHome = Form::select('show_at_home', $arrShowAtHome, 'filter-element', @$this->params['show_at_home']);
+$filterShowAtHome = HelperBackend::filterForm('filter-form', 'show_at_home', $this->params, $arrShowAtHome);
 
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
@@ -76,12 +76,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                         </div>
 
                         <div>
-                            <form action="" method="GET" name="filter-form" id="filter-form">
-                                <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
-                                <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
-                                <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                <?= $filterShowAtHome; ?>
-                            </form>
+                            <?= $filterShowAtHome;?>
                         </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">

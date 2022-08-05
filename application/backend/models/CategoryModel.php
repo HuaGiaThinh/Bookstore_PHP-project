@@ -30,7 +30,7 @@ class CategoryModel extends Model
         $searchValue = isset($params['search']) ? trim($params['search']) : '';
         if (!empty($searchValue)) $query[]    = "AND {$this->createSearchQuery($searchValue)}";
 
-        // Filter group acp
+        // Filter show at home
         if (isset($params['show_at_home']) && $params['show_at_home'] != 'default') $query[] = "AND `show_at_home` = '{$params['show_at_home']}'";
 
         $query        = implode(" ", $query);
@@ -53,7 +53,7 @@ class CategoryModel extends Model
         // Filter Status
         if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
 
-        // Filter category id
+        // Filter show_at_home
         if (isset($params['show_at_home']) && $params['show_at_home'] != 'default') $query[] = "AND `show_at_home` = '{$params['show_at_home']}'";
 
         // PAGINATION
@@ -83,6 +83,9 @@ class CategoryModel extends Model
 
         // Filter Status
         if (isset($params['status']) && $params['status'] != 'all') $query[] = "AND `status` = '{$params['status']}'";
+
+        // Filter show_at_home
+        if (isset($params['show_at_home']) && $params['show_at_home'] != 'default') $query[] = "AND `show_at_home` = '{$params['show_at_home']}'";
 
         $query        = implode(" ", $query);
         $result        = $this->singleRecord($query);

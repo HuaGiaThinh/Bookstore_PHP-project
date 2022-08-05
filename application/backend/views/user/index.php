@@ -46,6 +46,9 @@ if (!empty($items)) {
     }
 }
 
+// filter group
+$filterGroup = HelperBackend::filterForm('filter-form', 'group_id', $this->params, $this->groupSelect);
+
 // pagination
 $xhtmlPagination = $this->pagination->showPagination();
 ?>
@@ -70,12 +73,7 @@ $xhtmlPagination = $this->pagination->showPagination();
                                 <?= $xhtmlFilterStatus; ?>
                             </div>
                             <div class="area-filter-attribute mb-2">
-                                <form action="" method="GET" name="filter-form" id="filter-form">
-                                    <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
-                                    <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
-                                    <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                    <?= Form::select('group_id', $this->groupSelect, 'custom-select filter-element', @$this->params['group_id']) ?>
-                                </form>
+                                <?= $filterGroup;?>
                             </div>
                             <div class="area-search mb-2">
                                 <form action="" method="GET" name="search-form">

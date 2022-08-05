@@ -25,7 +25,7 @@ if (!empty($items)) {
 
 // filter group_acp
 $arrGroupAcp = ['default' => 'All', 1 => 'Active', 0 => 'Inactive'];
-$filterGroupAcp = Form::select('group_acp', $arrGroupAcp, 'filter-element', @$this->params['group_acp']);
+$filterGroupAcp = HelperBackend::filterForm('filter-form', 'group_acp', @$this->params, $arrGroupAcp);
 
 // pagination
 $xhtmlPagination = $this->pagination->showPagination('');
@@ -47,12 +47,7 @@ $xhtmlPagination = $this->pagination->showPagination('');
                 <div class="container-fluid">
                     <div class="row justify-content-between align-items-center">
                         <div>
-                            <form action="" method="GET" name="filter-form" id="filter-form">
-                                <?= HelperBackend::input('hidden', 'module', $this->params['module']); ?>
-                                <?= HelperBackend::input('hidden', 'controller', $this->params['controller']); ?>
-                                <?= HelperBackend::input('hidden', 'action', 'index'); ?>
-                                <?= $filterGroupAcp;?>
-                            </form>
+                            <?= $filterGroupAcp;?>
                         </div>
                         <div class="area-search mb-2">
                             <form action="" method="GET" name="search-form">

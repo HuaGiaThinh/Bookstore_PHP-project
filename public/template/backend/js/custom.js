@@ -119,12 +119,23 @@ $(document).ready(function () {
 
     $('#currentPage').parent().addClass('active');
 
+    $('.filter-element-group_acp').on('change', function () {
+        $('#filter-form-group_acp').submit();
+    });
     $('.filter-element-category_id').on('change', function () {
         $('#filter-form-category_id').submit();
     });
 
     $('.filter-element-special').on('change', function () {
         $('#filter-form-special').submit();
+    });
+
+    $('.filter-element-show_at_home').on('change', function () {
+        $('#filter-form-show_at_home').submit();
+    });
+
+    $('.filter-element-group_id').on('change', function () {
+        $('#filter-form-group_id').submit();
     });
 
     $('.slb-group').on('change', function () {
