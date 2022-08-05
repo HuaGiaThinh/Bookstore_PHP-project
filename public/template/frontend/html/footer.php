@@ -72,9 +72,8 @@ foreach ($listCategory as $value) {
                         </div>
                         <div class="footer-contant">
                             <ul class="contact-list">
-                                <li><i class="fa fa-phone"></i>Hotline 1: <a href="tel:0123456789">0123456789</a></li>
-                                <li><i class="fa fa-phone"></i>Hotline 2: <a href="tel:0969696969">0969696969</a></li>
-                                <li><i class="fa fa-envelope-o"></i>Email: <a href="mailto:huagia.thinh@gmail.com" class="text-lowercase">huagia.thinh@gmail.com</a></li>
+                                <li><i class="fa fa-phone"></i>Hotline: <a href="tel:0123456789">0123456789</a></li>
+                                <li><i class="fa fa-envelope-o"></i><a href="mailto:huagia.thinh@gmail.com" class="text-lowercase">huagia.thinh@gmail.com</a></li>
                             </ul>
                         </div>
                     </div>
