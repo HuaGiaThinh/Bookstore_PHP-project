@@ -18,9 +18,12 @@ $xhtml = Form::showElements($elements);
 
 // breadcrumb
 $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Đổi mật khẩu');
+
+$user = Session::get('user');
+$userInfo = $user['info'];
 ?>
 
-<?= $xhtmlBreadcrumb;?>
+<?= $xhtmlBreadcrumb; ?>
 <section class="faq-section section-b-space">
     <div class="container">
         <div class="row">
@@ -30,11 +33,16 @@ $xhtmlBreadcrumb = HelperFrontend::createBreadcrumb('Đổi mật khẩu');
             <div class="col-lg-9">
                 <div class="dashboard-right">
                     <div class="dashboard">
-                        <form action="" method="post" id="admin-form" class="theme-form">
-                            <?= @$this->errors?>
-                            <?= $xhtml?>
-                            <button type="submit" id="submit" name="submit" value="Cập nhật thông tin" class="btn btn-solid btn-sm">Cập nhật thông tin</button>
-                        </form>
+                        <?php
+                        if ($userInfo['username'] != 'demo_account') { ?>
+                            <form action="" method="post" id="admin-form" class="theme-form">
+                                <?= @$this->errors ?>
+                                <?= $xhtml ?>
+                                <button type="submit" id="submit" name="submit" value="Cập nhật thông tin" class="btn btn-solid btn-sm">Cập nhật thông tin</button>
+                            </form>
+                        <?php } else { ?>
+                            <h2 style="color:#ff9e3e; font-size: 22px;" class="text-center">Tài khoản Demo không thể thay đổi mật khẩu</h2>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

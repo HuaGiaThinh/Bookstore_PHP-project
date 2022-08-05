@@ -4,7 +4,7 @@ $linkRegister = URL::createLink($this->params['module'], $this->params['controll
 $elements = [
     [
         'label'     => Form::label('Email'),
-        'element'   => Form::input('email', 'form[email]', 'demo01@bookstore.xyz', 'form-control', 'required')
+        'element'   => Form::input('email', 'form[email]', 'demoAccount@bookstore.demo', 'form-control', 'required')
     ],
     [
         'label'     => Form::label('Mật khẩu'),
