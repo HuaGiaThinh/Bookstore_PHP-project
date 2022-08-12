@@ -1,5 +1,5 @@
 <?php
-$linkFE         = URL::createLink('frontend', 'index', 'index');
+$linkFE         = URL::createLink('frontend', 'index', 'index', null, 'trang-chu.html');
 $linkProfile    = URL::createLink($this->params['module'], 'user', 'profile');
 $linkLogout     = URL::createLink($this->params['module'], 'index', 'logout');
 

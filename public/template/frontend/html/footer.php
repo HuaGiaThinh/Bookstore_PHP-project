@@ -73,7 +73,7 @@ foreach ($listCategory as $value) {
                         <div class="footer-contant">
                             <ul class="contact-list">
                                 <li><i class="fa fa-phone"></i>Hotline: <a href="tel:0123456789">0123456789</a></li>
-                                <li><i class="fa fa-envelope-o"></i><a href="mailto:huagia.thinh@gmail.com" class="text-lowercase">huagia.thinh@gmail.com</a></li>
+                                <li><i class="fa fa-envelope-o"></i><a href="mailto:huagiathinh2709@gmail.com" class="text-lowercase">huagiathinh2709@gmail.com</a></li>
                             </ul>
                         </div>
                     </div>
