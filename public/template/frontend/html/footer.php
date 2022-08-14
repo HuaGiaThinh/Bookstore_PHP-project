@@ -72,7 +72,7 @@ foreach ($listCategory as $value) {
                         </div>
                         <div class="footer-contant">
                             <ul class="contact-list">
-                                <li><i class="fa fa-phone"></i>Hotline: <a href="tel:0123456789">0123456789</a></li>
+                                <li><i class="fa fa-phone"></i>Hotline: <a href="tel:0372734851">0372734851</a></li>
                                 <li><i class="fa fa-envelope-o"></i><a href="mailto:huagiathinh2709@gmail.com" class="text-lowercase">huagiathinh2709@gmail.com</a></li>
                             </ul>
                         </div>
@@ -86,7 +86,7 @@ foreach ($listCategory as $value) {
             <div class="row">
                 <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="footer-end">
-                        <p><i class="fa fa-copyright" aria-hidden="true"></i> 2022 ZendVN</p>
+                        <p><i class="fa fa-copyright" aria-hidden="true"></i> 2022 BookStore</p>
                     </div>
                 </div>
             </div>

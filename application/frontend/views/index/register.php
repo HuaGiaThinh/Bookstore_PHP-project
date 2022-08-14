@@ -1,6 +1,6 @@
 <?php
 if (isset($this->data)) $data = $this->data;
-$linkLogin = URL::createLink($this->params['module'], $this->params['controller'], 'login');
+$linkLogin = URL::createLink($this->params['module'], $this->params['controller'], 'login', null, 'dang-nhap.html');
 
 $elements = [
     [
